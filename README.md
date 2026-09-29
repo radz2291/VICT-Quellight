@@ -38,9 +38,10 @@ Agents and contributors must read, in order:
 2. `docs/VISION.md`
 3. `docs/ARCHITECTURE.md`
 4. `docs/DECISIONS.md`
-5. `docs/STAGES.md`
-6. `docs/EVALUATION.md`
-7. `docs/RUNBOOK.md`
-8. `docs/STATE.md`
+5. `docs/GOVERNANCE.md`
+6. `docs/STAGES.md`
+7. `docs/EVALUATION.md`
+8. `docs/RUNBOOK.md`
+9. `docs/STATE.md`
 
-No product implementation has been authorized by this bootstrap documentation commit. The next permitted work is the repository/dependency intake milestone recorded in `docs/STATE.md`.
+The documentation bootstrap is complete. The next permitted work is G0 repository/dependency intake as recorded in `docs/STATE.md`; no G1 product implementation is authorized yet.
