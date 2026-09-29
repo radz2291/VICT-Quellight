@@ -22,6 +22,7 @@ interface QuellightState {
 	modelIdentity: string;
 	turnIndex: number;
 	knowledgeInitStarted: boolean;
+	knowledgeInitPromise: Promise<void> | null;
 }
 
 const state: QuellightState = {
@@ -32,7 +33,8 @@ const state: QuellightState = {
 	knowledgeFaulted: false,
 	modelIdentity: resolveModelPlan().modelIdentity,
 	turnIndex: 0,
-	knowledgeInitStarted: false
+	knowledgeInitStarted: false,
+	knowledgeInitPromise: null as Promise<void> | null
 };
 
 export async function ensureAgent(): Promise<QuellightAgent> {
@@ -96,7 +98,7 @@ export async function executeTurn(question: string): Promise<ServerTurnResult> {
 export interface ServerStatus {
 	model: { identity: string; mode: string; liveStatus: string };
 	knowledge: {
-		state: 'ready' | 'degraded';
+		state: 'ready' | 'degraded' | 'initializing';
 		detail: string | null;
 		dataset: string;
 	};
@@ -112,7 +114,12 @@ export async function serverStatus(): Promise<ServerStatus> {
 			liveStatus: modelPlan.liveStatus
 		},
 		knowledge: {
-			state: state.knowledge && !state.knowledgeFaulted ? 'ready' : 'degraded',
+			state:
+				state.knowledge && !state.knowledgeFaulted
+					? 'ready'
+					: state.knowledgeInitPromise === null
+						? 'initializing'
+						: 'degraded',
 			detail: state.knowledgeFaulted ? state.knowledgeLoadError : null,
 			dataset: 'g1.quellight'
 		},

@@ -15,6 +15,8 @@
  */
 
 import { createCogneePack } from '@victframework/cognee';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
 import type { KnowledgeCandidate } from '$lib/types';
 
 /**
@@ -61,13 +63,7 @@ export class KnowledgeDependencyError extends Error {
 }
 
 export class KnowledgeStore {
-	private constructor(
-		private readonly pack: KnowledgePack,
-		private readonly addBinding: CapabilityBinding,
-		private readonly cognifyBinding: CapabilityBinding,
-		private readonly searchBinding: CapabilityBinding
-	) {}
-
+	private hasCognified = false;
 	static async create(options: {
 		pythonPath: string;
 		storeRoot: string;
@@ -76,6 +72,35 @@ export class KnowledgeStore {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		createPack?: any;
 	}): Promise<KnowledgeStore> {
+		// Quellight-owned, keyless worker configuration for the isolated G1 store
+		// (no LLM key; fastembed embeddings; no credentials ever sent to Cognee).
+		mkdirSync(options.storeRoot, { recursive: true });
+		const envPath = path.join(options.storeRoot, '.env');
+		if (!existsSync(envPath)) {
+			writeFileSync(
+				envPath,
+				[
+					'ENV=dev',
+					'RUNTIME__LOG_LEVEL=INFO',
+					...Object.entries({
+						SYSTEM_ROOT_DIRECTORY: 'system',
+						DATA_ROOT_DIRECTORY: 'data',
+						CACHE_ROOT_DIRECTORY: 'cache',
+						LOGS_ROOT_DIRECTORY: 'logs',
+						COGNEE_REPOS_DIR: 'repos'
+					}).map(([k, v]) => `${k}=${path.join(options.storeRoot, v).replace(/\\/g, '/')}`),
+					'VECTOR_DB_PROVIDER=lancedb',
+					'GRAPH_DATABASE_PROVIDER=ladybug',
+					'DB_PROVIDER=sqlite',
+					'EMBEDDING_PROVIDER=fastembed',
+					'EMBEDDING_MODEL=BAAI/bge-small-en-v1.5',
+					'EMBEDDING_DIMENSIONS=384',
+					'GRAPH_EXTRACTOR=gliner_demo',
+					'AUTO_FEEDBACK=false',
+					''
+				].join('\n')
+			);
+		}
 		let pack: KnowledgePack;
 		try {
 			const createFn = options.createPack ?? createCogneePack;
@@ -98,7 +123,61 @@ export class KnowledgeStore {
 			void pack.supervision.shutdown();
 			throw new KnowledgeDependencyError('Required Cognee capability bindings missing from pack');
 		}
-		return new KnowledgeStore(pack, add, cognify, search);
+		return new KnowledgeStore(options, pack, add, cognify, search);
+	}
+
+	private constructor(
+		private readonly options: {
+			pythonPath: string;
+			storeRoot: string;
+			namespaces: string[];
+			readyBudgetMs?: number;
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			createPack?: any;
+		},
+		private pack: KnowledgePack,
+		private addBinding: CapabilityBinding,
+		private cognifyBinding: CapabilityBinding,
+		private searchBinding: CapabilityBinding
+	) {}
+
+	/**
+	 * G1 bounded recovery for an observed UPSTREAM Cognee-worker defect:
+	 * the SECOND cognify in one worker process's lifetime fails deterministically
+	 * (Python asyncio lock bound to a different event loop; one cognify per fresh
+	 * worker succeeds — verified against the real worker at G1). This is a
+	 * recovery behavior inside Quellight/VICT boundaries; VICT-Cognee itself is
+	 * NOT modified by this repository.
+	 *
+	 * Policy: each durable intake gives its cognify a fresh supervised worker,
+	 * so every cognify is the first in its worker's lifetime. Bounded: at most
+	 * one recreate + one cognify retry per storeMessage call; failure still
+	 * degrades truthfully (intakeDegraded) rather than fabricating state.
+	 */
+	private async recyclePack(): Promise<void> {
+		try {
+			await this.pack.supervision.shutdown();
+		} catch {
+			// best-effort
+		}
+		const createFn = this.options.createPack ?? createCogneePack;
+		const next = createFn({
+			pythonPath: this.options.pythonPath,
+			cwd: this.options.storeRoot,
+			storeRoot: this.options.storeRoot,
+			namespaces: this.options.namespaces,
+			readyBudgetMs: this.options.readyBudgetMs ?? 240_000
+		});
+		this.pack = next;
+		const add = binding(next, 'cognee.add');
+		const cognify = binding(next, 'cognee.cognify');
+		const search = binding(next, 'cognee.searchChunks');
+		if (!add || !cognify || !search) {
+			throw new KnowledgeDependencyError('Required Cognee capability bindings missing after recovery');
+		}
+		this.addBinding = add;
+		this.cognifyBinding = cognify;
+		this.searchBinding = search;
 	}
 
 	/** Durable intake: add + cognify a user-submitted message (keyed, idempotent per call). */
@@ -106,14 +185,38 @@ export class KnowledgeStore {
 		content: string,
 		idempotencyKey: string
 	): Promise<{ datasetName: string; itemsAfter: number }> {
+		// Upstream defect workaround: never run a second cognify on one worker.
+		if (this.hasCognified) {
+			await this.recyclePack();
+		}
 		const addReceipt = (await this.addBinding.invoke(
 			{ datasetName: G1_DATASET, content },
 			{ mode: 'normal', idempotencyKey }
 		)) as { datasetName?: string; itemsAfter?: number };
-		await this.cognifyBinding.invoke(
-			{ datasetName: G1_DATASET },
-			{ mode: 'normal', idempotencyKey: `${idempotencyKey}-cognify` }
-		);
+		try {
+			await this.cognifyBinding.invoke(
+				{ datasetName: G1_DATASET },
+				{ mode: 'normal', idempotencyKey: `${idempotencyKey}-cognify` }
+			);
+			this.hasCognified = true;
+		} catch (firstError) {
+			// One bounded recovery attempt: fresh worker, one retry.
+			await this.recyclePack();
+			const retryAdd = (await this.addBinding.invoke(
+				{ datasetName: G1_DATASET, content },
+				{ mode: 'normal', idempotencyKey: `${idempotencyKey}-r` }
+			)) as { datasetName?: string; itemsAfter?: number };
+			await this.cognifyBinding.invoke(
+				{ datasetName: G1_DATASET },
+				{ mode: 'normal', idempotencyKey: `${idempotencyKey}-cognify-r` }
+			);
+			this.hasCognified = true;
+			void firstError;
+			return {
+				datasetName: retryAdd.datasetName ?? G1_DATASET,
+				itemsAfter: typeof retryAdd.itemsAfter === 'number' ? retryAdd.itemsAfter : 0
+			};
+		}
 		return {
 			datasetName: addReceipt.datasetName ?? G1_DATASET,
 			itemsAfter: typeof addReceipt.itemsAfter === 'number' ? addReceipt.itemsAfter : 0
