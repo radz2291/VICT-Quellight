@@ -63,7 +63,7 @@ function startKnowledgeInit(): Promise<void> {
 		return Promise.resolve();
 	}
 	const init = KnowledgeStore.create(config)
-			.then((store) => {
+		.then((store) => {
 			state.knowledge = store;
 			state.knowledgeFaulted = false;
 			state.knowledgeInitSettled = true;
