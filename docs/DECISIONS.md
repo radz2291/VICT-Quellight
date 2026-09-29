@@ -44,7 +44,14 @@ Before Quellight product implementation depends on Cognee, revalidate/update `@v
 
 ## Open owner decisions
 
-- QD-01: exact first user-visible Quellight vertical slice.
-- QD-02: initial model/provider for live development proof.
+- QD-01: **RESOLVED FOR G1** — first vertical slice is the conversation UI → durable
+  knowledge item → Cognee retrieval → VICT ProductAgent/Mastra reasoning → natural answer;
+  canonical demo is codename-fact recall (mechanism-proven, not hardcoded). Recorded verbatim
+  in the executing handoff and frozen into `docs/gates/G1-CONTRACT.md` §2.
+- QD-02: **RESOLVED FOR G1** — deterministic offline fixture is the REQUIRED path for all
+  automated/repeatable verification; live path optional only with an existing legitimate
+  VICT/Mastra-route credential. No credential exists on the development host, so the live
+  model path is recorded `NOT RUN — no authorized configured credential available`.
+  No credential was created, committed, or exposed. G1 remains fully functional fixture-only.
 - QD-03: **COMPLETED** — the bounded Cognee revalidation/remediation was performed in VICT-Cognee (`compat/vict-0.4-rc1` @ `78e6c0ab…`) under its own branch/governance and was independently verified by the Quellight G0 re-proof audit (`docs/reports/G0-COGNEE-REPROOF-AUDIT.md`). No bypass flags were used at any point.
-- QD-04: exact first Quellight semantic concepts after the walking vertical slice proves the base stack.
+- QD-04: exact first Quellight semantic concepts after the walking vertical slice proves the base stack. **Still open** — G1 evidence does not make this resolution mechanical (no G2 semantics were exercised).

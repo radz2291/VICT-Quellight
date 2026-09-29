@@ -39,7 +39,9 @@ try {
 ledger = ledger.filter((e) => e.phase !== phase);
 const record = (id, name, ok, detail) => {
 	ledger.push({ phase, id, name, outcome: ok ? 'PASS' : 'FAIL', detail });
-	console.error(`[browser-${phase}] ${id} ${ok ? 'PASS' : 'FAIL'} ${name} :: ${detail.slice(0, 160)}`);
+	console.error(
+		`[browser-${phase}] ${id} ${ok ? 'PASS' : 'FAIL'} ${name} :: ${detail.slice(0, 160)}`
+	);
 };
 
 async function submitAndWait(page, text) {
@@ -98,12 +100,22 @@ async function narrowPhase() {
 	const noHScroll = await page.evaluate(
 		() => document.documentElement.scrollWidth <= window.innerWidth + 1
 	);
-	record('N1', 'narrow viewport (390px) renders without horizontal overflow', noHScroll, `scrollWidth check`);
+	record(
+		'N1',
+		'narrow viewport (390px) renders without horizontal overflow',
+		noHScroll,
+		`scrollWidth check`
+	);
 
 	await submitAndWait(page, 'Hello.');
 	const texts = await lastTexts(page);
 	const answered = texts.some((t) => /Quellight/i.test(t));
-	record('N2', 'keyboard-only interaction submits and answers on narrow viewport', answered, JSON.stringify(texts));
+	record(
+		'N2',
+		'keyboard-only interaction submits and answers on narrow viewport',
+		answered,
+		JSON.stringify(texts)
+	);
 	await page.screenshot({ path: path.join(OUT, '06-narrow-after-turn.png'), fullPage: true });
 
 	await browser.close();

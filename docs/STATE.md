@@ -1,8 +1,17 @@
 # Project State
 
-**Updated:** 2026-09-29 (G0 closed after independent Cognee re-proof audit)
+**Updated:** 2026-09-29 (G1 candidate executed on `g1/walking-quellight`; awaiting independent verification)
 **Repository:** https://github.com/radz2291/VICT-Quellight
-**Status:** G0 VERIFIED — CLOSED; G1 PERMITTED BUT NOT BEGUN (product execution awaits QD-01/QD-02)
+**Status:** G0 VERIFIED — CLOSED; G1 CANDIDATE EXECUTED (NOT self-closed; independent verification required)
+
+## G1 executed record (candidate, not closed)
+
+- Branch: `g1/walking-quellight` from G0 closure `7ee427ac1abbb864922eef16f81d28a1394f3666`.
+- Contract frozen at `04b3e68` before implementation; implementation single-lane per contract §9.
+- Delivered: SvelteKit browser app (`/`, `POST /api/turn`, `GET /api/health`, gated `POST /api/shutdown` maintenance endpoint), server-only product modules composing VICT capability bindings only, deterministic fixture model keyed on real composed inputs (QD-02), checksum-verified `@victframework/cognee@0.1.0` tarball intake, deterministic test suite, real-Cognee integration proof (10/10 PASS), browser walkthrough with failure/narrow phases (all PASS).
+- QD-01/QD-02: resolved for G1 (see `docs/DECISIONS.md`). QD-04 remains open.
+- Retained non-blocking findings (NOT resolved here): warm-worker second-cognify failure in `@victframework/cognee` (upstream, deterministic; asyncio event-loop lock error) with a G1-local bounded workaround of one fresh supervised worker per durable cognify — workaround only, not an architecture decision; cold-cognify turn latency ~2–4 min surfaced honestly; CRLF-vs-LF tarball rebuild note; temporary intake policy (every user message stored), temporary gated shutdown endpoint.
+- Full detail: `docs/reports/G1-WALKING-QUELLIGHT.md`.
 
 ## G0 closure record
 
@@ -31,13 +40,13 @@
 
 ## Gate table
 
-| Gate                    | Status                                                                                                                                                                 | Next permitted action                               |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Documentation bootstrap | COMPLETE                                                                                                                                                               | None                                                |
-| G0 dependency intake    | VERIFIED — CLOSED (original candidate BLOCKED; blocker lifted by VICT-Cognee `78e6c0a`; independent re-proof verified — see `docs/reports/G0-COGNEE-REPROOF-AUDIT.md`) | None                                                |
-| G1 walking Quellight    | PERMITTED BUT NOT BEGUN — product execution awaits owner decisions QD-01/QD-02                                                                                         | Owner sets QD-01/QD-02, then freeze the G1 contract |
-| G2 durable meaning      | BLOCKED                                                                                                                                                                | None                                                |
-| G3+                     | BLOCKED                                                                                                                                                                | None                                                |
+| Gate                    | Status                                                                                                                                                                 | Next permitted action                                |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Documentation bootstrap | COMPLETE                                                                                                                                                               | None                                                 |
+| G0 dependency intake    | VERIFIED — CLOSED (original candidate BLOCKED; blocker lifted by VICT-Cognee `78e6c0a`; independent re-proof verified — see `docs/reports/G0-COGNEE-REPROOF-AUDIT.md`) | None                                                 |
+| G1 walking Quellight    | CANDIDATE EXECUTED — awaiting independent verification (report: `docs/reports/G1-WALKING-QUELLIGHT.md`; evidence: `proof/g1-evidence/*`)                               | Independent verification; then owner decides closure |
+| G2 durable meaning      | BLOCKED                                                                                                                                                                | None                                                 |
+| G3+                     | BLOCKED                                                                                                                                                                | None                                                 |
 
 ## Explicit exclusions right now
 
