@@ -277,6 +277,9 @@ async function main() {
 		JSON.stringify({ meta: t5.body.meta }).slice(0, 120) + ' :: ' + t5text.slice(0, 200)
 	);
 	killTree(serverB);
+	// Release the store-owner lock after B's verified stop so later phases attach cleanly.
+	await waitStoreFree(25_000);
+	await releaseStaleOwnerLock(path.join(RUN_ROOT, 'cognee-store'));
 
 	// Bounded controlled failure: model surface (W4) on a separate instance.
 	await sleep(2_000);
