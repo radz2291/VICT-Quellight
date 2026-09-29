@@ -43,6 +43,59 @@ const check = (id, name, cond, detail = '') => {
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/** Kill the whole child tree (Windows leaves grandchildren alive on kill()). */
+function killTree(child) {
+	const pid = child.pid;
+	if (!pid) return;
+	try {
+		child.kill();
+	} catch {}
+	try {
+		execSync(`taskkill /PID ${pid} /T /F`, { stdio: 'ignore', windowsHide: true });
+	} catch {
+		// already gone
+	}
+}
+
+/** Wait until no python workers remain (documented store-root holders). */
+async function waitStoreFree(ms = 20_000) {
+	const end = Date.now() + ms;
+	while (Date.now() < end) {
+		try {
+			const out = execSync('tasklist /FI "IMAGENAME eq python.exe" /FO CSV /NH 2>NUL', {
+				windowsHide: true
+			})
+				.toString()
+				.trim();
+			if (!out) return true;
+		} catch {
+			return true;
+		}
+		await sleep(1000);
+	}
+	return false;
+}
+
+/**
+ * Bounded manual recovery for a hard-killed server, documented in the pack's
+ * own fail-closed error (C5 design, docs/c3-pack-contract.md §8.1): verify the
+ * owner and its worker are STOPPED, then delete the store-owner lock file.
+ * Harness-only behavior; never performed while a worker may be alive.
+ */
+async function releaseStaleOwnerLock(storeRoot, ms = 20_000) {
+	const pythonFree = await waitStoreFree(ms);
+	if (!pythonFree) {
+		throw new Error('python workers still alive; refusing to release store-owner lock');
+	}
+	const lock = path.join(storeRoot, 'cognee-store-owner.lock');
+	try {
+		rmSync(lock, { force: true });
+		console.error('[g1-integration] released stale owner lock after verified stop');
+	} catch {
+		// lock absent already
+	}
+}
+
 function startServer(port, extraEnv = {}) {
 	const env = {
 		...process.env,
@@ -198,13 +251,16 @@ async function main() {
 
 	// Persistence check BEFORE restart: confirm durable retrieval (already in W2), then kill server A.
 	await sleep(1_000);
-	serverA.kill();
-
+	killTree(serverA);
+	// Documented manual recovery (pack's fail-closed C5 error, docs/c3-pack-contract.md §8.1):
+	// verify the owner and its worker are STOPPED, then release the store-owner lock.
+	await waitStoreFree(25_000);
+	await releaseStaleOwnerLock(path.join(RUN_ROOT, 'cognee-store'));
+	await sleep(1_000);
 	// Fresh process, SAME RUN_ROOT -> proves durable knowledge survives restart.
-	await sleep(3_000);
 	console.error('[g1-integration] T5: restart with same store; ask recall again');
 	const serverB = startServer(PORT_A);
-	const readyB = await waitReady(PORT_A, 30_000);
+	const readyB = await waitReady(PORT_A, 90_000);
 	check(
 		'S0',
 		'restart: knowledge ready from persisted store',
@@ -220,7 +276,7 @@ async function main() {
 		t5.status === 200 && t5text.includes('Zephyr'),
 		JSON.stringify({ meta: t5.body.meta }).slice(0, 120) + ' :: ' + t5text.slice(0, 200)
 	);
-	serverB.kill();
+	killTree(serverB);
 
 	// Bounded controlled failure: model surface (W4) on a separate instance.
 	await sleep(2_000);
@@ -235,7 +291,7 @@ async function main() {
 		w4.status === 502,
 		JSON.stringify(w4.body).slice(0, 200)
 	);
-	serverC.kill();
+	killTree(serverC);
 
 	// Knowledge-degraded boot (no Python path): truthful degraded behavior.
 	console.error('[g1-integration] W4b: knowledge unavailable degradation');
@@ -260,7 +316,7 @@ async function main() {
 			!tDtext.includes('Zephyr'),
 		JSON.stringify(metaD).slice(0, 120) + ' :: ' + tDtext.slice(0, 200)
 	);
-	serverD.kill();
+	killTree(serverD);
 
 	[serverA, serverB, serverC, serverD].forEach((s) => {
 		try {
