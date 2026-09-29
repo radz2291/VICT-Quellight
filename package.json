@@ -1,0 +1,19 @@
+{
+  "name": "vict-quellight",
+  "version": "0.0.0-g0",
+  "private": true,
+  "type": "module",
+  "description": "Quellight — persistent cognitive partner built as a thin consumer of VICT capabilities. Current stage: G0 dependency intake (no product implementation).",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "proof:mastra": "node proof/mastra-offline-proof.mjs"
+  },
+  "dependencies": {
+    "@victframework/mastra": "0.4.0-rc.1",
+    "@victframework/runtime": "0.4.0-rc.1",
+    "@victframework/sdk": "0.4.0-rc.1"
+  },
+  "license": "UNLICENSED"
+}

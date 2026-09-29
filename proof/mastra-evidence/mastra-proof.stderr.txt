@@ -1,0 +1,130 @@
+This storage provider does not support batch creating metrics
+LibSQLStore: Non-lock error during batch insert into table mastra_ai_spans, not retrying {
+  error: LibsqlError: CLIENT_CLOSED: The client is closed
+      at #checkNotClosed (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:201:19)
+      at Sqlite3Client.execute (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:82:29)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1376:38
+      at LibSQLDB.getTableColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1384:5)
+      at LibSQLDB.filterRecordToKnownColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1393:35)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:70
+      at Array.map (<anonymous>)
+      at LibSQLDB.doBatchInsert (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:54)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1490:57
+      at LibSQLDB.executeWriteOperationWithRetry (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1116:17) {
+    code: 'CLIENT_CLOSED',
+    extendedCode: undefined,
+    rawCode: undefined,
+    [cause]: undefined
+  }
+}
+Failed to persist observability events {
+  signal: 'tracing',
+  eventCount: 24,
+  retryAttempt: 1,
+  maxRetries: 4,
+  nextRetryDelayMs: 500,
+  error: 'CLIENT_CLOSED: The client is closed'
+}
+LibSQLStore: Non-lock error during batch insert into table mastra_ai_spans, not retrying {
+  error: LibsqlError: CLIENT_CLOSED: The client is closed
+      at #checkNotClosed (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:201:19)
+      at Sqlite3Client.execute (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:82:29)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1376:38
+      at LibSQLDB.getTableColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1384:5)
+      at LibSQLDB.filterRecordToKnownColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1393:35)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:70
+      at Array.map (<anonymous>)
+      at LibSQLDB.doBatchInsert (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:54)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1490:57
+      at LibSQLDB.executeWriteOperationWithRetry (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1116:17) {
+    code: 'CLIENT_CLOSED',
+    extendedCode: undefined,
+    rawCode: undefined,
+    [cause]: undefined
+  }
+}
+Failed to persist observability events {
+  signal: 'tracing',
+  eventCount: 24,
+  retryAttempt: 2,
+  maxRetries: 4,
+  nextRetryDelayMs: 1000,
+  error: 'CLIENT_CLOSED: The client is closed'
+}
+LibSQLStore: Non-lock error during batch insert into table mastra_ai_spans, not retrying {
+  error: LibsqlError: CLIENT_CLOSED: The client is closed
+      at #checkNotClosed (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:201:19)
+      at Sqlite3Client.execute (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:82:29)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1376:38
+      at LibSQLDB.getTableColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1384:5)
+      at LibSQLDB.filterRecordToKnownColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1393:35)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:70
+      at Array.map (<anonymous>)
+      at LibSQLDB.doBatchInsert (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:54)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1490:57
+      at LibSQLDB.executeWriteOperationWithRetry (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1116:17) {
+    code: 'CLIENT_CLOSED',
+    extendedCode: undefined,
+    rawCode: undefined,
+    [cause]: undefined
+  }
+}
+Failed to persist observability events {
+  signal: 'tracing',
+  eventCount: 24,
+  retryAttempt: 3,
+  maxRetries: 4,
+  nextRetryDelayMs: 2000,
+  error: 'CLIENT_CLOSED: The client is closed'
+}
+LibSQLStore: Non-lock error during batch insert into table mastra_ai_spans, not retrying {
+  error: LibsqlError: CLIENT_CLOSED: The client is closed
+      at #checkNotClosed (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:201:19)
+      at Sqlite3Client.execute (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:82:29)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1376:38
+      at LibSQLDB.getTableColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1384:5)
+      at LibSQLDB.filterRecordToKnownColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1393:35)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:70
+      at Array.map (<anonymous>)
+      at LibSQLDB.doBatchInsert (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:54)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1490:57
+      at LibSQLDB.executeWriteOperationWithRetry (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1116:17) {
+    code: 'CLIENT_CLOSED',
+    extendedCode: undefined,
+    rawCode: undefined,
+    [cause]: undefined
+  }
+}
+Failed to persist observability events {
+  signal: 'tracing',
+  eventCount: 24,
+  retryAttempt: 4,
+  maxRetries: 4,
+  nextRetryDelayMs: 4000,
+  error: 'CLIENT_CLOSED: The client is closed'
+}
+LibSQLStore: Non-lock error during batch insert into table mastra_ai_spans, not retrying {
+  error: LibsqlError: CLIENT_CLOSED: The client is closed
+      at #checkNotClosed (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:201:19)
+      at Sqlite3Client.execute (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@libsql/client/lib-esm/sqlite3.js:82:29)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1376:38
+      at LibSQLDB.getTableColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1384:5)
+      at LibSQLDB.filterRecordToKnownColumns (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1393:35)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:70
+      at Array.map (<anonymous>)
+      at LibSQLDB.doBatchInsert (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1473:54)
+      at file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1490:57
+      at LibSQLDB.executeWriteOperationWithRetry (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/libsql/dist/index.js:1116:17) {
+    code: 'CLIENT_CLOSED',
+    extendedCode: undefined,
+    rawCode: undefined,
+    [cause]: undefined
+  }
+}
+Failed to persist observability events {
+  signal: 'tracing',
+  eventCount: 24,
+  retryAttempt: 5,
+  maxRetries: 4,
+  error: 'CLIENT_CLOSED: The client is closed'
+}

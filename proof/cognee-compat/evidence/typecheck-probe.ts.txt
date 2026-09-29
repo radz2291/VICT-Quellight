@@ -1,0 +1,18 @@
+import { createCogneePack } from './extracted-cognee/dist/index.js';
+import type { CapabilityPack } from '@victframework/sdk';
+import { installCapabilityPack, createRuntime, createInMemoryStores } from '@victframework/runtime';
+
+// Structural assignability of the cognee pack to the CURRENT VICT 0.4.0-rc.1
+// CapabilityPack contract expected by installCapabilityPack.
+const pack = createCogneePack({
+  pythonPath: 'C:/placeholder/python.exe',
+  cwd: 'C:/placeholder',
+  storeRoot: 'C:/placeholder',
+  namespaces: ['typecheck'],
+});
+const asPack: CapabilityPack = pack;
+const runtime = createRuntime({ stores: createInMemoryStores(), authority: { grants: [] } });
+const { installed } = installCapabilityPack(runtime, asPack);
+export function installedCount(): number {
+  return installed.length;
+}
