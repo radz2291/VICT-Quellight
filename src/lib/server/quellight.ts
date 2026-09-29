@@ -59,6 +59,7 @@ function startKnowledgeInit(): Promise<void> {
 	if (!config.enabled) {
 		state.knowledgeFaulted = true;
 		state.knowledgeLoadError = 'No Python worker path configured (QUOLLIGHT_COGNEE_PYTHON).';
+		state.knowledgeInitSettled = true;
 		return Promise.resolve();
 	}
 	const init = KnowledgeStore.create(config)
