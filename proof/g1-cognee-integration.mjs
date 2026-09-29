@@ -62,7 +62,7 @@ async function waitStoreFree(ms = 20_000) {
 	const end = Date.now() + ms;
 	while (Date.now() < end) {
 		try {
-			const out = execSync('tasklist /FI "IMAGENAME eq python.exe" /FO CSV /NH 2>NUL', {
+			const out = execSync('tasklist /FI "IMAGENAME eq python.exe" /FO CSV /NH', {
 				windowsHide: true
 			})
 				.toString()
@@ -103,6 +103,7 @@ function startServer(port, extraEnv = {}) {
 		HOST: '127.0.0.1',
 		QUOLLIGHT_RUN_ROOT: RUN_ROOT,
 		QUOLLIGHT_COGNEE_PYTHON: PYTHON,
+		QUOLLIGHT_MAINTENANCE_SHUTDOWN: '1',
 		...extraEnv
 	};
 	// Ensure the Cognee store exists and carries a keyless .env (worker config)
@@ -132,18 +133,13 @@ function startServer(port, extraEnv = {}) {
 
 	const child = spawn('node', [path.resolve(here, '../build/index.js')], {
 		env,
-		stdio: ['ignore', 'pipe', 'pipe'],
+		// Server output is always captured: crashes must be observable evidence.
+		stdio: ['ignore', 'inherit', 'inherit'],
 		windowsHide: true
 	});
-	child.stdout.on(
-		'data',
-		(d) => process.env.PROOF_VERBOSE && process.stdout.write(`[srv ${port}] ${d}`)
+	child.on('exit', (code, signal) =>
+		console.error(`[srv ${port}] exited code=${code} signal=${signal ?? '-'}`)
 	);
-	child.stderr.on(
-		'data',
-		(d) => process.env.PROOF_VERBOSE && process.stderr.write(`[srv ${port}] ${d}`)
-	);
-	child.on('exit', (code) => console.error(`[srv ${port}] exited ${code}`));
 	return child;
 }
 
@@ -164,6 +160,29 @@ async function waitReady(port, ms) {
 	throw new Error(
 		`server on ${port} not ready after ${ms}ms (last: ${res2 ? JSON.stringify(await res2.json()).slice(0, 300) : 'unreachable'})`
 	);
+}
+
+/** Graceful stop: gated clean shutdown endpoint (releases the store-owner
+ * lock); falls back to tree-kill plus documented manual lock release. */
+async function stopServer(server, port) {
+	try {
+		const res = await fetch(`http://127.0.0.1:${port}/api/shutdown`, { method: 'POST' });
+		console.error(`[g1-integration] stop ${port}: shutdown endpoint status=${res.status}`);
+		if (res.ok) {
+			await sleep(2_000);
+			return true;
+		}
+		await res.text().then(
+			(t) => console.error(`[g1-integration] stop ${port}: body=${t.slice(0, 300)}`),
+			() => {}
+		);
+	} catch (e) {
+		console.error(`[g1-integration] stop ${port}: shutdown fetch failed: ${e.message}`);
+	}
+	killTree(server);
+	await waitStoreFree(25_000);
+	await releaseStaleOwnerLock(path.join(RUN_ROOT, 'cognee-store'));
+	return false;
 }
 
 async function turn(port, message) {
@@ -249,13 +268,9 @@ async function main() {
 	const t4Note = t4.body?.meta?.retrieval === 'used' ? 'quoted-as-note behavior' : 'miss behavior';
 	console.error(`[g1-integration] T4 behavior: ${t4Note}; text: ${t4text}`);
 
-	// Persistence check BEFORE restart: confirm durable retrieval (already in W2), then kill server A.
+	// Persistence check BEFORE restart: confirm durable retrieval (already in W2).
 	await sleep(1_000);
-	killTree(serverA);
-	// Documented manual recovery (pack's fail-closed C5 error, docs/c3-pack-contract.md §8.1):
-	// verify the owner and its worker are STOPPED, then release the store-owner lock.
-	await waitStoreFree(25_000);
-	await releaseStaleOwnerLock(path.join(RUN_ROOT, 'cognee-store'));
+	await stopServer(serverA, PORT_A);
 	await sleep(1_000);
 	// Fresh process, SAME RUN_ROOT -> proves durable knowledge survives restart.
 	console.error('[g1-integration] T5: restart with same store; ask recall again');
@@ -276,10 +291,7 @@ async function main() {
 		t5.status === 200 && t5text.includes('Zephyr'),
 		JSON.stringify({ meta: t5.body.meta }).slice(0, 120) + ' :: ' + t5text.slice(0, 200)
 	);
-	killTree(serverB);
-	// Release the store-owner lock after B's verified stop so later phases attach cleanly.
-	await waitStoreFree(25_000);
-	await releaseStaleOwnerLock(path.join(RUN_ROOT, 'cognee-store'));
+	await stopServer(serverB, PORT_A);
 
 	// Bounded controlled failure: model surface (W4) on a separate instance.
 	await sleep(2_000);
@@ -294,7 +306,7 @@ async function main() {
 		w4.status === 502,
 		JSON.stringify(w4.body).slice(0, 200)
 	);
-	killTree(serverC);
+	await stopServer(serverC, PORT_B);
 
 	// Knowledge-degraded boot (no Python path): truthful degraded behavior.
 	console.error('[g1-integration] W4b: knowledge unavailable degradation');

@@ -25,6 +25,12 @@ interface QuellightState {
 	knowledgeInitPromise: Promise<void> | null;
 }
 
+// G1 diagnostics: unhandled rejections must be OBSERVABLE evidence, never converted
+// into silent success. Node's default crash behavior is preserved.
+process.on('unhandledRejection', (reason) => {
+	console.error('[quellight] unhandledRejection:', reason);
+});
+
 const state: QuellightState = {
 	fixture: createDeterministicFixture(),
 	agent: null,
@@ -103,6 +109,33 @@ export interface ServerStatus {
 		dataset: string;
 	};
 	turns: number;
+}
+
+/**
+ * Clean lifecycle close: VICT-Cognee supervision shutdown first (releases the
+ * store-owner lock), then the Mastra dedicated store; used by the gated
+ * maintenance-shutdown endpoint at G1.
+ */
+export async function gracefulClose(): Promise<{ knowledge: boolean; agent: boolean }> {
+	await ensureAgent();
+	await ensureKnowledge();
+	let knowledge = true;
+	let agent = true;
+	if (state.knowledge) {
+		try {
+			await state.knowledge.close();
+		} catch {
+			knowledge = false;
+		}
+	}
+	if (state.agent) {
+		try {
+			await state.agent.close();
+		} catch {
+			agent = false;
+		}
+	}
+	return { knowledge, agent };
 }
 
 export async function serverStatus(): Promise<ServerStatus> {
