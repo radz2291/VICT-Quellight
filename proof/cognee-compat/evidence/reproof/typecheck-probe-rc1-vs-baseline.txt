@@ -1,0 +1,11 @@
+== type probe SENSITIVITY CONTROL (unmodified C7 baseline artifact 2c180ef, same sdk 0.4.0-rc.1) ==
+command: npx tsc --ignoreConfig --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --skipLibCheck --types node typecheck-probe-baseline.ts
+expected: FAIL with TS2322 (effect: string vs EffectClass) — reproduces original G0 friction
+
+typecheck-probe-baseline.ts(13,7): error TS2322: Type 'CogneePack' is not assignable to type 'CapabilityPack'.
+  The types of 'manifest.capabilities' are incompatible between these types.
+    Type '({ id: string; revision: string; effect: string; idempotency: string; ambiguity: string; permissions: string[]; input: { contractId: string; revision: string; }; output: { contractId: string; revision: string; }; } | { ...; })[]' is not assignable to type 'readonly PackCapabilityDeclaration[]'.
+BASELINE_PROBE_EXIT=1
+
+== REMEDIATED artifact probe (same command, same sdk) ==
+RC1_PROBE_EXIT=0

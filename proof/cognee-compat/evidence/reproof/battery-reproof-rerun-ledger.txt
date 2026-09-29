@@ -1,0 +1,12 @@
+[diag] V0 PASS manifest validates against current sdk validateCapabilityPack
+[diag] V1 PASS installCapabilityPack (VICT 0.4.0-rc.1) installs six capabilities
+[diag] V2 PASS test-mode doubles (add+cognify) via current runtime
+[diag] V2b PASS forget double in test mode
+[diag] V3 PASS read in test mode fails closed (no double)
+[diag] V4 PASS ungranted write fails pre-handler
+[diag] V5b PASS sequential-engine unkeyed write refused in normal mode
+[diag] V9a PASS durable graph in non-normal mode refused, store unchanged
+[diag] V9b PASS durable graph in non-normal mode refused, store unchanged
+[diag] V9d PASS durable graph in non-normal mode refused, store unchanged
+[diag] V10a PASS ctx deadline fails BEFORE worker request
+[diag] V10b PASS ctx deadline fails BEFORE worker request

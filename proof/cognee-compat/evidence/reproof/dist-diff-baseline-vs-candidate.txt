@@ -1,0 +1,30 @@
+== Regression dist diff: C7 baseline (2c180ef) vs remediated candidate (78e6c0a), tarballs built by independent verifier ==
+== IDENTICAL files listed first; behavior-bearing JS must be identical ==
+Files dist-diff/base/package/README.md and dist-diff/compat/package/README.md differ
+Files dist-diff/base/package/dist/bindings.d.ts and dist-diff/compat/package/dist/bindings.d.ts differ
+Files dist-diff/base/package/dist/bindings.js.map and dist-diff/compat/package/dist/bindings.js.map differ
+Files dist-diff/base/package/dist/contracts.d.ts and dist-diff/compat/package/dist/contracts.d.ts differ
+Files dist-diff/base/package/dist/contracts.js.map and dist-diff/compat/package/dist/contracts.js.map differ
+Files dist-diff/base/package/dist/manifest.d.ts and dist-diff/compat/package/dist/manifest.d.ts differ
+Files dist-diff/base/package/dist/manifest.js and dist-diff/compat/package/dist/manifest.js differ
+Files dist-diff/base/package/dist/manifest.js.map and dist-diff/compat/package/dist/manifest.js.map differ
+Files dist-diff/base/package/package.json and dist-diff/compat/package/package.json differ
+
+== manifest.js full delta (one comment only): ==
+27a28,33
+>     // `as const` on every field the VICT sdk types NARROWLY (EffectClass,
+>     // 'keyed', PackAmbiguityPolicy, the schema literal, double modes): without
+>     // it the object literal widens these to `string`, which breaks structural
+>     // assignability of the pack to the sdk CapabilityPack contract
+>     // (`effect: string` vs EffectClass — TS2322, seen identically against both
+>     // supported sdk lines). Type hygiene only; no declaration value changes.
+
+== contract values cross-check (capability ids/revisions/effects/permissions) via node ==
+cognee.add 1 write keyed cognee.write -
+cognee.cognify 1 write keyed cognee.write -
+cognee.searchChunks 1 read - cognee.search -
+cognee.searchSummaries 1 read - cognee.search -
+cognee.datasetsStatus 1 read - cognee.search -
+cognee.forgetDataset 1 irreversible - cognee.delete -
+doubles: [{"capabilityId":"cognee.add","revision":"1","modes":["test","simulate"]},{"capabilityId":"cognee.cognify","revision":"1","modes":["test","simulate"]},{"capabilityId":"cognee.forgetDataset","revision":"1","modes":["test","simulate"]}]
+schema: vict.capability-pack@1 | victCompatibility: ^0.1.0 | secrets: []

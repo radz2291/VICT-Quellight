@@ -38,5 +38,5 @@ Before Quellight product implementation depends on Cognee, revalidate/update `@v
 
 - QD-01: exact first user-visible Quellight vertical slice.
 - QD-02: initial model/provider for live development proof.
-- QD-03: whether Cognee revalidation work occurs immediately in VICT-Cognee or is delegated to a separate bounded session.
+- QD-03: **COMPLETED** — the bounded Cognee revalidation/remediation was performed in VICT-Cognee (`compat/vict-0.4-rc1` @ `78e6c0ab…`) under its own branch/governance and was independently verified by the Quellight G0 re-proof audit (`docs/reports/G0-COGNEE-REPROOF-AUDIT.md`). No bypass flags were used at any point.
 - QD-04: exact first Quellight semantic concepts after the walking vertical slice proves the base stack.

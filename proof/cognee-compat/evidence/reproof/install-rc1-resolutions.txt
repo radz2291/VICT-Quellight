@@ -1,0 +1,8 @@
+g0-reproof-consumer@ C:\Users\RZ1\Desktop\RZ\g0-reproof\consumer-rc1-verify
++-- @victframework/cognee@0.1.0
++-- @victframework/contracts@0.4.0-rc.1
++-- @victframework/kernel@0.4.0-rc.1
++-- @victframework/runtime@0.4.0-rc.1
++-- @victframework/sdk@0.4.0-rc.1
+`-- zod@3.25.76
+

@@ -1,0 +1,4 @@
+ADD receipt: {"datasetName":"g0reproof.d1","idempotencyKey":"g0-reproof-add-1","reconciled":"fresh-execution","itemsBefore":0,"itemsAfter":1,"deduplicated":false}
+COGNIFY receipt: {"datasetName":"g0reproof.d1","idempotencyKey":"g0-reproof-cognify-1","reconciled":"fresh-execution","itemsBefore":1,"itemsAfter":1,"deduplicated":true}
+SEARCH result: {"total":1,"truncated":false,"text":["G0 reproof sentinel: the ZEPHYR-QUARTZ-42 alloy was catalogued by the Meridian Institute."]}
+REAL_WORKER_SMOKE: OK {"add":true,"cognify":true,"search":true}
