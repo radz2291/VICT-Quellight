@@ -56,16 +56,24 @@ available` (verified at contract freeze; no credential created or exposed). Fixt
 
 ## 4. Mechanical verification (exact commands / exit codes)
 
-All commands run from the repository root on the frozen tree; log:
-`proof/g1-evidence/frozen-dag.log`.
+All commands run in sequence from the repository root at frozen tip `b9d5291`
+(the `npm ci` step was executed immediately before the typecheck/lint/test/build
+sequence, producing the fresh install all subsequent steps used; log:
+`proof/g1-evidence/frozen-dag.log`). The real-Cognee integration proof and the
+browser walkthrough/extras were then re-run once on this same frozen tip.
 
-| Step             | Command                                                        | Result      |
-| ---------------- | -------------------------------------------------------------- | ----------- |
-| Fresh CI install | `npm ci`                                                       | PENDING-DAG |
-| Typecheck        | `npx svelte-check --tsconfig ./tsconfig.json --output machine` | PENDING-DAG |
-| Lint/format      | `npx prettier --check .`                                       | PENDING-DAG |
-| Unit tests       | `npx vitest run`                                               | PENDING-DAG |
-| Build            | `npm run build`                                                | PENDING-DAG |
+| Step                    | Command                                                        | Result                                                                 |
+| ----------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Fresh CI install        | `npm ci`                                                       | exit 0 (EBADENGINE warning for `posthog-node` only — known G0 finding) |
+| Typecheck               | `npx svelte-check --tsconfig ./tsconfig.json --output machine` | exit 0 — 0 errors, 0 warnings (1358 files)                             |
+| Lint/format             | `npx prettier --check .`                                       | exit 0 — all matched files clean                                       |
+| Unit tests              | `npx vitest run`                                               | exit 0 — 2 files, 15/15 passed                                         |
+| Build                   | `npm run build`                                                | exit 0                                                                 |
+| Integration proof       | `node proof/g1-cognee-integration.mjs`                         | exit 0 — 10/10 evidence points PASS                                    |
+| Browser walkthrough     | `node proof/g1-browser-walkthrough.mjs`                        | exit 0 — W1/W2/W3/W-rest PASS                                          |
+| Browser failure phase   | `node proof/g1-browser-extras.mjs failure`                     | exit 0 — PASS                                                          |
+| Browser narrow/keyboard | `node proof/g1-browser-extras.mjs narrow`                      | exit 0 — PASS                                                          |
+| Clean-tree check        | `git status --porcelain` after the DAG and proofs              | tracked tree clean (disposable run-store content only, gitignored)     |
 
 Deterministic test suite (`tests/walking-turn.test.ts`, `tests/compose.test.ts`) covers the
 frozen contract's acceptance tests 1, 4–9 with doubles at the boundary only
