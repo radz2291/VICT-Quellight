@@ -16,7 +16,8 @@ export interface StoreLocations {
 }
 
 export function resolveStoreLocations(baseDir?: string): StoreLocations {
-	const root = baseDir ?? process.env.QUOLLIGHT_RUN_ROOT ?? path.resolve(here, '../../..', 'quellight/run');
+	const root =
+		baseDir ?? process.env.QUOLLIGHT_RUN_ROOT ?? path.resolve(here, '../../..', 'quellight/run');
 	return { mastraStore: path.join(root, 'mastra-store') };
 }
 
@@ -30,7 +31,9 @@ export interface KnowledgeConfig {
 
 export function resolveKnowledgeConfig(baseRunRoot?: string): KnowledgeConfig {
 	const root =
-		baseRunRoot ?? process.env.QUOLLIGHT_RUN_ROOT ?? path.resolve(here, '../../..', 'quellight/run');
+		baseRunRoot ??
+		process.env.QUOLLIGHT_RUN_ROOT ??
+		path.resolve(here, '../../..', 'quellight/run');
 	const pythonPath = process.env.QUOLLIGHT_COGNEE_PYTHON ?? '';
 	return {
 		enabled: process.env.QUOLLIGHT_COGNEE_DISABLED !== '1' && pythonPath.length > 0,

@@ -7,6 +7,7 @@ A green unit suite is not sufficient. Each gate needs evidence appropriate to th
 ## Cross-cutting negative controls
 
 The project must prove that:
+
 - old Quellight code is not silently imported;
 - framework-specific internals do not leak across the intended VICT boundary;
 - incompatible package versions are not force-installed;
@@ -28,6 +29,7 @@ The project must prove that:
 ## G1 checks
 
 Browser walkthrough:
+
 1. open Quellight;
 2. send a simple message;
 3. receive a model-generated answer through VICT/Mastra;
@@ -41,6 +43,7 @@ Record exact candidate SHA and relevant runtime versions.
 ## G2+ checks
 
 As durable meaning appears, add:
+
 - restart persistence;
 - provenance inspection;
 - correction/supersession;
@@ -51,6 +54,7 @@ As durable meaning appears, add:
 ## Verification roles
 
 For material executable or semantic gates:
+
 - implementer may run focused checks;
 - integration owner freezes the candidate;
 - fresh verifier evaluates the frozen SHA against this contract;

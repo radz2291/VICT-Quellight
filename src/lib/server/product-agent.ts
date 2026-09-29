@@ -54,7 +54,12 @@ export interface QuellightAgent {
 		input: string;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		context?: any;
-	}): Promise<{ status: string; text?: string; errorCode?: string; providerModelIdentity?: string }>;
+	}): Promise<{
+		status: string;
+		text?: string;
+		errorCode?: string;
+		providerModelIdentity?: string;
+	}>;
 	close(): Promise<void>;
 	adapterCompatOk(): boolean;
 }

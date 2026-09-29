@@ -24,7 +24,10 @@ export class FakeCogneePack {
 		this.searchProvider =
 			searchProvider ??
 			((query) => {
-				const words = query.toLowerCase().split(/\W+/).filter((w) => w.length > 2);
+				const words = query
+					.toLowerCase()
+					.split(/\W+/)
+					.filter((w) => w.length > 2);
 				const out: KnowledgeCandidate[] = [];
 				for (const [dataset, items] of this.datasets) {
 					if (!this.cognifiedDatasets.has(dataset)) continue;
@@ -75,8 +78,9 @@ export class FakeCogneePack {
 						query: string;
 						topK: number;
 					};
-					const hits = this.searchProvider(query)
-						.filter((h) => datasets.length === 0 || datasets.includes('g1.quellight'));
+					const hits = this.searchProvider(query).filter(
+						(h) => datasets.length === 0 || datasets.includes('g1.quellight')
+					);
 					return { hits: hits.slice(0, topK), datasets, total: hits.length, truncated: false };
 				};
 			default:

@@ -29,10 +29,12 @@ Fill every bracketed field from verified repository facts before execution.
 ## Contract
 
 Acceptance criteria:
+
 1. [...]
 2. [...]
 
 Negative controls:
+
 1. [...]
 2. [...]
 
@@ -43,6 +45,7 @@ Use existing VICT/provider capability boundaries. Do not add a heavyweight depen
 ## Verification
 
 Run:
+
 - [focused commands]
 - [final commands]
 - [browser/live proof if needed]
@@ -52,6 +55,7 @@ Freeze candidate before independent verification.
 ## Stop conditions
 
 Stop and report on:
+
 - source-of-truth conflict;
 - dependency incompatibility requiring a semantic workaround;
 - architecture/product fork;
@@ -62,6 +66,7 @@ Stop and report on:
 ## Final report
 
 Return:
+
 - branch/full SHA;
 - baseline SHA;
 - files changed;

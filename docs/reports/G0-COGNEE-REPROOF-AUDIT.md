@@ -11,14 +11,14 @@
 
 All SHAs verified with `git fetch` + `git rev-parse` immediately before work:
 
-| Repository | Item | Value | Check |
-| --- | --- | --- | --- |
-| `radz2291/VICT-Quellight` | `origin/main` | `3248ceb8d1c2af74e8750cf3fcee5e3d331f601e` | ✓ unchanged |
-| `radz2291/VICT-Quellight` | `origin/g0/dependency-intake` | `5da8b178149ba2776da3777b4e030f92f0700894` | ✓ exact frozen candidate |
-| `radz2291/VICT-Quellight` | working tree | clean at audit start | ✓ |
-| `radz2291/VICT-Cognee` | `origin/main` | `2c180efbc564c4a4a3f22556858f108e2fa23bc0` (C7 baseline) | ✓ |
-| `radz2291/VICT-Cognee` | `origin/compat/vict-0.4-rc1` | `78e6c0ab3f86c571878675d4a947c934768c5ec7` | ✓ |
-| `radz2291/vict-02` | `origin/main` | `fd675d9083a32f282820d9e0135c191d691c943c` | ✓ (unchanged for this G0 cycle) |
+| Repository                | Item                          | Value                                                    | Check                           |
+| ------------------------- | ----------------------------- | -------------------------------------------------------- | ------------------------------- |
+| `radz2291/VICT-Quellight` | `origin/main`                 | `3248ceb8d1c2af74e8750cf3fcee5e3d331f601e`               | ✓ unchanged                     |
+| `radz2291/VICT-Quellight` | `origin/g0/dependency-intake` | `5da8b178149ba2776da3777b4e030f92f0700894`               | ✓ exact frozen candidate        |
+| `radz2291/VICT-Quellight` | working tree                  | clean at audit start                                     | ✓                               |
+| `radz2291/VICT-Cognee`    | `origin/main`                 | `2c180efbc564c4a4a3f22556858f108e2fa23bc0` (C7 baseline) | ✓                               |
+| `radz2291/VICT-Cognee`    | `origin/compat/vict-0.4-rc1`  | `78e6c0ab3f86c571878675d4a947c934768c5ec7`               | ✓                               |
+| `radz2291/vict-02`        | `origin/main`                 | `fd675d9083a32f282820d9e0135c191d691c943c`               | ✓ (unchanged for this G0 cycle) |
 
 The compatibility candidate is **exactly one commit** on top of the recorded C7 baseline (`2c180ef` → `78e6c0a`), i.e. one bounded change lineage. The full diff was inspected: code changes are limited to `pack/package.json` (peer ranges), `pack/src/{manifest,bindings,contracts}.ts` (type narrowing only), `pack/verify/verify.ts` (harness-only optional VICT-target override, default unchanged) and README/doc updates; no worker/supervision/runtime semantic file was touched.
 
@@ -66,14 +66,14 @@ Restrictions honored: **no** `--force`, **no** `--legacy-peer-deps`, **no** over
 
 Resolved versions (exact):
 
-| Package | Version | Source |
-| --- | --- | --- |
-| `@victframework/cognee` | 0.1.0 | verifier-built tarball |
-| `@victframework/sdk` | 0.4.0-rc.1 | npm registry |
-| `@victframework/runtime` | 0.4.0-rc.1 | npm registry |
-| `@victframework/contracts` | 0.4.0-rc.1 | npm registry |
-| `@victframework/kernel` | 0.4.0-rc.1 | npm registry |
-| `zod` | 3.25.76 | npm registry |
+| Package                    | Version    | Source                 |
+| -------------------------- | ---------- | ---------------------- |
+| `@victframework/cognee`    | 0.1.0      | verifier-built tarball |
+| `@victframework/sdk`       | 0.4.0-rc.1 | npm registry           |
+| `@victframework/runtime`   | 0.4.0-rc.1 | npm registry           |
+| `@victframework/contracts` | 0.4.0-rc.1 | npm registry           |
+| `@victframework/kernel`    | 0.4.0-rc.1 | npm registry           |
+| `zod`                      | 3.25.76    | npm registry           |
 
 Evidence: `install-rc1-resolutions.txt`.
 
@@ -136,15 +136,15 @@ Manifest values cross-checked at runtime (from the built dist): six capability I
 
 Findings from the source diff (checked, none a regression):
 
-| Inspection point | Result |
-| --- | --- |
-| No stale-lock auto-recovery introduced | ✓ `supervision.js` byte-identical |
-| Worker supervision not redesigned | ✓ `supervision.js` byte-identical |
-| Unkeyed writes refused / keyed-write semantics | ✓ battery V5b/V6-class checks PASS |
-| Namespace/store semantics | ✓ real-worker scope guard **actively enforced** the `<ns>.<name>` scope against this verifier's own first script (observed fail-closed, `COGNEE_SCOPE_REJECTED`) |
-| Publication disabled | ✓ `private: true` retained; nothing published |
-| `pack/verify/verify.ts` harness change | ✓ optional `C5_VICT_TARGET` env readback, default unchanged; test semantics unchanged — not a test weakening |
-| Cognee results are candidate knowledge, not Quellight truth | ✓ (no retrieval consumed as truth anywhere; unchanged repository boundary) |
+| Inspection point                                            | Result                                                                                                                                                           |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| No stale-lock auto-recovery introduced                      | ✓ `supervision.js` byte-identical                                                                                                                                |
+| Worker supervision not redesigned                           | ✓ `supervision.js` byte-identical                                                                                                                                |
+| Unkeyed writes refused / keyed-write semantics              | ✓ battery V5b/V6-class checks PASS                                                                                                                               |
+| Namespace/store semantics                                   | ✓ real-worker scope guard **actively enforced** the `<ns>.<name>` scope against this verifier's own first script (observed fail-closed, `COGNEE_SCOPE_REJECTED`) |
+| Publication disabled                                        | ✓ `private: true` retained; nothing published                                                                                                                    |
+| `pack/verify/verify.ts` harness change                      | ✓ optional `C5_VICT_TARGET` env readback, default unchanged; test semantics unchanged — not a test weakening                                                     |
+| Cognee results are candidate knowledge, not Quellight truth | ✓ (no retrieval consumed as truth anywhere; unchanged repository boundary)                                                                                       |
 
 Full diff record: `dist-diff-baseline-vs-candidate.txt`.
 
@@ -154,21 +154,22 @@ Full diff record: `dist-diff-baseline-vs-candidate.txt`.
 
 ## 10. G0 exit-condition audit (Step 11)
 
-| # | Original G0 requirement | Disposition |
-| --- | --- | --- |
-| 1 | Reproducible fresh consumer baseline | ✓ original evidence + this audit's own flagless install (§4) |
-| 2 | VICT/Mastra path proven | ✓ original proof; no drift (§9) |
-| 3 | Cognee/current-VICT compatibility without bypass | ✓ this audit: build + flagless install + battery + type probe + real-worker (§3–8) |
-| 4 | No blocking dependency issue | ✓ the single blocker is removed by `78e6c0a` |
-| 5 | No old-Quellight import | ✓ original evidence; this branch adds audit artifacts only |
-| 6 | No premature semantic/intelligence framework | ✓ no new code/product in this audit |
-| 7 | No unauthorized publication/production/irreversible action | ✓ `private: true` retained; nothing merged to `main`; VICT and VICT-Cognee untouched |
+| #   | Original G0 requirement                                    | Disposition                                                                          |
+| --- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 1   | Reproducible fresh consumer baseline                       | ✓ original evidence + this audit's own flagless install (§4)                         |
+| 2   | VICT/Mastra path proven                                    | ✓ original proof; no drift (§9)                                                      |
+| 3   | Cognee/current-VICT compatibility without bypass           | ✓ this audit: build + flagless install + battery + type probe + real-worker (§3–8)   |
+| 4   | No blocking dependency issue                               | ✓ the single blocker is removed by `78e6c0a`                                         |
+| 5   | No old-Quellight import                                    | ✓ original evidence; this branch adds audit artifacts only                           |
+| 6   | No premature semantic/intelligence framework               | ✓ no new code/product in this audit                                                  |
+| 7   | No unauthorized publication/production/irreversible action | ✓ `private: true` retained; nothing merged to `main`; VICT and VICT-Cognee untouched |
 
 ## 11. Findings
 
 **Blocking:** none.
 
 **Non-blocking observations (carried/recorded):**
+
 1. `posthog-node` EBADENGINE warning under Node 22.13.1 (pre-existing, from original G0 §8; telemetry-sink only).
 2. Peer ranges admit future `0.3.x`/`0.4.x` semver-compatible versions that were not exercised (only `0.3.1` and `0.4.0-rc.1` exercised) — by the same semver convention as the pre-remediation `^0.3.1` declaration.
 3. This audit's own smoke-script corrections (dataset scope shape; receipt field checks) are recorded honestly; they were verifier tooling bugs, not pack defects — and the pack's scope guard and receipt validation behaved correctly throughout.

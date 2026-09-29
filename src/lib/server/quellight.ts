@@ -13,7 +13,6 @@ import { KnowledgeStore } from './knowledge.js';
 import { createQuellightAgent, type QuellightAgent } from './product-agent.js';
 import { runWalkingTurn } from './turn.js';
 
-
 interface QuellightState {
 	fixture: ReturnType<typeof createDeterministicFixture>;
 	agent: QuellightAgent | null;
@@ -60,8 +59,7 @@ function startKnowledgeInit(): Promise<void> {
 		.catch((error: unknown) => {
 			state.knowledge = null;
 			state.knowledgeFaulted = true;
-			state.knowledgeLoadError =
-				error instanceof Error ? error.message : String(error);
+			state.knowledgeLoadError = error instanceof Error ? error.message : String(error);
 		});
 	return init;
 }

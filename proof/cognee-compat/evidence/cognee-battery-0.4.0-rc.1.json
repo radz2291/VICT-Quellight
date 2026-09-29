@@ -1,157 +1,157 @@
 {
-  "diagnostic": "G0-WP-C node-boundary battery vs VICT 0.4.0-rc.1",
-  "ok": true,
-  "results": [
-    {
-      "id": "V0",
-      "name": "manifest validates against current sdk validateCapabilityPack",
-      "outcome": "PASS",
-      "detail": {
-        "capabilities": 6
-      }
-    },
-    {
-      "id": "V1",
-      "name": "installCapabilityPack (VICT 0.4.0-rc.1) installs six capabilities",
-      "outcome": "PASS",
-      "detail": {
-        "installed": [
-          "cognee.add",
-          "cognee.cognify",
-          "cognee.searchChunks",
-          "cognee.searchSummaries",
-          "cognee.datasetsStatus",
-          "cognee.forgetDataset"
-        ]
-      }
-    },
-    {
-      "id": "V2",
-      "name": "test-mode doubles (add+cognify) via current runtime",
-      "outcome": "PASS",
-      "detail": {
-        "status": "completed",
-        "output": {
-          "datasetName": "diag.verify",
-          "idempotencyKey": "double-no-key",
-          "reconciled": "fresh-execution",
-          "itemsBefore": 1,
-          "itemsAfter": 1,
-          "deduplicated": true
-        }
-      }
-    },
-    {
-      "id": "V2b",
-      "name": "forget double in test mode",
-      "outcome": "PASS",
-      "detail": {
-        "status": "completed",
-        "output": {
-          "datasetName": "diag.never",
-          "datasetId": "double-dataset-id",
-          "purged": "not-observed",
-          "storeFilesBefore": 0,
-          "storeFilesAfter": 0
-        }
-      }
-    },
-    {
-      "id": "V3",
-      "name": "read in test mode fails closed (no double)",
-      "outcome": "PASS",
-      "detail": {
-        "status": "blocked",
-        "spawns": 0
-      }
-    },
-    {
-      "id": "V4",
-      "name": "ungranted write fails pre-handler",
-      "outcome": "PASS",
-      "detail": {
-        "status": "failed",
-        "error": {
-          "code": "VICT_RUNTIME_PERMISSION_DENIED",
-          "details": {
-            "capabilityId": "cognee.add",
-            "errorId": "err_4edb90c5a68b36c2",
-            "invokedVia": "real",
-            "nodeId": "put"
-          },
-          "message": "Permission 'cognee.write' required by capability 'cognee.add' is not granted in this runtime; the handler was not invoked."
-        }
-      }
-    },
-    {
-      "id": "V5b",
-      "name": "sequential-engine unkeyed write refused in normal mode",
-      "outcome": "PASS",
-      "detail": {
-        "status": "failed",
-        "error": {
-          "code": "VICT_RUNTIME_CAPABILITY_THREW",
-          "message": "Capability 'cognee.add' threw during invocation; the thrown message is not retained.",
-          "details": {
-            "capabilityId": "cognee.add",
-            "nodeId": "put",
-            "invokedVia": "real",
-            "errorName": "Error",
-            "errorId": "err_12f51d5f82ddb8ce"
-          }
-        }
-      }
-    },
-    {
-      "id": "V9a",
-      "name": "durable graph in non-normal mode refused, store unchanged",
-      "outcome": "PASS",
-      "detail": {
-        "input": {
-          "datasetName": "diag.never",
-          "content": "must be refused"
-        },
-        "status": "failed"
-      }
-    },
-    {
-      "id": "V9b",
-      "name": "durable graph in non-normal mode refused, store unchanged",
-      "outcome": "PASS",
-      "detail": {
-        "input": {
-          "datasetName": "diag.never",
-          "content": "must be refused"
-        },
-        "status": "failed"
-      }
-    },
-    {
-      "id": "V9d",
-      "name": "durable graph in non-normal mode refused, store unchanged",
-      "outcome": "PASS",
-      "detail": {
-        "input": {
-          "datasetName": "diag.never"
-        },
-        "status": "failed"
-      }
-    },
-    {
-      "id": "V10a",
-      "name": "ctx deadline fails BEFORE worker request",
-      "outcome": "PASS",
-      "detail": {
-        "got": "COGNEE_DEADLINE_EXCEEDED"
-      }
-    },
-    {
-      "id": "V10b",
-      "name": "ctx deadline fails BEFORE worker request",
-      "outcome": "PASS",
-      "detail": {
-        "got": "COGNEE_DEADLINE_EXCEEDED"
-      }
-    }
-  ]
+	"diagnostic": "G0-WP-C node-boundary battery vs VICT 0.4.0-rc.1",
+	"ok": true,
+	"results": [
+		{
+			"id": "V0",
+			"name": "manifest validates against current sdk validateCapabilityPack",
+			"outcome": "PASS",
+			"detail": {
+				"capabilities": 6
+			}
+		},
+		{
+			"id": "V1",
+			"name": "installCapabilityPack (VICT 0.4.0-rc.1) installs six capabilities",
+			"outcome": "PASS",
+			"detail": {
+				"installed": [
+					"cognee.add",
+					"cognee.cognify",
+					"cognee.searchChunks",
+					"cognee.searchSummaries",
+					"cognee.datasetsStatus",
+					"cognee.forgetDataset"
+				]
+			}
+		},
+		{
+			"id": "V2",
+			"name": "test-mode doubles (add+cognify) via current runtime",
+			"outcome": "PASS",
+			"detail": {
+				"status": "completed",
+				"output": {
+					"datasetName": "diag.verify",
+					"idempotencyKey": "double-no-key",
+					"reconciled": "fresh-execution",
+					"itemsBefore": 1,
+					"itemsAfter": 1,
+					"deduplicated": true
+				}
+			}
+		},
+		{
+			"id": "V2b",
+			"name": "forget double in test mode",
+			"outcome": "PASS",
+			"detail": {
+				"status": "completed",
+				"output": {
+					"datasetName": "diag.never",
+					"datasetId": "double-dataset-id",
+					"purged": "not-observed",
+					"storeFilesBefore": 0,
+					"storeFilesAfter": 0
+				}
+			}
+		},
+		{
+			"id": "V3",
+			"name": "read in test mode fails closed (no double)",
+			"outcome": "PASS",
+			"detail": {
+				"status": "blocked",
+				"spawns": 0
+			}
+		},
+		{
+			"id": "V4",
+			"name": "ungranted write fails pre-handler",
+			"outcome": "PASS",
+			"detail": {
+				"status": "failed",
+				"error": {
+					"code": "VICT_RUNTIME_PERMISSION_DENIED",
+					"details": {
+						"capabilityId": "cognee.add",
+						"errorId": "err_4edb90c5a68b36c2",
+						"invokedVia": "real",
+						"nodeId": "put"
+					},
+					"message": "Permission 'cognee.write' required by capability 'cognee.add' is not granted in this runtime; the handler was not invoked."
+				}
+			}
+		},
+		{
+			"id": "V5b",
+			"name": "sequential-engine unkeyed write refused in normal mode",
+			"outcome": "PASS",
+			"detail": {
+				"status": "failed",
+				"error": {
+					"code": "VICT_RUNTIME_CAPABILITY_THREW",
+					"message": "Capability 'cognee.add' threw during invocation; the thrown message is not retained.",
+					"details": {
+						"capabilityId": "cognee.add",
+						"nodeId": "put",
+						"invokedVia": "real",
+						"errorName": "Error",
+						"errorId": "err_12f51d5f82ddb8ce"
+					}
+				}
+			}
+		},
+		{
+			"id": "V9a",
+			"name": "durable graph in non-normal mode refused, store unchanged",
+			"outcome": "PASS",
+			"detail": {
+				"input": {
+					"datasetName": "diag.never",
+					"content": "must be refused"
+				},
+				"status": "failed"
+			}
+		},
+		{
+			"id": "V9b",
+			"name": "durable graph in non-normal mode refused, store unchanged",
+			"outcome": "PASS",
+			"detail": {
+				"input": {
+					"datasetName": "diag.never",
+					"content": "must be refused"
+				},
+				"status": "failed"
+			}
+		},
+		{
+			"id": "V9d",
+			"name": "durable graph in non-normal mode refused, store unchanged",
+			"outcome": "PASS",
+			"detail": {
+				"input": {
+					"datasetName": "diag.never"
+				},
+				"status": "failed"
+			}
+		},
+		{
+			"id": "V10a",
+			"name": "ctx deadline fails BEFORE worker request",
+			"outcome": "PASS",
+			"detail": {
+				"got": "COGNEE_DEADLINE_EXCEEDED"
+			}
+		},
+		{
+			"id": "V10b",
+			"name": "ctx deadline fails BEFORE worker request",
+			"outcome": "PASS",
+			"detail": {
+				"got": "COGNEE_DEADLINE_EXCEEDED"
+			}
+		}
+	]
 }

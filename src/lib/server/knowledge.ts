@@ -50,9 +50,7 @@ export const G1_DATASET = 'g1.quellight';
 
 function binding(pack: KnowledgePack, id: string): CapabilityBinding | undefined {
 	const found = pack.bindings.capabilities.find((b) => b.id === id);
-	return found
-		? { id: found.id, invoke: (input, call) => found.invoke(input, call) }
-		: undefined;
+	return found ? { id: found.id, invoke: (input, call) => found.invoke(input, call) } : undefined;
 }
 
 export class KnowledgeDependencyError extends Error {

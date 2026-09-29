@@ -24,26 +24,43 @@ rmSync(storeRoot, { recursive: true, force: true });
 mkdirSync(storeRoot, { recursive: true });
 
 const pack = createCogneePack({
-  pythonPath: process.env.PILOT_PYTHON,
-  cwd: storeRoot,
-  storeRoot,
-  namespaces: ['diag'],
+	pythonPath: process.env.PILOT_PYTHON,
+	cwd: storeRoot,
+	storeRoot,
+	namespaces: ['diag']
 });
 const runtime = createRuntime({
-  stores: (await import('@victframework/runtime')).createInMemoryStores(),
-  authority: { grants: ['cognee.write', 'cognee.search'] },
+	stores: (await import('@victframework/runtime')).createInMemoryStores(),
+	authority: { grants: ['cognee.write', 'cognee.search'] }
 });
 let installed;
 try {
-  installed = installCapabilityPack(runtime, pack).installed;
+	installed = installCapabilityPack(runtime, pack).installed;
 } catch (error) {
-  console.log(JSON.stringify({ diagnostic: 'installCapabilityPack', ok: false, error: String(error?.message ?? error) }, null, 2));
-  process.exit(1);
+	console.log(
+		JSON.stringify(
+			{ diagnostic: 'installCapabilityPack', ok: false, error: String(error?.message ?? error) },
+			null,
+			2
+		)
+	);
+	process.exit(1);
 }
-console.log(JSON.stringify({
-  diagnostic: 'installCapabilityPack against VICT 0.4.0-rc.1',
-  ok: installed.length === 6,
-  installed,
-  manifest: { schema: pack.manifest.schema, id: pack.manifest.id, version: pack.manifest.version, victCompatibility: pack.manifest.victCompatibility },
-}, null, 2));
+console.log(
+	JSON.stringify(
+		{
+			diagnostic: 'installCapabilityPack against VICT 0.4.0-rc.1',
+			ok: installed.length === 6,
+			installed,
+			manifest: {
+				schema: pack.manifest.schema,
+				id: pack.manifest.id,
+				version: pack.manifest.version,
+				victCompatibility: pack.manifest.victCompatibility
+			}
+		},
+		null,
+		2
+	)
+);
 process.exit(installed.length === 6 ? 0 : 1);

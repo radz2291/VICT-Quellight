@@ -39,12 +39,12 @@ tsc typecheck.ts          # identical error against BOTH sdk lines (pre-existing
 
 ## Files
 
-| File | Contents |
-| --- | --- |
-| `eresolve-npm-install-failure.txt` | Full npm ERESOLVE report (the failing install boundary). |
-| `cognee-battery-0.4.0-rc.1.json` | 12-check Node-boundary battery results (PASS, exit 0). |
-| `cognee-battery-0.4.0-rc.1.stderr.log` | stderr of the battery (check ledger). |
-| `typecheck-probe.ts.txt` | The type-level assignability probe (renamed to .ts.txt). |
+| File                                   | Contents                                                 |
+| -------------------------------------- | -------------------------------------------------------- |
+| `eresolve-npm-install-failure.txt`     | Full npm ERESOLVE report (the failing install boundary). |
+| `cognee-battery-0.4.0-rc.1.json`       | 12-check Node-boundary battery results (PASS, exit 0).   |
+| `cognee-battery-0.4.0-rc.1.stderr.log` | stderr of the battery (check ledger).                    |
+| `typecheck-probe.ts.txt`               | The type-level assignability probe (renamed to .ts.txt). |
 
 ## Battery coverage (mirrors VICT-Cognee `pack/verify/verify.ts` V0–V10, workerless)
 

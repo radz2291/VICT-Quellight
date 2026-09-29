@@ -1,5 +1,10 @@
 :root {
-	font-family: 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+	font-family:
+		'Segoe UI Variable Text',
+		'Segoe UI',
+		system-ui,
+		-apple-system,
+		sans-serif;
 	--bg: #f6f5f2;
 	--surface: #ffffff;
 	--ink-strong: #1c1b1a;

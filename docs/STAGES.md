@@ -7,6 +7,7 @@ These are product-development gates, not user-facing navigation.
 **Goal:** establish a reproducible greenfield baseline and prove dependency compatibility before product architecture grows.
 
 Required work:
+
 - inspect current VICT public/local package identities;
 - verify `@victframework/mastra` current consumer path;
 - verify `@victframework/cognee` packaging and compatibility status;
@@ -15,6 +16,7 @@ Required work:
 - establish minimal app scaffold only if needed to prove the dependencies.
 
 **Pass:**
+
 - fresh checkout installs/builds using documented commands;
 - no previous Quellight code is imported;
 - Mastra path is proven through VICT;
@@ -28,6 +30,7 @@ Required work:
 **Goal:** smallest real end-to-end product slice.
 
 Target shape:
+
 ```text
 user input
   -> Quellight app
@@ -39,6 +42,7 @@ user input
 Keep this deliberately small. No giant memory architecture.
 
 **Pass:**
+
 - real browser interaction;
 - actual model path or an explicitly approved deterministic fixture plus one bounded live proof;
 - same-turn retrieval can influence the answer when relevant;
@@ -52,6 +56,7 @@ Keep this deliberately small. No giant memory architecture.
 Choose only the minimum concepts required by a real product scenario. Do not recreate a universal semantic framework.
 
 Required properties:
+
 - proposal versus accepted state is explicit where required;
 - provenance is inspectable;
 - correction/supersession is not destructive;
@@ -63,6 +68,7 @@ Required properties:
 **Goal:** make Quellight meaningfully useful across conversations/time.
 
 Add only demonstrated needs:
+
 - relevant context selection;
 - unresolved/important continuity;
 - temporal/staleness handling where needed;
@@ -80,6 +86,7 @@ Pass requires explicit authority boundaries, attributable actions, safe failure 
 **Goal:** realistic resilience, performance, cost, usability and recovery evaluation.
 
 Includes:
+
 - restart/provider failure;
 - semantic retrieval false positives/irrelevance;
 - model substitution;

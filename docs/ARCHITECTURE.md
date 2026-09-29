@@ -57,6 +57,7 @@ Quellight should rely on the VICT-neutral ProductAgent boundary rather than Mast
 ### @victframework/cognee / Cognee owns
 
 Candidate semantic/knowledge machinery such as:
+
 - ingestion;
 - cognification;
 - semantic retrieval;
@@ -96,6 +97,7 @@ Therefore **Cognee compatibility with the current VICT line is not assumed**. It
 ## 5. Build-vs-adopt rule
 
 For every significant capability:
+
 1. identify mature existing machinery;
 2. prefer an existing VICT package if already available;
 3. otherwise create a thin VICT-facing provider wrapper only if needed;

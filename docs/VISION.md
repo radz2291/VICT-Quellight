@@ -12,6 +12,7 @@ Quellight is a persistent cognitive partner: a distinct intelligence that mainta
 Quellight should feel light to use even if sophisticated machinery exists underneath it.
 
 The user should experience:
+
 - continuity without repeatedly re-explaining everything;
 - relevant memory without a giant hidden profile;
 - clear distinction between what was said, inferred, proposed, confirmed, changed, or unresolved;
@@ -25,12 +26,14 @@ The user should experience:
 Quellight is not the place to invent infrastructure that mature frameworks already provide.
 
 We prefer:
+
 1. existing proven framework capability;
 2. VICT-native wrapper/capability boundary;
 3. composition inside Quellight;
 4. custom implementation only for a demonstrated unsatisfied requirement.
 
 The product should therefore remain mostly:
+
 - Quellight semantics;
 - Quellight policies;
 - Quellight prompts/instructions;
@@ -46,6 +49,7 @@ Older implementations may be studied only if an explicit owner decision requests
 ## Success direction
 
 A successful Quellight can eventually:
+
 - converse naturally;
 - retrieve relevant durable knowledge;
 - distinguish grounded state from interpretation;
@@ -58,6 +62,7 @@ A successful Quellight can eventually:
 ## Non-goals
 
 Quellight is not:
+
 - a new general-purpose agent framework;
 - a replacement for Mastra;
 - a replacement for Cognee;

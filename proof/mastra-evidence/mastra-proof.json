@@ -1,26 +1,26 @@
 {
-  "proof": "G0-WP-B VICT/Mastra consumer proof",
-  "adapterCompatibility": {
-    "ok": true,
-    "adapterId": "@victframework/mastra",
-    "revision": "3"
-  },
-  "turn1": {
-    "status": "completed",
-    "text": "G0-MASTRA-SENTINEL-OK",
-    "providerModelIdentity": "offline-fixture/deterministic-1"
-  },
-  "turn2": {
-    "status": "completed",
-    "text": "G0-MASTRA-SENTINEL-OK"
-  },
-  "deterministicRepeat": true,
-  "sentinelMatch": true,
-  "offlineIdentity": "offline-fixture/deterministic-1",
-  "offScript": {
-    "status": "completed",
-    "errorCode": null,
-    "text": ""
-  },
-  "pass": true
+	"proof": "G0-WP-B VICT/Mastra consumer proof",
+	"adapterCompatibility": {
+		"ok": true,
+		"adapterId": "@victframework/mastra",
+		"revision": "3"
+	},
+	"turn1": {
+		"status": "completed",
+		"text": "G0-MASTRA-SENTINEL-OK",
+		"providerModelIdentity": "offline-fixture/deterministic-1"
+	},
+	"turn2": {
+		"status": "completed",
+		"text": "G0-MASTRA-SENTINEL-OK"
+	},
+	"deterministicRepeat": true,
+	"sentinelMatch": true,
+	"offlineIdentity": "offline-fixture/deterministic-1",
+	"offScript": {
+		"status": "completed",
+		"errorCode": null,
+		"text": ""
+	},
+	"pass": true
 }

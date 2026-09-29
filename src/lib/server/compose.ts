@@ -30,16 +30,14 @@ export function composeTurnInput(
 	if (selected.length === 0) {
 		return question;
 	}
-	const blocks = selected
-		.map((c, i) => `${i + 1}. ${c.text.trim()}`)
-		.join('\n');
+	const blocks = selected.map((c, i) => `${i + 1}. ${c.text.trim()}`).join('\n');
 	return [
 		'[Retrieved knowledge candidates — unverified; may or may not be relevant.]',
 		blocks,
 		'[End retrieved candidates]',
 		'',
 		'Current question:',
-		question,
+		question
 	].join('\n');
 }
 

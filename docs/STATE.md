@@ -31,17 +31,18 @@
 
 ## Gate table
 
-| Gate | Status | Next permitted action |
-| --- | --- | --- |
-| Documentation bootstrap | COMPLETE | None |
-| G0 dependency intake | VERIFIED — CLOSED (original candidate BLOCKED; blocker lifted by VICT-Cognee `78e6c0a`; independent re-proof verified — see `docs/reports/G0-COGNEE-REPROOF-AUDIT.md`) | None |
-| G1 walking Quellight | PERMITTED BUT NOT BEGUN — product execution awaits owner decisions QD-01/QD-02 | Owner sets QD-01/QD-02, then freeze the G1 contract |
-| G2 durable meaning | BLOCKED | None |
-| G3+ | BLOCKED | None |
+| Gate                    | Status                                                                                                                                                                 | Next permitted action                               |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Documentation bootstrap | COMPLETE                                                                                                                                                               | None                                                |
+| G0 dependency intake    | VERIFIED — CLOSED (original candidate BLOCKED; blocker lifted by VICT-Cognee `78e6c0a`; independent re-proof verified — see `docs/reports/G0-COGNEE-REPROOF-AUDIT.md`) | None                                                |
+| G1 walking Quellight    | PERMITTED BUT NOT BEGUN — product execution awaits owner decisions QD-01/QD-02                                                                                         | Owner sets QD-01/QD-02, then freeze the G1 contract |
+| G2 durable meaning      | BLOCKED                                                                                                                                                                | None                                                |
+| G3+                     | BLOCKED                                                                                                                                                                | None                                                |
 
 ## Explicit exclusions right now
 
 No:
+
 - old Quellight imports;
 - G1 product implementation;
 - new universal intelligence package;

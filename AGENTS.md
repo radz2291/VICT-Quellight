@@ -36,6 +36,7 @@ Use FastGate principles:
 Quellight should stay thin.
 
 Own here:
+
 - Quellight product meaning and ontology;
 - Quellight constitution, authority, initiative and behavior policy;
 - Quellight UX and conversation experience;
@@ -43,6 +44,7 @@ Own here:
 - app-specific state and projections that are genuinely product-specific.
 
 Do not custom-build here by default:
+
 - agent/model runtime;
 - model routing;
 - tool-loop machinery;

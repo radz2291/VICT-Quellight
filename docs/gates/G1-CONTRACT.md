@@ -28,13 +28,13 @@ dependency failure degrade truthfully. Nothing more than the walking slice.
 
 ## 3. Dependency pins (frozen)
 
-| Dependency | Pin | Source |
-| --- | --- | --- |
-| VICT repo reference | `radz2291/vict-02` @ `fd675d9083a32f282820d9e0135c191d691c943c` | read-only reference |
-| `@victframework/{sdk,runtime,mastra,contracts,kernel}` | `0.4.0-rc.1` (npm registry) | exact G0 pins, unchanged |
-| `@victframework/cognee` | `0.1.0` tarball built from `radz2291/VICT-Cognee` @ **`78e6c0ab3f86c571878675d4a947c934768c5ec7`**; expected SHA-256 of `victframework-cognee-0.1.0.tgz` = `9c9545222312cfcc130085b20b04ea5379948ac02d8f151ea7166a8a94439117` | verified G0 route: clean clone → `pack && npm install && npm run build && npm pack`; checksum verified before install; `file:` install, NO npm flags |
-| Python worker | 3.12.x + `cognee[gliner]==1.6.1` (host venv; path via env `QUOLLIGHT_COGNEE_PYTHON`) | pre-existing proof venv |
-| App host | SvelteKit (current, stable) + `@sveltejs/adapter-node` | app-local choice (WP-A) |
+| Dependency                                             | Pin                                                                                                                                                                                                                           | Source                                                                                                                                               |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| VICT repo reference                                    | `radz2291/vict-02` @ `fd675d9083a32f282820d9e0135c191d691c943c`                                                                                                                                                               | read-only reference                                                                                                                                  |
+| `@victframework/{sdk,runtime,mastra,contracts,kernel}` | `0.4.0-rc.1` (npm registry)                                                                                                                                                                                                   | exact G0 pins, unchanged                                                                                                                             |
+| `@victframework/cognee`                                | `0.1.0` tarball built from `radz2291/VICT-Cognee` @ **`78e6c0ab3f86c571878675d4a947c934768c5ec7`**; expected SHA-256 of `victframework-cognee-0.1.0.tgz` = `9c9545222312cfcc130085b20b04ea5379948ac02d8f151ea7166a8a94439117` | verified G0 route: clean clone → `pack && npm install && npm run build && npm pack`; checksum verified before install; `file:` install, NO npm flags |
+| Python worker                                          | 3.12.x + `cognee[gliner]==1.6.1` (host venv; path via env `QUOLLIGHT_COGNEE_PYTHON`)                                                                                                                                          | pre-existing proof venv                                                                                                                              |
+| App host                                               | SvelteKit (current, stable) + `@sveltejs/adapter-node`                                                                                                                                                                        | app-local choice (WP-A)                                                                                                                              |
 
 No dependency bytes may be substituted without recording and proving the change.
 

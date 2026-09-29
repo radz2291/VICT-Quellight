@@ -36,8 +36,7 @@
 					kind: 'note',
 					id: uid++,
 					tone: 'info',
-					text:
-						'Deterministic G1 proof mode — model: deterministic offline fixture through VICT. Knowledge answers come only from what you store in this session store.'
+					text: 'Deterministic G1 proof mode — model: deterministic offline fixture through VICT. Knowledge answers come only from what you store in this session store.'
 				});
 			}
 		} catch {
@@ -82,7 +81,12 @@
 				};
 				messages = [
 					...messages,
-					{ kind: 'note', id: uid++, tone: 'error', text: err.message ?? `Request failed (${res.status}).` }
+					{
+						kind: 'note',
+						id: uid++,
+						tone: 'error',
+						text: err.message ?? `Request failed (${res.status}).`
+					}
 				];
 			} else {
 				const data = (await res.json()) as TurnResponse;
@@ -140,7 +144,10 @@
 
 <svelte:head>
 	<title>Quellight</title>
-	<meta name="description" content="Quellight — your persistent cognitive partner (G1 walking slice)" />
+	<meta
+		name="description"
+		content="Quellight — your persistent cognitive partner (G1 walking slice)"
+	/>
 </svelte:head>
 
 <div class="shell">
@@ -180,7 +187,9 @@
 		{#if busy}
 			<div class="row assistant">
 				<div class="speaker">Quellight</div>
-				<div class="bubble assistant thinking" role="status">Thinking<span class="dots">…</span></div>
+				<div class="bubble assistant thinking" role="status">
+					Thinking<span class="dots">…</span>
+				</div>
 			</div>
 		{/if}
 	</main>
@@ -203,7 +212,12 @@
 			onkeydown={onKeydown}
 			disabled={busy}
 		></textarea>
-		<button class="send" type="button" disabled={busy || input.trim().length === 0} onclick={() => void send(input)}>
+		<button
+			class="send"
+			type="button"
+			disabled={busy || input.trim().length === 0}
+			onclick={() => void send(input)}
+		>
 			Send
 		</button>
 	</footer>

@@ -23,17 +23,17 @@
 
 Verified read-only via `git ls-remote` + a clean pre-existing clone refreshed to `origin/main`:
 
-| Item | Value | Changed since bootstrap? |
-| --- | --- | --- |
-| VICT repo | `https://github.com/radz2291/vict-02` | — |
-| VICT `main` SHA | `fd675d9083a32f282820d9e0135c191d691c943c` | No |
-| `@victframework/sdk` | `0.4.0-rc.1` (npm; `latest` dist-tag still `0.3.1`; `0.4.0-rc.1` tagged `vict-0.4.0-rc`) | No |
-| `@victframework/runtime` | `0.4.0-rc.1` | No |
-| `@victframework/mastra` | `0.4.0-rc.1` (npm tarball `mastra-0.4.0-rc.1.tgz`) | No |
-| `@victframework/contracts` / `kernel` / `control` | `0.4.0-rc.1` | No |
-| Node requirement | `>=22.13.0` (all VICT packages) | No |
-| License | Apache-2.0 (all VICT packages) | No |
-| Install route | npm registry (public) | No |
+| Item                                              | Value                                                                                    | Changed since bootstrap? |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------ |
+| VICT repo                                         | `https://github.com/radz2291/vict-02`                                                    | —                        |
+| VICT `main` SHA                                   | `fd675d9083a32f282820d9e0135c191d691c943c`                                               | No                       |
+| `@victframework/sdk`                              | `0.4.0-rc.1` (npm; `latest` dist-tag still `0.3.1`; `0.4.0-rc.1` tagged `vict-0.4.0-rc`) | No                       |
+| `@victframework/runtime`                          | `0.4.0-rc.1`                                                                             | No                       |
+| `@victframework/mastra`                           | `0.4.0-rc.1` (npm tarball `mastra-0.4.0-rc.1.tgz`)                                       | No                       |
+| `@victframework/contracts` / `kernel` / `control` | `0.4.0-rc.1`                                                                             | No                       |
+| Node requirement                                  | `>=22.13.0` (all VICT packages)                                                          | No                       |
+| License                                           | Apache-2.0 (all VICT packages)                                                           | No                       |
+| Install route                                     | npm registry (public)                                                                    | No                       |
 
 Version-line diff facts established by comparing published npm tarballs (`sdk`, `runtime`, `contracts`, `kernel`, `control`), 0.3.1 vs 0.4.0-rc.1:
 
@@ -47,18 +47,18 @@ Mastra adapter facts: adapter id `@victframework/mastra`, compatibility revision
 
 ## 4. VICT-Cognee SHA/version inventory (Work Package A)
 
-| Item | Value | Changed since bootstrap? |
-| --- | --- | --- |
-| Repo | `https://github.com/radz2291/VICT-Cognee` | — |
-| `main` SHA (verified live via `git ls-remote`) | `2c180efbc564c4a4a3f22556858f108e2fa23bc0` | No |
-| Package | `@victframework/cognee@0.1.0` (`private: true`; `pack/` in source tree) | No |
-| Publication | NOT on npm (registry 404); tarball-only private route; `npm pack` refuses to publish a private package | No |
-| npm peers | `@victframework/sdk ^0.3.1`, `@victframework/runtime ^0.3.1` (both `peerOptional`) | No |
-| Manifest ABI | `vict.capability-pack@1`, `victCompatibility ^0.1.0` — unchanged between VICT lines | No |
-| Node requirement | `>=22` | No |
-| Python requirement | 3.12.x with `cognee[gliner]==1.6.1` (tested here: Python 3.12.10, venv `C:/Users/RZ1/Desktop/RZ/260925-VCT-Cognee/proof/.venv`, `import cognee` OK) | No |
-| License | `UNLICENSED` (private candidate; NOT a distribution license decision — no adoption into Quellight is made by G0) | No |
-| Resource constraints (documented, not re-measured here) | ~2.0 GB peak during cognify; second concurrent worker needs commit headroom (~3–4 GB free observed failures); ≥1 GB disk per active dataset; one-time model downloads on a fresh host (both fastembed `bge-small-en-v1.5` and GLiNER model caches are warmed on this host) | — |
+| Item                                                    | Value                                                                                                                                                                                                                                                                      | Changed since bootstrap? |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| Repo                                                    | `https://github.com/radz2291/VICT-Cognee`                                                                                                                                                                                                                                  | —                        |
+| `main` SHA (verified live via `git ls-remote`)          | `2c180efbc564c4a4a3f22556858f108e2fa23bc0`                                                                                                                                                                                                                                 | No                       |
+| Package                                                 | `@victframework/cognee@0.1.0` (`private: true`; `pack/` in source tree)                                                                                                                                                                                                    | No                       |
+| Publication                                             | NOT on npm (registry 404); tarball-only private route; `npm pack` refuses to publish a private package                                                                                                                                                                     | No                       |
+| npm peers                                               | `@victframework/sdk ^0.3.1`, `@victframework/runtime ^0.3.1` (both `peerOptional`)                                                                                                                                                                                         | No                       |
+| Manifest ABI                                            | `vict.capability-pack@1`, `victCompatibility ^0.1.0` — unchanged between VICT lines                                                                                                                                                                                        | No                       |
+| Node requirement                                        | `>=22`                                                                                                                                                                                                                                                                     | No                       |
+| Python requirement                                      | 3.12.x with `cognee[gliner]==1.6.1` (tested here: Python 3.12.10, venv `C:/Users/RZ1/Desktop/RZ/260925-VCT-Cognee/proof/.venv`, `import cognee` OK)                                                                                                                        | No                       |
+| License                                                 | `UNLICENSED` (private candidate; NOT a distribution license decision — no adoption into Quellight is made by G0)                                                                                                                                                           | No                       |
+| Resource constraints (documented, not re-measured here) | ~2.0 GB peak during cognify; second concurrent worker needs commit headroom (~3–4 GB free observed failures); ≥1 GB disk per active dataset; one-time model downloads on a fresh host (both fastembed `bge-small-en-v1.5` and GLiNER model caches are warmed on this host) | —                        |
 
 ## 5. Mastra proof (Work Package B) — PASS
 
@@ -110,16 +110,16 @@ Real-worker runs (V5/V6/V7 store-touching parts) were deliberately excluded: the
 
 ## 7. Commands and exit codes
 
-| # | Command (abbreviated; see `proof/cognee-compat/README.md` for full shell history) | Exit |
-| --- | --- | --- |
-| 1 | `git clone … VICT-Quellight && git rev-parse origin/main` → `3248ceb8…` | 0 |
-| 2 | `git fetch origin` in local VICT/VICT-Cognee clones + `git ls-remote` against both remotes | 0 (no drift) |
-| 3 | `cd Quellight && npm install --no-audit --no-fund` | 0 (1 non-blocking `posthog-node` engine warning, §8) |
-| 4 | `node proof/mastra-offline-proof.mjs` | **0 (PASS)** |
-| 5 | VICT-Cognee clean clone → `pack && npm install && npm run build && npm pack` | 0 (`victframework-cognee-0.1.0.tgz`, 46,732 bytes) |
-| 6 | consumer `npm install --no-audit --no-fund` (cognee tarball + VICT rc.1) | **ERESOLVE (non-zero)** — recorded, not bypassed |
-| 7 | `node battery.mjs` (diag workspace, unmodified tarball by path) | **0 (12/12 PASS)** |
-| 8 | `tsc typecheck.ts` vs `0.4.0-rc.1` and vs `0.3.1` | identical TS2322 both lines (pre-existing friction) |
+| #   | Command (abbreviated; see `proof/cognee-compat/README.md` for full shell history)          | Exit                                                 |
+| --- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| 1   | `git clone … VICT-Quellight && git rev-parse origin/main` → `3248ceb8…`                    | 0                                                    |
+| 2   | `git fetch origin` in local VICT/VICT-Cognee clones + `git ls-remote` against both remotes | 0 (no drift)                                         |
+| 3   | `cd Quellight && npm install --no-audit --no-fund`                                         | 0 (1 non-blocking `posthog-node` engine warning, §8) |
+| 4   | `node proof/mastra-offline-proof.mjs`                                                      | **0 (PASS)**                                         |
+| 5   | VICT-Cognee clean clone → `pack && npm install && npm run build && npm pack`               | 0 (`victframework-cognee-0.1.0.tgz`, 46,732 bytes)   |
+| 6   | consumer `npm install --no-audit --no-fund` (cognee tarball + VICT rc.1)                   | **ERESOLVE (non-zero)** — recorded, not bypassed     |
+| 7   | `node battery.mjs` (diag workspace, unmodified tarball by path)                            | **0 (12/12 PASS)**                                   |
+| 8   | `tsc typecheck.ts` vs `0.4.0-rc.1` and vs `0.3.1`                                          | identical TS2322 both lines (pre-existing friction)  |
 
 ## 8. Environment / runtime versions
 
@@ -137,19 +137,19 @@ Real-worker runs (V5/V6/V7 store-touching parts) were deliberately excluded: the
 
 ## 10. Negative-control results
 
-| Control | Result |
-| --- | --- |
-| No old Quellight code imported | PASS — repository began at a docs-only commit; branch tree contains only this branch's new G0 files (`git log`/`git ls-files` auditable) |
-| No custom semantic foundation / no `@vict/intelligence` | PASS — diff contains only intake scaffold, proof scripts, evidence, docs |
-| No direct product dependency on Mastra internals at the product level | PASS — `package.json` deps are the three VICT packages; Mastra APIs appear only inside the G0 proof script |
-| No direct product dependency on Cognee internals | PASS — the cognee tarball exists only in external disposable workspaces; nothing vendored into Quellight |
-| No custom embeddings / vector search / graph DB / entity resolution / another agent framework | PASS — verified by inspection of the entire diff |
-| Incompatible package versions not force-installed | PASS — the one ERESOLVE failure was recorded and left in place |
-| Cognee retrieval ≠ canonical truth | PASS (invariant honored) — no retrieval result is consumed anywhere in this repository; only battery receipts (doubles/denials) were exercised; the pack's own fail-closed/double semantics preserved as shipped |
-| Model output ≠ accepted durable user state | PASS — offline fixture output asserted as proof only; no product state written |
-| Capability ≠ authority | PASS — battery V4 proved permission pre-check before handler |
-| No secrets in source/evidence | PASS — keyless everywhere; grep-clean |
-| No production deployment / publication / irreversible actions | PASS — none performed; `vict-02` and `VICT-Cognee` remain unmodified (working trees verified clean) |
+| Control                                                                                       | Result                                                                                                                                                                                                           |
+| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| No old Quellight code imported                                                                | PASS — repository began at a docs-only commit; branch tree contains only this branch's new G0 files (`git log`/`git ls-files` auditable)                                                                         |
+| No custom semantic foundation / no `@vict/intelligence`                                       | PASS — diff contains only intake scaffold, proof scripts, evidence, docs                                                                                                                                         |
+| No direct product dependency on Mastra internals at the product level                         | PASS — `package.json` deps are the three VICT packages; Mastra APIs appear only inside the G0 proof script                                                                                                       |
+| No direct product dependency on Cognee internals                                              | PASS — the cognee tarball exists only in external disposable workspaces; nothing vendored into Quellight                                                                                                         |
+| No custom embeddings / vector search / graph DB / entity resolution / another agent framework | PASS — verified by inspection of the entire diff                                                                                                                                                                 |
+| Incompatible package versions not force-installed                                             | PASS — the one ERESOLVE failure was recorded and left in place                                                                                                                                                   |
+| Cognee retrieval ≠ canonical truth                                                            | PASS (invariant honored) — no retrieval result is consumed anywhere in this repository; only battery receipts (doubles/denials) were exercised; the pack's own fail-closed/double semantics preserved as shipped |
+| Model output ≠ accepted durable user state                                                    | PASS — offline fixture output asserted as proof only; no product state written                                                                                                                                   |
+| Capability ≠ authority                                                                        | PASS — battery V4 proved permission pre-check before handler                                                                                                                                                     |
+| No secrets in source/evidence                                                                 | PASS — keyless everywhere; grep-clean                                                                                                                                                                            |
+| No production deployment / publication / irreversible actions                                 | PASS — none performed; `vict-02` and `VICT-Cognee` remain unmodified (working trees verified clean)                                                                                                              |
 
 ## 11. Files created/changed on this branch
 

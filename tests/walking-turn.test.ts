@@ -36,7 +36,13 @@ let agent: QuellightAgent | null = null;
 let captured: CapturedCalls;
 let turnCounter = 0;
 
-async function freshStore(searchProvider?: (query: string) => Parameters<typeof composeTurnInput>[1] extends never ? never : { text: string; score?: number }[]): Promise<{
+async function freshStore(
+	searchProvider?: (
+		query: string
+	) => Parameters<typeof composeTurnInput>[1] extends never
+		? never
+		: { text: string; score?: number }[]
+): Promise<{
 	store: KnowledgeStore;
 	pack: FakeCogneePack;
 }> {
@@ -138,7 +144,8 @@ describe('G1 walking slice (frozen contract §7)', () => {
 		expect(answerText(result.response)).toContain(FACT);
 	});
 
-	it('4. retrieved candidate context reaches the REAL ProductAgent/model surface', async () => {		const { store } = await freshStore();
+	it('4. retrieved candidate context reaches the REAL ProductAgent/model surface', async () => {
+		const { store } = await freshStore();
 		captured.prompts.splice(0);
 		await runWalkingTurn(await makeDeps({ question: FACT, store }));
 		const factTurnPrompt = captured.prompts.at(-1)?.at(-1);
@@ -229,9 +236,7 @@ describe('G1 walking slice (frozen contract §7)', () => {
 		expect(storedContent).toBe(FACT);
 		expect(storedContent.includes(firstText)).toBe(false);
 		await runWalkingTurn(await makeDeps({ question: RECALL, store }));
-		storedContent = pack.addCalls
-			.map((c) => (c.input as { content: string }).content)
-			.join('|||');
+		storedContent = pack.addCalls.map((c) => (c.input as { content: string }).content).join('|||');
 		expect(storedContent).toBe([FACT, RECALL].join('|||'));
 		expect(storedContent.includes('From your stored knowledge')).toBe(false);
 	});
