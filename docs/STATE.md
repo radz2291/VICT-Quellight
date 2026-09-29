@@ -1,10 +1,17 @@
 # Project State
 
-**Updated:** 2026-09-29 (G1 candidate executed on `g1/walking-quellight`; awaiting independent verification)
+**Updated:** 2026-09-30 (G1 independently verified and closed by fresh audit on `verify/g1-walking-quellight`)
 **Repository:** https://github.com/radz2291/VICT-Quellight
-**Status:** G0 VERIFIED — CLOSED; G1 CANDIDATE EXECUTED (NOT self-closed; independent verification required)
+**Status:** G0 VERIFIED — CLOSED; G1 VERIFIED — CLOSED (independent audit: `docs/reports/G1-INDEPENDENT-AUDIT.md`); G2 PERMITTED BUT NOT BEGUN
 
-## G1 executed record (candidate, not closed)
+## G1 closure record
+
+- Implementation candidate: `g1/walking-quellight` @ `df2a1f6ce03133c68ecda5a3e577f86b092542c5` (single lane from G0 closure `7ee427ac…`; contract frozen at `04b3e68` before implementation).
+- Independent audit: `verify/g1-walking-quellight` created from the exact frozen candidate; report: `docs/reports/G1-INDEPENDENT-AUDIT.md`; audit evidence: `proof/g1-audit-evidence/audit-*.log`.
+- Auditor fresh results: `npm ci` exit 0; typecheck 0 errors / 0 warnings (1358 files); prettier clean; vitest 15/15; build exit 0; Mastra offline proof `pass: true`; verifier probe 4/4 (anti-fabrication instruction verified reaching the real model surface at system role); real Cognee integration 10/10 PASS incl. restart durability; double-cognify upstream defect independently reproduced; browser walkthrough W1/W2/W3/W-rest + failure (W4b, fault verified via HTTP 502) + narrow/keyboard (N1/N2) all PASS; shutdown endpoint verified gated (404 by default).
+- Verdict: VERIFIED WITH NON-BLOCKING FINDINGS — closure permitted and performed. QD-01/QD-02 confirmed by G1 evidence; QD-04 remains open (owner decision). No implementation remediation was applied by the auditor; VICT and VICT-Cognee untouched (tarball SHA-256 `9c9545…9117` re-verified).
+
+## Historical G1 candidate execution record
 
 - Branch: `g1/walking-quellight` from G0 closure `7ee427ac1abbb864922eef16f81d28a1394f3666`.
 - Contract frozen at `04b3e68` before implementation; implementation single-lane per contract §9.
@@ -30,6 +37,7 @@
 - Repository began empty.
 - Documentation pack completed through governance commit: `d0627e604818f83b75053efbb5895c4fa9312b95`
 - G0 executed on branch `g0/dependency-intake` from starting SHA `3248ceb8d1c2af74e8750cf3fcee5e3d331f601e`
+- G1 executed on branch `g1/walking-quellight` from G0 closure `7ee427ac1abbb864922eef16f81d28a1394f3666` to candidate `df2a1f6ce03133c68ecda5a3e577f86b092542c5` (contract frozen at `04b3e6842aec0c840e6e22b99cf71dedbebe2571`); independently verified on `verify/g1-walking-quellight`
 - VICT reference repo observed: `radz2291/vict-02`
 - VICT main observed at bootstrap AND at G0 intake (unchanged): `fd675d9083a32f282820d9e0135c191d691c943c`
 - `@victframework/mastra`: `0.4.0-rc.1` (npm registry), proven by consumer proof with deterministic offline fixture — PASS
@@ -40,20 +48,20 @@
 
 ## Gate table
 
-| Gate                    | Status                                                                                                                                                                 | Next permitted action                                |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| Documentation bootstrap | COMPLETE                                                                                                                                                               | None                                                 |
-| G0 dependency intake    | VERIFIED — CLOSED (original candidate BLOCKED; blocker lifted by VICT-Cognee `78e6c0a`; independent re-proof verified — see `docs/reports/G0-COGNEE-REPROOF-AUDIT.md`) | None                                                 |
-| G1 walking Quellight    | CANDIDATE EXECUTED — awaiting independent verification (report: `docs/reports/G1-WALKING-QUELLIGHT.md`; evidence: `proof/g1-evidence/*`)                               | Independent verification; then owner decides closure |
-| G2 durable meaning      | BLOCKED                                                                                                                                                                | None                                                 |
-| G3+                     | BLOCKED                                                                                                                                                                | None                                                 |
+| Gate                    | Status                                                                                                                                                                 | Next permitted action                                                     |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Documentation bootstrap | COMPLETE                                                                                                                                                               | None                                                                      |
+| G0 dependency intake    | VERIFIED — CLOSED (original candidate BLOCKED; blocker lifted by VICT-Cognee `78e6c0a`; independent re-proof verified — see `docs/reports/G0-COGNEE-REPROOF-AUDIT.md`) | None                                                                      |
+| G1 walking Quellight    | VERIFIED — CLOSED (candidate `df2a1f6…`; independent audit `docs/reports/G1-INDEPENDENT-AUDIT.md`, verdict: VERIFIED WITH NON-BLOCKING FINDINGS — closure permitted)   | None — G2 is permitted but NOT begun                                      |
+| G2 durable meaning      | PERMITTED BUT NOT BEGUN                                                                                                                                                | Owner decisions first (QD-04 first semantic concepts; G2 contract freeze) |
+| G3+                     | BLOCKED                                                                                                                                                                | None                                                                      |
 
 ## Explicit exclusions right now
 
 No:
 
 - old Quellight imports;
-- G1 product implementation;
+- G2 implementation (permitted but not begun — no work before the G2 contract is frozen);
 - new universal intelligence package;
 - package publication;
 - production deployment;
@@ -61,6 +69,6 @@ No:
 - direct edits to VICT or VICT-Cognee from this repository;
 - force-installed peers or compatibility bypasses.
 
-No direct edits to VICT or VICT-Cognee from this repository; no force-installed peers or compatibility bypasses; **no G1 work before QD-01/QD-02 owner decisions**.
+No direct edits to VICT or VICT-Cognee from this repository; no force-installed peers or compatibility bypasses. QD-01/QD-02 are resolved and were confirmed by the G1 independent audit; **no G2 work before the next owner authorization and QD-04 resolution**.
 
-QD-04 remains open for the first semantic concepts after the walking vertical slice (owner decision).
+QD-04 (first Quellight semantic concepts) remains the open owner decision gating G2 scope; G2 must also carry the G1 retained findings register (audit report §12) into its contract planning (worker-per-cognify workaround, per-turn intake policy, temporary shutdown endpoint).

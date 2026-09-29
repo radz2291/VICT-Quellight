@@ -1,0 +1,27 @@
+[browser-failure] W4b PASS controlled model fault surfaces honestly in the browser (no fake success) :: bubbles: ["Deterministic G1 proof mode — model: deterministic offline fixture through VICT. Knowledge answers come only from what you store in this session stor
+{
+  "pass": true,
+  "ledger": [
+    {
+      "phase": "narrow",
+      "id": "N1",
+      "name": "narrow viewport (390px) renders without horizontal overflow",
+      "outcome": "PASS",
+      "detail": "scrollWidth check"
+    },
+    {
+      "phase": "narrow",
+      "id": "N2",
+      "name": "keyboard-only interaction submits and answers on narrow viewport",
+      "outcome": "PASS",
+      "detail": "[\"Deterministic G1 proof mode — model: deterministic offline fixture through VICT. Knowledge answers come only from what you store in this session store.\",\"Hello.\",\"Hello! I’m Quellight — your persistent cognitive partner. What would you like to do?\",\"Knowledge retrieval was unavailable — answered without it. Nothing fabricated.\"]"
+    },
+    {
+      "phase": "failure",
+      "id": "W4b",
+      "name": "controlled model fault surfaces honestly in the browser (no fake success)",
+      "outcome": "PASS",
+      "detail": "bubbles: [\"Deterministic G1 proof mode — model: deterministic offline fixture through VICT. Knowledge answers come only from what you store in this session store.\",\"What is my project codename?\",\"Quellight could not produce a response for this input.\"]"
+    }
+  ]
+}

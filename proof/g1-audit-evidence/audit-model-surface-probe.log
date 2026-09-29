@@ -1,0 +1,14 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight[39m
+
+ [32m✓[39m scratch/audit-model-surface.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 4409[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 audit probe — model surface (contract §6/§7 invariants)[2m > [22manti-fabrication instruction reaches the REAL model call (system role) [33m 1396[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 audit probe — model surface (contract §6/§7 invariants)[2m > [22mcandidate text reaches the REAL model call via the composed user input [33m 1025[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 audit probe — model surface (contract §6/§7 invariants)[2m > [22mmodel output is never persisted: add calls carry user content only [33m 782[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 audit probe — model surface (contract §6/§7 invariants)[2m > [22moff-corpus honesty holds at the real model surface [33m 861[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 01:30:05
+[2m   Duration [22m 13.26s[2m (transform 943ms, setup 0ms, collect 7.08s, tests 4.41s, environment 1ms, prepare 536ms)[22m
+

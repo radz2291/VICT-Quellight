@@ -1,0 +1,128 @@
+df2a1f6ce03133c68ecda5a3e577f86b092542c5
+Listening on http://127.0.0.1:5177
+[g1-integration] I0 PASS server boots with knowledge configured to READY {"state":"ready","detail":null,"dataset":"g1.quellight"}
+[g1-integration] T1: Hello. (fresh store; worker boot)
+[g1-integration] W1 PASS basic conversation answers through the path {"kind":"assistant","text":"Hello! I’m Quellight — your persistent cognitive partner. What would you like to do?","meta":{"retrieval":"miss","intakeDegraded":false,"modelIdentity":"offline-fixture/deterministic-1"}}
+[g1-integration] T2: store the fact (real add+cognify)
+This storage provider does not support batch creating metrics
+[g1-integration] I1 PASS fact stored cognified (used or degraded-noted intake) {"retrieval":"used","intakeDegraded":false,"modelIdentity":"offline-fixture/deterministic-1"}
+[g1-integration] T3: recall question (real searchChunks + reasoning)
+[g1-integration] W2 PASS recall uses REAL retrieved durable knowledge {"meta":{"retrieval":"used","intakeDegraded":false,"modelIdentity":"offline-fixture/deterministic-1"},"text":"From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “My project codename is Zephyr.”; “Hello.”."}
+[g1-integration] T4: off-corpus honesty
+[g1-integration] W3 PASS off-corpus: no fabricated personal fact From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “Hello.”; “My project codename is Zephyr.”; “What is my project codename?”.
+[g1-integration] T4 behavior: quoted-as-note behavior; text: From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “Hello.”; “My project codename is Zephyr.”; “What is my project codename?”.
+[g1-integration] stop 5177: shutdown endpoint status=200
+[srv 5177] exited code=0 signal=-
+[g1-integration] T5: restart with same store; ask recall again
+Listening on http://127.0.0.1:5177
+[g1-integration] S0 PASS restart: knowledge ready from persisted store {"state":"ready","detail":null,"dataset":"g1.quellight"}
+[quellight] durable intake failed: WorkerError: idempotency key 'g1-turn-1' is durably bound to (add, g1__quellight) with a different input fingerprint; refusing to reuse it for different logical work
+    at Interface.<anonymous> (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/cognee/dist/supervision.js:452:30)
+    at Interface.emit (node:events:524:28)
+    at [_onLine] [as _onLine] (node:internal/readline/interface:415:12)
+    at [_normalWrite] [as _normalWrite] (node:internal/readline/interface:609:22)
+    at Socket.ondata (node:internal/readline/interface:242:23)
+    at Socket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  code: 'COGNEE_IDEMPOTENCY_MISMATCH',
+  detail: { op: 'add', idempotencyKey: 'g1-turn-1' }
+}
+[g1-integration] I2 PASS durable recall persists across app restart {"meta":{"retrieval":"used","intakeDegraded":true,"modelIdentity":"offline-fixture/deterministic-1"}} :: From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “My project codename is Zephyr.”; “Hello.”; “What is my favorite color?”.
+[g1-integration] stop 5177: shutdown endpoint status=200
+[srv 5177] exited code=0 signal=-
+[g1-integration] W4: controlled model failure
+Listening on http://127.0.0.1:5178
+[AGENT] Error in agent stream {
+  error: Error: VICT_OFFLINE_MODEL_FAILED
+      at enqueueScript (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/mastra/dist/offline-model.js:180:56)
+      at Object.doStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/mastra/dist/offline-model.js:143:18)
+      at AISDKV5LanguageModel.doStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/model-ZBb3aVXT.js:212:28)
+      at retryResult.default.retries (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/agent-DsRUDsS_.js:23449:109)
+      at Module.pRetry (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/p-retry/index.js:197:25)
+      at createStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/agent-DsRUDsS_.js:23448:64)
+      at async Object.start (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/trip-wire-D8UqG8U-.js:2496:20),
+  runId: '61d050d2-a0b5-472d-a189-4d1ecdb31d98',
+  provider: 'offline-fixture',
+  modelId: 'deterministic-1'
+} {
+  trace_id: '34a7e01f07751ef2d0270023cf945a39',
+  span_id: '2d394078665e52d6'
+}
+[g1-integration] W4a PASS model failure surfaces as HTTP failure (no fake success) {"message":"Quellight could not produce a response for this input."}
+[g1-integration] stop 5178: shutdown endpoint status=200
+[srv 5178] exited code=0 signal=-
+[g1-integration] W4b: knowledge unavailable degradation
+Listening on http://127.0.0.1:5178
+[g1-integration] W4b-pre PASS knowledge reported degraded when worker disabled {"state":"degraded","detail":"No Python worker path configured (QUOLLIGHT_COGNEE_PYTHON).","dataset":"g1.quellight"}
+[g1-integration] W4b PASS knowledge unavailable: answered truthfully without fabricated retrieval {"retrieval":"unavailable","intakeDegraded":false,"modelIdentity":"offline-fixture/deterministic-1"} :: I don’t have durable knowledge about that — nothing relevant was retrieved from your stored knowledge. I won’t guess or invent a fact.
+{
+  "pass": true,
+  "passCount": 10,
+  "total": 10,
+  "gitHead": "df2a1f6ce03133c68ecda5a3e577f86b092542c5",
+  "results": [
+    {
+      "id": "I0",
+      "name": "server boots with knowledge configured to READY",
+      "outcome": "PASS",
+      "detail": "{\"state\":\"ready\",\"detail\":null,\"dataset\":\"g1.quellight\"}"
+    },
+    {
+      "id": "W1",
+      "name": "basic conversation answers through the path",
+      "outcome": "PASS",
+      "detail": "{\"kind\":\"assistant\",\"text\":\"Hello! I’m Quellight — your persistent cognitive partner. What would you like to do?\",\"meta\":{\"retrieval\":\"miss\",\"intakeDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\"}}"
+    },
+    {
+      "id": "I1",
+      "name": "fact stored cognified (used or degraded-noted intake)",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"intakeDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\"}"
+    },
+    {
+      "id": "W2",
+      "name": "recall uses REAL retrieved durable knowledge",
+      "outcome": "PASS",
+      "detail": "{\"meta\":{\"retrieval\":\"used\",\"intakeDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\"},\"text\":\"From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “My project codename is Zephyr.”; “Hello.”.\"}"
+    },
+    {
+      "id": "W3",
+      "name": "off-corpus: no fabricated personal fact",
+      "outcome": "PASS",
+      "detail": "From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “Hello.”; “My project codename is Zephyr.”; “What is my project codename?”."
+    },
+    {
+      "id": "S0",
+      "name": "restart: knowledge ready from persisted store",
+      "outcome": "PASS",
+      "detail": "{\"state\":\"ready\",\"detail\":null,\"dataset\":\"g1.quellight\"}"
+    },
+    {
+      "id": "I2",
+      "name": "durable recall persists across app restart",
+      "outcome": "PASS",
+      "detail": "{\"meta\":{\"retrieval\":\"used\",\"intakeDegraded\":true,\"modelIdentity\":\"offline-fixture/deterministic-1\"}} :: From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “My project codename is Zephyr.”; “Hello.”; “What is my favorite color?”."
+    },
+    {
+      "id": "W4a",
+      "name": "model failure surfaces as HTTP failure (no fake success)",
+      "outcome": "PASS",
+      "detail": "{\"message\":\"Quellight could not produce a response for this input.\"}"
+    },
+    {
+      "id": "W4b-pre",
+      "name": "knowledge reported degraded when worker disabled",
+      "outcome": "PASS",
+      "detail": "{\"state\":\"degraded\",\"detail\":\"No Python worker path configured (QUOLLIGHT_COGNEE_PYTHON).\",\"dataset\":\"g1.quellight\"}"
+    },
+    {
+      "id": "W4b",
+      "name": "knowledge unavailable: answered truthfully without fabricated retrieval",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"unavailable\",\"intakeDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\"} :: I don’t have durable knowledge about that — nothing relevant was retrieved from your stored knowledge. I won’t guess or invent a fact."
+    }
+  ]
+}

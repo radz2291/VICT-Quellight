@@ -1,0 +1,34 @@
+[browser] W1 PASS basic conversation through the reasoning path :: Hello! I’m Quellight — your persistent cognitive partner. What would you like to do?
+[browser] W2b waiting for recall turn (real cognify + search)...
+[browser] W2 PASS durable recall uses retrieved knowledge :: From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “My project codename is Zephyr.”; “Hello.”.
+[browser] W3 PASS off-corpus: no fabricated personal fact :: From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “Hello.”; “My project codename is Zephyr.”; “What is m
+[browser] W-rest PASS page reload preserves durable knowledge (fresh conversation view) :: bubbles after reload: 0
+{
+  "pass": true,
+  "ledger": [
+    {
+      "id": "W1",
+      "name": "basic conversation through the reasoning path",
+      "outcome": "PASS",
+      "detail": "Hello! I’m Quellight — your persistent cognitive partner. What would you like to do?"
+    },
+    {
+      "id": "W2",
+      "name": "durable recall uses retrieved knowledge",
+      "outcome": "PASS",
+      "detail": "From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “My project codename is Zephyr.”; “Hello.”."
+    },
+    {
+      "id": "W3",
+      "name": "off-corpus: no fabricated personal fact",
+      "outcome": "PASS",
+      "detail": "From your stored knowledge (retrieved as unverified candidates), the relevant notes I have are, in order: “Hello.”; “My project codename is Zephyr.”; “What is my project codename?”."
+    },
+    {
+      "id": "W-rest",
+      "name": "page reload preserves durable knowledge (fresh conversation view)",
+      "outcome": "PASS",
+      "detail": "bubbles after reload: 0"
+    }
+  ]
+}

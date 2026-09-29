@@ -1,0 +1,63 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight[39m
+
+ [32m✓[39m tests/compose.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+[90mstderr[2m | tests/walking-turn.test.ts[2m > [22m[2mG1 walking slice (frozen contract §7)[2m > [22m[2m7. Cognee failure does not fabricate retrieval (truthful degraded answer)
+[22m[39m[quellight] knowledge retrieval failed: Error: FAKE-SEARCH-FAILURE
+    at [90mC:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39mtests\helpers\fake-cognee.ts:75:44
+    at Object.invoke [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39mtests\helpers\fake-cognee.ts:96:75[90m)[39m
+    at Object.invoke [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39msrc\lib\server\knowledge.ts:55:64[90m)[39m
+    at KnowledgeStore.search [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39msrc\lib\server\knowledge.ts:233:44[90m)[39m
+    at runWalkingTurn [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39msrc\lib\server\turn.ts:68:34[90m)[39m
+    at [90mC:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39mtests\walking-turn.test.ts:204:18
+    at [90mfile:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-hooks.js:752:20
+
+[90mstderr[2m | tests/walking-turn.test.ts[2m > [22m[2mG1 walking slice (frozen contract §7)[2m > [22m[2m7b. intake failure degrades storage without killing the turn
+[22m[39m[quellight] durable intake failed: Error: FAKE-ADD-FAILURE
+    at cognifyCalls.push.input.input [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39mtests\helpers\fake-cognee.ts:52:41[90m)[39m
+    at Object.invoke [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39mtests\helpers\fake-cognee.ts:96:75[90m)[39m
+    at Object.invoke [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39msrc\lib\server\knowledge.ts:55:64[90m)[39m
+    at KnowledgeStore.storeMessage [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39msrc\lib\server\knowledge.ts:194:45[90m)[39m
+    at runWalkingTurn [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39msrc\lib\server\turn.ts:61:21[90m)[39m
+    at [90mC:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39mtests\walking-turn.test.ts:214:24
+    at [90mfile:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-hooks.js:752:20
+
+[90mstderr[2m | tests/walking-turn.test.ts[2m > [22m[2mG1 walking slice (frozen contract §7)[2m > [22m[2m7b. intake failure degrades storage without killing the turn
+[22m[39mThis storage provider does not support batch creating metrics
+
+[90mstderr[2m | tests/walking-turn.test.ts[2m > [22m[2mG1 walking slice (frozen contract §7)[2m > [22m[2m8. model failure surfaces as failure (no fake success)
+[22m[39m[AGENT] Error in agent stream {
+  error: Error: VICT_OFFLINE_MODEL_FAILED
+      at enqueueScript [90m(file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4m@victframework[24m/mastra/src/offline-model.ts:396:50[90m)[39m
+      at Object.doStream [90m(file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4m@victframework[24m/mastra/src/offline-model.ts:322:12[90m)[39m
+      at Proxy.<anonymous> [90m(C:\Users\RZ1\Desktop\RZ\260929-VCT-Quellight\[39mtests\helpers\capture-model.ts:39:20[90m)[39m
+      at AISDKV5LanguageModel.doStream [90m(file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4m@mastra[24m/core/src/llm/model/aisdk/v5/model.ts:111:30[90m)[39m
+      at retryResult.default.retries [90m(file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4m@mastra[24m/core/src/stream/aisdk/v5/execute.ts:283:20[90m)[39m
+      at Module.pRetry [90m(file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4mp-retry[24m/index.js:197:25[90m)[39m
+      at createStream [90m(file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4m@mastra[24m/core/src/stream/aisdk/v5/execute.ts:274:12[90m)[39m
+      at Object.start [90m(file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/[39mnode_modules/[4m@mastra[24m/core/src/stream/base/input.ts:67:26[90m)[39m,
+  runId: [32m'daba915a-acba-4dc7-a78e-5c9ecb373754'[39m,
+  provider: [32m'offline-fixture'[39m,
+  modelId: [32m'deterministic-1'[39m
+} {
+  trace_id: [32m'81b93192e49ce7bf50e5afb7a7091556'[39m,
+  span_id: [32m'9ebebda091fac98e'[39m
+}
+
+ [32m✓[39m tests/walking-turn.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 8654[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m1. accepts a user message and returns an assistant response [33m 930[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m2. durable intake routes through VICT/Cognee capability bindings (add + cognify, keyed) [33m 361[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m3. later retrieval receives the stored synthetic knowledge through the scoped read [33m 682[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m4. retrieved candidate context reaches the REAL ProductAgent/model surface [33m 695[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m5. deterministic fixture produces the expected composed answer end to end [33m 680[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m6. off-corpus question does NOT assert a stored personal fact (zero-hit case) [33m 697[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m6b. off-corpus with a weak unrelated candidate does not fabricate a personal fact [33m 350[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m7. Cognee failure does not fabricate retrieval (truthful degraded answer) [33m 349[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m7b. intake failure degrades storage without killing the turn [33m 399[2mms[22m[39m
+   [33m[2m✓[22m[39m G1 walking slice (frozen contract §7)[2m > [22m9. no model output is ever written as durable knowledge (user content only) [33m 697[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m15 passed[39m[22m[90m (15)[39m
+[2m   Start at [22m 01:26:33
+[2m   Duration [22m 18.69s[2m (transform 481ms, setup 0ms, collect 8.80s, tests 8.67s, environment 1ms, prepare 1.34s)[22m
+

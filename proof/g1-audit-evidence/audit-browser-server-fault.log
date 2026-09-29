@@ -1,0 +1,36 @@
+Listening on http://0.0.0.0:5179
+[AGENT] Error in agent stream {
+  error: Error: VICT_OFFLINE_MODEL_FAILED
+      at enqueueScript (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/mastra/dist/offline-model.js:180:56)
+      at Object.doStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/mastra/dist/offline-model.js:143:18)
+      at AISDKV5LanguageModel.doStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/model-ZBb3aVXT.js:212:28)
+      at retryResult.default.retries (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/agent-DsRUDsS_.js:23449:109)
+      at Module.pRetry (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/p-retry/index.js:197:25)
+      at createStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/agent-DsRUDsS_.js:23448:64)
+      at async Object.start (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/trip-wire-D8UqG8U-.js:2496:20),
+  runId: 'fa7caab8-5fa6-42e8-98c8-73dbc1d52bef',
+  provider: 'offline-fixture',
+  modelId: 'deterministic-1'
+} {
+  trace_id: '64086c867b87c45dbca251d0d0e68019',
+  span_id: '34d4b9a47b86a818'
+}
+This storage provider does not support batch creating logs
+This storage provider does not support batch creating metrics
+[AGENT] Error in agent stream {
+  error: Error: VICT_OFFLINE_MODEL_FAILED
+      at enqueueScript (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/mastra/dist/offline-model.js:180:56)
+      at Object.doStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/mastra/dist/offline-model.js:143:18)
+      at AISDKV5LanguageModel.doStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/model-ZBb3aVXT.js:212:28)
+      at retryResult.default.retries (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/agent-DsRUDsS_.js:23449:109)
+      at Module.pRetry (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/p-retry/index.js:197:25)
+      at createStream (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/agent-DsRUDsS_.js:23448:64)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Object.start (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@mastra/core/dist/trip-wire-D8UqG8U-.js:2496:20),
+  runId: '42bcf6b4-4b97-42e1-9f00-6b776a00ccd6',
+  provider: 'offline-fixture',
+  modelId: 'deterministic-1'
+} {
+  trace_id: 'ade44af5fd437b80f6264679191fcfe4',
+  span_id: 'c862b1b4677fcb28'
+}

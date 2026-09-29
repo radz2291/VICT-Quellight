@@ -1,0 +1,21 @@
+ADD 1: {"datasetName":"g1.quellight","idempotencyKey":"scratch-add-1","reconciled":"fresh-execution","itemsBefore":0,"itemsAfter":1,"deduplicated":false} t+32.9s
+COGNIFY 1: {"datasetName":"g1.quellight","idempotencyKey":"scratch-cognify-1","reconciled":"fresh-execution","itemsBefore":1,"itemsAfter":1,"deduplicated":true} t+54.4s
+ADD 2: {"datasetName":"g1.quellight","idempotencyKey":"scratch-add-2","reconciled":"fresh-execution","itemsBefore":1,"itemsAfter":2,"deduplicated":false} t+55.1s
+CYCLE 2 FAILED: Error CognifyFailedError: CognifyFailedError: Cognify failed for dataset '['g1__quellight']': RuntimeError: <asyncio.locks.Lock object at 0x00000234FAEBA600 [locked]> is bound to a different event loop | Pass raise_on_error=Fa
+ADD 3: {"datasetName":"g1.quellight","idempotencyKey":"scratch-add-3","reconciled":"fresh-execution","itemsBefore":2,"itemsAfter":3,"deduplicated":false} t+69.5s
+CYCLE 3 FAILED: Error CognifyFailedError: CognifyFailedError: Cognify failed for dataset '['g1__quellight']': RuntimeError: <asyncio.locks.Lock object at 0x00000234FAEBA600 [locked]> is bound to a different event loop | Pass raise_on_error=Fa
+SEARCH: {
+  "hits": [
+    {
+      "text": "My project codename is Zephyr.",
+      "score": 0.16343241930007935,
+      "datasetName": "g1.quellight"
+    }
+  ],
+  "datasets": [
+    "g1.quellight"
+  ],
+  "total": 1,
+  "truncated": false
+} t+96.3s
+SCRATCH DONE
