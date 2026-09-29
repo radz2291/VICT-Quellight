@@ -10,10 +10,11 @@ Before proposing or editing a stage, read:
 2. `docs/VISION.md`
 3. `docs/ARCHITECTURE.md`
 4. `docs/DECISIONS.md`
-5. `docs/STAGES.md`
-6. `docs/EVALUATION.md`
-7. `docs/RUNBOOK.md`
-8. `docs/STATE.md`
+5. `docs/GOVERNANCE.md`
+6. `docs/STAGES.md`
+7. `docs/EVALUATION.md`
+8. `docs/RUNBOOK.md`
+9. `docs/STATE.md`
 
 Then read the active handoff for the current gate.
 
