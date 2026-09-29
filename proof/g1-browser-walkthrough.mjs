@@ -33,15 +33,13 @@ async function sendAndWait(page, text) {
 	const textarea = page.getByLabel('Message Quellight');
 	await textarea.fill(text);
 	await page.keyboard.press('Enter');
-	// Wait until send is no longer disabled (turn finished).
-	const send = page.getByRole('button', { name: 'Send' });
-	await page.waitForFunction(
-		() => {
-			const btns = document.querySelectorAll('button.send');
-			return btns.length > 0 && !btns[0].disabled;
-		},
-		{ timeout: 600_000, polling: 500 }
-	);
+	// The Send button is disabled by empty-input after the field clears, so
+	// completion must be observed via the thinking indicator lifecycle.
+	await page
+		.locator('.bubble.thinking')
+		.waitFor({ state: 'visible', timeout: 10_000 })
+		.catch(() => undefined); // fast turns may finish before the first poll
+	await page.locator('.bubble.thinking').waitFor({ state: 'detached', timeout: 600_000 });
 	await page.waitForTimeout(300);
 	return textarea;
 }
