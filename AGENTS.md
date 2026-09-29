@@ -31,6 +31,17 @@ Use FastGate principles:
 - independent audit is required for material semantic/executable gates;
 - owner decisions remain owner decisions.
 
+## Agent delegation
+
+When multiple execution lanes are required, delegate through pi-subagents rather than ad hoc orchestration:
+
+- use subagent delegation for genuinely independent lanes with **disjoint file ownership** (e.g. review lanes, contract-test authoring, focused implementation packages);
+- keep **one integration owner** who integrates and freezes the candidate tree;
+- do not use subagents to bypass boundaries: every delegated lane inherits this repository's stop rules, evidence discipline, and scope limits from its handoff;
+- no permanent orchestration framework, custom loop machinery, or orchestration framework packages in the repo;
+- prefer a single competent lane when the work is not genuinely independent — artificial parallelism is prohibited;
+- read-only review/audit work should run as fresh-context subagents that never fix implementation code.
+
 ## Product boundary
 
 Quellight should stay thin.
