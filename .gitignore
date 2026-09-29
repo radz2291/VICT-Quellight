@@ -8,3 +8,4 @@ vendor/cognee/
 scratch/
 quellight/run/
 .svelte-kit/
+build/
