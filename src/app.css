@@ -1,0 +1,35 @@
+:root {
+	font-family: 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+	--bg: #f6f5f2;
+	--surface: #ffffff;
+	--ink-strong: #1c1b1a;
+	--ink: #3d3b38;
+	--ink-muted: #7a7671;
+	--accent: #2f6f5a;
+	--accent-ink: #ffffff;
+	--user-bubble: #2f6f5a;
+	--assistant-bubble: #ffffff;
+	--note: #8a8570;
+	--note-bg: #f0eee6;
+	--error: #9d3533;
+	--error-bg: #f7e7e6;
+	--border: #e3e0d8;
+	color-scheme: light;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	height: 100%;
+	background: var(--bg);
+	color: var(--ink);
+}
+
+body {
+	font-size: 15px;
+	line-height: 1.55;
+}

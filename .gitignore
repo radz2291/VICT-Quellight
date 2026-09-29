@@ -4,3 +4,7 @@ dist/
 .env
 .g0-run/
 *.log
+vendor/cognee/
+scratch/
+quellight/run/
+.svelte-kit/

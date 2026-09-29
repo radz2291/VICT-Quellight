@@ -1,19 +1,42 @@
 {
   "name": "vict-quellight",
-  "version": "0.0.0-g0",
+  "version": "0.0.0-g1",
   "private": true,
   "type": "module",
-  "description": "Quellight — persistent cognitive partner built as a thin consumer of VICT capabilities. Current stage: G0 dependency intake (no product implementation).",
+  "description": "Quellight — persistent cognitive partner built as a thin consumer of VICT capabilities. Current stage: G1 Walking Quellight (candidate).",
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
-    "proof:mastra": "node proof/mastra-offline-proof.mjs"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "svelte-kit-sync": "svelte-kit sync",
+    "typecheck": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "prettier --check . --plugin prettier-plugin-svelte",
+    "format": "prettier --write . --plugin prettier-plugin-svelte",
+    "test": "vitest run",
+    "proof:mastra": "node proof/mastra-offline-proof.mjs",
+    "proof:g1": "node proof/g1-cognee-integration.mjs"
   },
   "dependencies": {
+    "@victframework/cognee": "file:vendor/cognee/victframework-cognee-0.1.0.tgz",
     "@victframework/mastra": "0.4.0-rc.1",
     "@victframework/runtime": "0.4.0-rc.1",
     "@victframework/sdk": "0.4.0-rc.1"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-node": "^5.3.3",
+    "@sveltejs/kit": "^2.28.1",
+    "@sveltejs/vite-plugin-svelte": "^6.2.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-svelte": "^3.4.1",
+    "svelte": "^5.38.7",
+    "svelte-check": "^4.3.2",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4",
+    "zod": "3.25.76"
   },
   "license": "UNLICENSED"
 }
