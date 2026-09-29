@@ -59,12 +59,17 @@ export async function runWalkingTurn(deps: WalkingTurnDeps): Promise<WalkingTurn
 		} else {
 			try {
 				await knowledge.storeMessage(question, `g1-turn-${deps.turnIndex}`);
-			} catch {
+			} catch (error) {
+				console.error('[quellight] durable intake failed:', error);
+				intakeDegraded = true;
 				intakeDegraded = true;
 			}
 			try {
 				candidates = await knowledge.search(question, G1_MAX_CANDIDATES);
-			} catch {
+			} catch (error) {
+				console.error('[quellight] knowledge retrieval failed:', error);
+				retrievalDegraded = true;
+				candidates = [];
 				retrievalDegraded = true;
 				candidates = [];
 			}
