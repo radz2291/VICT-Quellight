@@ -23,6 +23,7 @@ interface QuellightState {
 	turnIndex: number;
 	knowledgeInitStarted: boolean;
 	knowledgeInitPromise: Promise<void> | null;
+	knowledgeInitSettled: boolean;
 }
 
 // G1 diagnostics: unhandled rejections must be OBSERVABLE evidence, never converted
@@ -40,7 +41,8 @@ const state: QuellightState = {
 	modelIdentity: resolveModelPlan().modelIdentity,
 	turnIndex: 0,
 	knowledgeInitStarted: false,
-	knowledgeInitPromise: null as Promise<void> | null
+	knowledgeInitPromise: null as Promise<void> | null,
+	knowledgeInitSettled: false
 };
 
 export async function ensureAgent(): Promise<QuellightAgent> {
@@ -60,14 +62,16 @@ function startKnowledgeInit(): Promise<void> {
 		return Promise.resolve();
 	}
 	const init = KnowledgeStore.create(config)
-		.then((store) => {
+			.then((store) => {
 			state.knowledge = store;
 			state.knowledgeFaulted = false;
+			state.knowledgeInitSettled = true;
 		})
 		.catch((error: unknown) => {
 			state.knowledge = null;
 			state.knowledgeFaulted = true;
 			state.knowledgeLoadError = error instanceof Error ? error.message : String(error);
+			state.knowledgeInitSettled = true;
 		});
 	return init;
 }
@@ -149,9 +153,9 @@ export async function serverStatus(): Promise<ServerStatus> {
 			state:
 				state.knowledge && !state.knowledgeFaulted
 					? 'ready'
-					: state.knowledgeInitPromise === null
-						? 'initializing'
-						: 'degraded',
+					: state.knowledgeInitSettled
+						? 'degraded'
+						: 'initializing',
 			detail: state.knowledgeFaulted ? state.knowledgeLoadError : null,
 			dataset: 'g1.quellight'
 		},
