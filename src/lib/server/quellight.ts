@@ -74,10 +74,9 @@ function startKnowledgeInit(): Promise<void> {
 
 export async function ensureKnowledge(): Promise<void> {
 	if (!state.knowledgeInitStarted) {
-		const init = startKnowledgeInit();
-		// Do NOT block the first turn on worker readiness; degraded until then.
-		void init;
+		state.knowledgeInitPromise = startKnowledgeInit();
 	}
+	await state.knowledgeInitPromise;
 }
 
 export interface ServerTurnResult {
