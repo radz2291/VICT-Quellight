@@ -9,3 +9,6 @@ scratch/
 quellight/run/
 .svelte-kit/
 build/
+proof/.g1-run/
+proof/g1-evidence/g1-integration.log
+proof/g1-evidence/browser/

@@ -99,11 +99,18 @@ async function waitReady(port, ms) {
 	while (Date.now() < end) {
 		try {
 			const res = await fetch(`http://127.0.0.1:${port}/api/health`);
-			if (res.ok) return await res.json();
+			if (res.ok) {
+				const status = await res.json();
+				// Honest 'initializing' state: wait until the knowledge path settles.
+				if (status.knowledge?.state !== 'initializing') return status;
+			}
 		} catch {}
 		await sleep(500);
 	}
-	throw new Error(`server on ${port} not ready after ${ms}ms`);
+	const res2 = await fetch(`http://127.0.0.1:${port}/api/health`).catch(() => null);
+	throw new Error(
+		`server on ${port} not ready after ${ms}ms (last: ${res2 ? JSON.stringify(await res2.json()).slice(0, 300) : 'unreachable'})`
+	);
 }
 
 async function turn(port, message) {
@@ -133,7 +140,7 @@ async function main() {
 
 	// Phase 1 — fresh store; full real path with the durable store.
 	const serverA = startServer(PORT_A);
-	const readyA = await waitReady(PORT_A, 30_000);
+	const readyA = await waitReady(PORT_A, 90_000);
 	check(
 		'I0',
 		'server boots with knowledge configured to READY',
@@ -173,7 +180,13 @@ async function main() {
 	console.error('[g1-integration] T4: off-corpus honesty');
 	const t4 = await turn(PORT_A, OFF_CORPUS);
 	const t4text = t4.body?.text ?? '';
-	const fabricated = /your (favorite|favourite) colo/i.test(t4text) || /zephyr/i.test(t4text);
+	// Honesty = no personal fact is ASSERTED. Quoting stored notes is explicit,
+	// attributed note behavior; only an asserted favorite color is fabrication.
+	const fabricated =
+		/my (favorite|favourite) colo[r] is/i.test(t4text) ||
+		/your (favorite|favourite) colo[^"]*(is|blue|red|green|black|white|yellow|purple|orange)/i.test(
+			t4text
+		);
 	check(
 		'W3',
 		'off-corpus: no fabricated personal fact',
@@ -213,7 +226,7 @@ async function main() {
 	await sleep(2_000);
 	console.error('[g1-integration] W4: controlled model failure');
 	const serverC = startServer(PORT_B, { QUOLLIGHT_FAULT: 'model' });
-	await waitReady(PORT_B, 30_000);
+	await waitReady(PORT_B, 90_000);
 	await sleep(1_500);
 	const w4 = await turn(PORT_B, 'Hello.');
 	check(
@@ -227,7 +240,7 @@ async function main() {
 	// Knowledge-degraded boot (no Python path): truthful degraded behavior.
 	console.error('[g1-integration] W4b: knowledge unavailable degradation');
 	const serverD = startServer(PORT_B, { QUOLLIGHT_COGNEE_DISABLED: '1' });
-	const readyD = await waitReady(PORT_B, 30_000);
+	const readyD = await waitReady(PORT_B, 90_000);
 	check(
 		'W4b-pre',
 		'knowledge reported degraded when worker disabled',

@@ -173,7 +173,9 @@ export class KnowledgeStore {
 		const cognify = binding(next, 'cognee.cognify');
 		const search = binding(next, 'cognee.searchChunks');
 		if (!add || !cognify || !search) {
-			throw new KnowledgeDependencyError('Required Cognee capability bindings missing after recovery');
+			throw new KnowledgeDependencyError(
+				'Required Cognee capability bindings missing after recovery'
+			);
 		}
 		this.addBinding = add;
 		this.cognifyBinding = cognify;
