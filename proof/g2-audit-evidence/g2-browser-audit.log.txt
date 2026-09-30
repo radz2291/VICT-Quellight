@@ -1,0 +1,172 @@
+1b658940efc4339dd1c279de143ff2213363f7c1
+Listening on http://127.0.0.1:5181
+(node:26936) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[browser] I0 PASS browser server boots with knowledge + meaning READY :: {"state":"ready","detail":null,"dataset":"g2.meaning"}
+This storage provider does not support batch creating metrics
+[quellight] knowledge retrieval failed: WorkerError: DatasetNotFoundError: DatasetNotFoundError: Dataset(s) not found: 'g2__meaning'. Dataset names resolve only among the datasets you own in the current tenant; pass dataset_ids for dat
+    at Interface.<anonymous> (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/cognee/dist/supervision.js:452:30)
+    at Interface.emit (node:events:524:28)
+    at [_onLine] [as _onLine] (node:internal/readline/interface:415:12)
+    at [_normalWrite] [as _normalWrite] (node:internal/readline/interface:609:22)
+    at Socket.ondata (node:internal/readline/interface:242:23)
+    at Socket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  code: 'COGNEE_DATASET_UNKNOWN',
+  detail: null
+}
+[browser] B1 PASS ordinary browser turn: answered, no meaning persisted :: latency=12881ms; answer="Hello! I’m Quellight — your persistent cognitive partner. Wh"
+[browser] B2 waiting for durable turn (real worker + cognify)...
+[browser] B2 durable turn latency: 31547ms
+[browser] B2 PASS accepted user_stated Zephyr visible with provenance :: [{"createdAt":"2026-09-30T06:46:50.903Z","decidedAt":"2026-09-30T06:46:50.903Z","decisionState":"accepted","id":"mr-35122f00-16b4-4f9e-a7fe-a8623e8450a6","origin":"user_s
+[browser] B2b PASS inspector page shows current meaning :: cards=1
+[browser] stop 5181: status=200
+[srv 5181] exited code=0 signal=-
+Listening on http://127.0.0.1:5181
+(node:24948) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[browser] B2c PASS meaning survives an application restart (inspector after restart) :: 
+[browser] B2d PASS reloaded inspector still shows Zephyr current :: 
+[browser] B3 recall...
+This storage provider does not support batch creating metrics
+[browser] B3 PASS recall uses eligible meaning through the intended path :: From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”.
+[browser] B4 PASS AI-inferred PROPOSAL created (never accepted) :: [{"createdAt":"2026-09-30T06:47:54.984Z","decisionState":"proposed","id":"mr-5715fd7f-40e1-4fde-a612-f1f142d7476c","origin":"agent_inferred","projectionState":"unprojecte
+[browser] B4b PASS proposed meaning NOT used as established user context :: From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”.
+[browser] B5a PASS rejected proposal recorded (decisionState rejected) :: {"record":{"createdAt":"2026-09-30T06:47:54.984Z","decidedAt":"2026-09-30T06:47:57.914Z","decisionState":"rejected","id":"mr-5715fd7f-40e1-4fde-a612-f1f142d7476
+[browser] B5b PASS accepted proposal eligible + projected :: {"record":{"createdAt":"2026-09-30T06:47:58.286Z","decidedAt":"2026-09-30T06:47:59.525Z","decisionState":"accepted","id":"mr-b2b6f93f-5d5b-4242-b335-8aa278739bc6","origin
+[browser] B6 correction turn (real fresh-worker cognify)...
+[browser] B6 correction latency: 41665ms
+[browser] B6 PASS correction: Orion current, Zephyr in history, lineage inspectable :: 
+[browser] B7 PASS stale-index protection in browser flow (Orion only) :: From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.interfaces.at.night = “Prefers dark interf
+[browser] stop 5181: status=200
+[srv 5181] exited code=0 signal=-
+Listening on http://127.0.0.1:5182
+(node:21836) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+This storage provider does not support batch creating metrics
+[browser] B8 PASS projection failure surfaced honestly; canonical meaning intact :: {"retrieval":"used","durableWrite":true,"meaningProposed":false,"projectionDegraded":true,"modelIdentity":"offline-fixture/deterministic-1","canonicalDegraded":false,"pro
+[browser] B8b PASS canonical meaning intact with failed-projection bookkeeping :: 
+[browser] released stale owner lock after verified stop
+[srv 5182] exited code=null signal=SIGTERM
+Listening on http://127.0.0.1:5181
+(node:25844) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[browser] B9 PASS narrow viewport (390px) renders without horizontal overflow :: 
+This storage provider does not support batch creating metrics
+[browser] B9b PASS keyboard-only interaction submits and answers :: From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.in
+[browser] stop 5181: status=200
+[srv 5181] exited code=0 signal=-
+{
+  "pass": true,
+  "passCount": 17,
+  "total": 17,
+  "gitHead": "1b658940efc4339dd1c279de143ff2213363f7c1",
+  "ledger": [
+    {
+      "id": "I0",
+      "name": "browser server boots with knowledge + meaning READY",
+      "outcome": "PASS",
+      "detail": "{\"state\":\"ready\",\"detail\":null,\"dataset\":\"g2.meaning\"}"
+    },
+    {
+      "id": "B1",
+      "name": "ordinary browser turn: answered, no meaning persisted",
+      "outcome": "PASS",
+      "detail": "latency=12881ms; answer=\"Hello! I’m Quellight — your persistent cognitive partner. Wh\""
+    },
+    {
+      "id": "B2",
+      "name": "accepted user_stated Zephyr visible with provenance",
+      "outcome": "PASS",
+      "detail": "[{\"createdAt\":\"2026-09-30T06:46:50.903Z\",\"decidedAt\":\"2026-09-30T06:46:50.903Z\",\"decisionState\":\"accepted\",\"id\":\"mr-35122f00-16b4-4f9e-a7fe-a8623e8450a6\",\"origin\":\"user_stated\",\"projectionState\":\"unpr"
+    },
+    {
+      "id": "B2b",
+      "name": "inspector page shows current meaning",
+      "outcome": "PASS",
+      "detail": "cards=1"
+    },
+    {
+      "id": "B2c",
+      "name": "meaning survives an application restart (inspector after restart)",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B2d",
+      "name": "reloaded inspector still shows Zephyr current",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B3",
+      "name": "recall uses eligible meaning through the intended path",
+      "outcome": "PASS",
+      "detail": "From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”."
+    },
+    {
+      "id": "B4",
+      "name": "AI-inferred PROPOSAL created (never accepted)",
+      "outcome": "PASS",
+      "detail": "[{\"createdAt\":\"2026-09-30T06:47:54.984Z\",\"decisionState\":\"proposed\",\"id\":\"mr-5715fd7f-40e1-4fde-a612-f1f142d7476c\",\"origin\":\"agent_inferred\",\"projectionState\":\"unprojected\",\"semanticKey\":\"preference.d"
+    },
+    {
+      "id": "B4b",
+      "name": "proposed meaning NOT used as established user context",
+      "outcome": "PASS",
+      "detail": "From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”."
+    },
+    {
+      "id": "B5a",
+      "name": "rejected proposal recorded (decisionState rejected)",
+      "outcome": "PASS",
+      "detail": "{\"record\":{\"createdAt\":\"2026-09-30T06:47:54.984Z\",\"decidedAt\":\"2026-09-30T06:47:57.914Z\",\"decisionState\":\"rejected\",\"id\":\"mr-5715fd7f-40e1-4fde-a612-f1f142d7476"
+    },
+    {
+      "id": "B5b",
+      "name": "accepted proposal eligible + projected",
+      "outcome": "PASS",
+      "detail": "{\"record\":{\"createdAt\":\"2026-09-30T06:47:58.286Z\",\"decidedAt\":\"2026-09-30T06:47:59.525Z\",\"decisionState\":\"accepted\",\"id\":\"mr-b2b6f93f-5d5b-4242-b335-8aa278739bc6\",\"origin\":\"agent_inferred\",\"projection"
+    },
+    {
+      "id": "B6",
+      "name": "correction: Orion current, Zephyr in history, lineage inspectable",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B7",
+      "name": "stale-index protection in browser flow (Orion only)",
+      "outcome": "PASS",
+      "detail": "From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.interfaces.at.night = “Prefers dark interf"
+    },
+    {
+      "id": "B8",
+      "name": "projection failure surfaced honestly; canonical meaning intact",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":true,\"meaningProposed\":false,\"projectionDegraded\":true,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded\":false,\"projectionDetail\":\"controlled cog"
+    },
+    {
+      "id": "B8b",
+      "name": "canonical meaning intact with failed-projection bookkeeping",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B9",
+      "name": "narrow viewport (390px) renders without horizontal overflow",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B9b",
+      "name": "keyboard-only interaction submits and answers",
+      "outcome": "PASS",
+      "detail": "From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.in"
+    }
+  ]
+}
+REAL_EXIT=0

@@ -1,0 +1,30 @@
+=== AUDIT DAG START 1b658940efc4339dd1c279de143ff2213363f7c1 ===
+1790749349385 START "c:\\Users\\RZ1\\Desktop\\RZ\\260929-VCT-Quellight"
+1790749349420 COMPLETED 1379 FILES 0 ERRORS 0 WARNINGS 0 FILES_WITH_PROBLEMS
+SVELTE_CHECK_EXIT=0
+Checking formatting...
+All matched files use Prettier code style!
+PRETTIER_EXIT=0
+   [33m[2m✓[22m[39m G2 durable meaning (frozen contract §14)[2m > [22m16+17. Cognee failure never corrupts canonical meaning and is surfaced honestly [33m 1775[2mms[22m[39m
+   [33m[2m✓[22m[39m G2 durable meaning (frozen contract §14)[2m > [22m17b. controlled cognee fault skips projection while the canonical write stands [33m 1993[2mms[22m[39m
+   [33m[2m✓[22m[39m G2 durable meaning (frozen contract §14)[2m > [22m15. raw model output never directly becomes accepted canonical state [33m 1577[2mms[22m[39m
+   [33m[2m✓[22m[39m G2 durable meaning (frozen contract §14)[2m > [22mextraction lane failure degrades honestly with NO write [33m 680[2mms[22m[39m
+   [33m[2m✓[22m[39m G2 durable meaning (frozen contract §14)[2m > [22mmodel failure surfaces as failure (no fake success) [33m 1530[2mms[22m[39m
+   [33m[2m✓[22m[39m G2 durable meaning (frozen contract §14)[2m > [22m18. no G1 every-message intake remains (knowledge store is projection-only) [33m 1794[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m35 passed[39m[22m[90m (35)[39m
+[2m   Start at [22m 14:22:49
+[2m   Duration [22m 66.65s[2m (transform 3.59s, setup 0ms, collect 28.98s, tests 37.91s, environment 2ms, prepare 2.76s)[22m
+
+VITEST_EXIT=0
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-node
+  ✔ done
+BUILD_EXIT=0
+  maxRetries: 4,
+  error: 'CLIENT_CLOSED: The client is closed'
+}
+MASTRA_PROOF_EXIT=0
+=== AUDIT DAG END ===

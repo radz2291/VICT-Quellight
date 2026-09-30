@@ -1,0 +1,199 @@
+1b658940efc4339dd1c279de143ff2213363f7c1
+Listening on http://127.0.0.1:5175
+(node:344) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[g2-integration] I0 PASS server boots with knowledge + meaning store READY {"state":"ready","detail":null,"dataset":"g2.meaning"} {"state":"ready","detail":null,"store":"VICT Application Data (appdata-sqlite)"}
+[g2-integration] T1 (B1): ordinary turn — no cognify expected
+This storage provider does not support batch creating metrics
+[quellight] knowledge retrieval failed: WorkerError: DatasetNotFoundError: DatasetNotFoundError: Dataset(s) not found: 'g2__meaning'. Dataset names resolve only among the datasets you own in the current tenant; pass dataset_ids for dat
+    at Interface.<anonymous> (file:///C:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight/node_modules/@victframework/cognee/dist/supervision.js:452:30)
+    at Interface.emit (node:events:524:28)
+    at [_onLine] [as _onLine] (node:internal/readline/interface:415:12)
+    at [_normalWrite] [as _normalWrite] (node:internal/readline/interface:609:22)
+    at Socket.ondata (node:internal/readline/interface:242:23)
+    at Socket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  code: 'COGNEE_DATASET_UNKNOWN',
+  detail: null
+}
+[g2-integration] B1 PASS ordinary turn answers without durable write {"retrieval":"unavailable","durableWrite":false,"meaningProposed":false,"projectionDegraded":false,"modelIdentity":"offline-fixture/deterministic-1","canonicalDegraded":false}
+[g2-integration] B1 ordinary turn latency: 16900ms (turn 2 = warm)
+[g2-integration] B1b PASS ordinary turn persisted NO meaning 
+[g2-integration] T2 (B2): Remember Zephyr (real projection: fresh worker + cognify)
+[g2-integration] B2 PASS explicit durable meaning recorded + projected through real VICT bindings {"retrieval":"used","durableWrite":true,"meaningProposed":false,"projectionDegraded":false,"modelIdentity":"offline-fixture/deterministic-1","canonicalDegraded":false}
+[g2-integration] B2 durable write turn latency: 45212ms
+[g2-integration] B2c PASS inspector shows accepted user_stated Zephyr with provenance 
+[g2-integration] T3 (B3): recall (real searchChunks -> canonical filter -> model)
+[g2-integration] B3 PASS recall uses the projected + eligible meaning {"retrieval":"used","durableWrite":false,"meaningProposed":false,"projectionDegraded":false,"modelIdentity":"offline-fix :: From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”.
+[g2-integration] T4 (B4): infer a preference -> proposed, never accepted
+[g2-integration] B4 PASS inference creates a PROPOSED record (never accepted) {"retrieval":"used","durableWrite":false,"meaningProposed":true,"projectionDegraded":false,"modelIdentity":"offline-fixture/deterministic-1","canonicalDegraded"
+[g2-integration] B4b PASS proposal visible under Proposed in inspector with origin agent_inferred 
+[g2-integration] B4c PASS proposed meaning excluded from ordinary turn {"retrieval":"used","durableWrite":false,"meaningProposed":false,"projectionDegraded":false,"modelIdentity":"offline-fixture/deterministic-1 :: From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”.
+[g2-integration] warm ordinary turn latency: 974ms
+[g2-integration] B1c PASS warm ordinary turn answers with no durable write and no cognify {"retrieval":"used","durableWrite":false,"meaningProposed":false,"projectionDegraded":false,"modelIdentity":"offline-fixture/deterministic-1","canonicalDegraded
+[g2-integration] B5a PASS rejected proposal becomes ineligible (decision recorded) 
+[g2-integration] B5b PASS accepting a proposal makes it eligible and projects it {"record":{"createdAt":"2026-09-30T06:42:49.401Z","decidedAt":"2026-09-30T06:42:50.094Z","decisionState":"accepted","id":"mr-874c581d-a4ef-4a2e-a987-ac07d333251f","origin":"agent_inferred","projection
+[g2-integration] T6 (B6): correct to Orion (fresh worker + cognify)
+[g2-integration] B6 PASS correction records new accepted Orion (slow durable turn, surfaced) {"retrieval":"used","durableWrite":true,"meaningProposed":false,"projectionDegraded":false,"modelIdentity":"offline-fixture/deterministic-1","canonicalDegraded"
+[g2-integration] B6 correction turn latency: 51560ms
+[g2-integration] B6b PASS Orion current; Zephyr superseded in history; lineage inspectable 
+[g2-integration] T7 (B7): recall after correction (filter must drop stale Zephyr)
+[g2-integration] B7 PASS stale-index protection: agent receives Orion only (Zephyr filtered) {"retrieval":"used","durableWrite":false,"meaningProposed":false,"projectionDegraded":false,"modelIdentity":"offline-fixture/deterministic-1 :: From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.interfaces.at.night = “Prefers dark interfaces at night”.
+[g2-integration] stop 5175: shutdown endpoint status=200
+[srv 5175] exited code=0 signal=-
+[g2-integration] S0-stop PASS clean shutdown endpoint used 
+Listening on http://127.0.0.1:5175
+(node:2468) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[g2-integration] S0 PASS restart: knowledge + meaning store READY from persisted stores 
+[g2-integration] I2 PASS meaning records + lineage survive restart (real on-disk appdata SQLite) 
+This storage provider does not support batch creating metrics
+[g2-integration] I2b PASS durable recall persists across app restart (eligibility intact) {"retrieval":"used","durableWrite":false,"meaningProposed":false,"projectionDegraded":false,"modelIdentity":"offline-fixture/deterministic-1 :: From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.interfaces.at.night = “Prefers dark interf
+[g2-integration] stop 5175: shutdown endpoint status=200
+[srv 5175] exited code=0 signal=-
+Listening on http://127.0.0.1:5176
+(node:10536) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+This storage provider does not support batch creating metrics
+[g2-integration] B8 PASS projection failure surfaces honestly; canonical meaning intact {"retrieval":"used","durableWrite":true,"meaningProposed":false,"projectionDegraded":true,"modelIdentity":"offline-fixture/deterministic-1","canonicalDegraded":false,"projectionDetail":"controlled cog
+[g2-integration] B8b PASS canonical record intact with failed projection bookkeeping 
+[g2-integration] stop 5176: shutdown endpoint status=200
+[srv 5176] exited code=0 signal=-
+{
+  "pass": true,
+  "passCount": 21,
+  "total": 21,
+  "gitHead": "1b658940efc4339dd1c279de143ff2213363f7c1",
+  "results": [
+    {
+      "id": "I0",
+      "name": "server boots with knowledge + meaning store READY",
+      "outcome": "PASS",
+      "detail": "{\"state\":\"ready\",\"detail\":null,\"dataset\":\"g2.meaning\"} {\"state\":\"ready\",\"detail\":null,\"store\":\"VICT Application Data (appdata-sqlite)\"}"
+    },
+    {
+      "id": "B1",
+      "name": "ordinary turn answers without durable write",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"unavailable\",\"durableWrite\":false,\"meaningProposed\":false,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded\":false}"
+    },
+    {
+      "id": "B1b",
+      "name": "ordinary turn persisted NO meaning",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B2",
+      "name": "explicit durable meaning recorded + projected through real VICT bindings",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":true,\"meaningProposed\":false,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded\":false}"
+    },
+    {
+      "id": "B2c",
+      "name": "inspector shows accepted user_stated Zephyr with provenance",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B3",
+      "name": "recall uses the projected + eligible meaning",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":false,\"meaningProposed\":false,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fix :: From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”."
+    },
+    {
+      "id": "B4",
+      "name": "inference creates a PROPOSED record (never accepted)",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":false,\"meaningProposed\":true,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded\""
+    },
+    {
+      "id": "B4b",
+      "name": "proposal visible under Proposed in inspector with origin agent_inferred",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B4c",
+      "name": "proposed meaning excluded from ordinary turn",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":false,\"meaningProposed\":false,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1 :: From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”."
+    },
+    {
+      "id": "B1c",
+      "name": "warm ordinary turn answers with no durable write and no cognify",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":false,\"meaningProposed\":false,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded"
+    },
+    {
+      "id": "B5a",
+      "name": "rejected proposal becomes ineligible (decision recorded)",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B5b",
+      "name": "accepting a proposal makes it eligible and projects it",
+      "outcome": "PASS",
+      "detail": "{\"record\":{\"createdAt\":\"2026-09-30T06:42:49.401Z\",\"decidedAt\":\"2026-09-30T06:42:50.094Z\",\"decisionState\":\"accepted\",\"id\":\"mr-874c581d-a4ef-4a2e-a987-ac07d333251f\",\"origin\":\"agent_inferred\",\"projection"
+    },
+    {
+      "id": "B6",
+      "name": "correction records new accepted Orion (slow durable turn, surfaced)",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":true,\"meaningProposed\":false,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded\""
+    },
+    {
+      "id": "B6b",
+      "name": "Orion current; Zephyr superseded in history; lineage inspectable",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "B7",
+      "name": "stale-index protection: agent receives Orion only (Zephyr filtered)",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":false,\"meaningProposed\":false,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1 :: From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.interfaces.at.night = “Prefers dark interfaces at night”."
+    },
+    {
+      "id": "S0-stop",
+      "name": "clean shutdown endpoint used",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "S0",
+      "name": "restart: knowledge + meaning store READY from persisted stores",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "I2",
+      "name": "meaning records + lineage survive restart (real on-disk appdata SQLite)",
+      "outcome": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "I2b",
+      "name": "durable recall persists across app restart (eligibility intact)",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":false,\"meaningProposed\":false,\"projectionDegraded\":false,\"modelIdentity\":\"offline-fixture/deterministic-1 :: From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.interfaces.at.night = “Prefers dark interf"
+    },
+    {
+      "id": "B8",
+      "name": "projection failure surfaces honestly; canonical meaning intact",
+      "outcome": "PASS",
+      "detail": "{\"retrieval\":\"used\",\"durableWrite\":true,\"meaningProposed\":false,\"projectionDegraded\":true,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded\":false,\"projectionDetail\":\"controlled cog"
+    },
+    {
+      "id": "B8b",
+      "name": "canonical record intact with failed projection bookkeeping",
+      "outcome": "PASS",
+      "detail": ""
+    }
+  ]
+}
+REAL_EXIT=0

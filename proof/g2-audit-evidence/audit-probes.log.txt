@@ -1,0 +1,20 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/RZ1/Desktop/RZ/260929-VCT-Quellight[39m
+
+(node:27144) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[90mstdout[2m | tests/g2-audit-probe.test.ts[2m > [22m[2mG2 INDEPENDENT AUDIT PROBES[2m > [22m[2mP1: forged schema-valid remember intent on an ORDINARY message (intent trust boundary)
+[22m[39m[AUDIT-P1] durableWrite = [33mtrue[39m
+
+[90mstdout[2m | tests/g2-audit-probe.test.ts[2m > [22m[2mG2 INDEPENDENT AUDIT PROBES[2m > [22m[2mP1: forged schema-valid remember intent on an ORDINARY message (intent trust boundary)
+[22m[39m[AUDIT-P1] records = [{"origin":"user_stated","state":"accepted","value":"User walks in good weather"}]
+
+ [32m✓[39m tests/g2-audit-probe.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2277[2mms[22m[39m
+   [33m[2m✓[22m[39m G2 INDEPENDENT AUDIT PROBES[2m > [22mP1: forged schema-valid remember intent on an ORDINARY message (intent trust boundary) [33m 1396[2mms[22m[39m
+   [33m[2m✓[22m[39m G2 INDEPENDENT AUDIT PROBES[2m > [22mP2: hits mapping to PROPOSED and REJECTED canonical records are excluded from context [33m 666[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 14:31:31
+[2m   Duration [22m 7.34s[2m (transform 508ms, setup 0ms, collect 4.01s, tests 2.28s, environment 1ms, prepare 421ms)[22m
+

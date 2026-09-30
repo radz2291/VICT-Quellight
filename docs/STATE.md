@@ -1,8 +1,39 @@
 # Project State
 
-**Updated:** 2026-09-30 (G2 candidate delivered on `g2/durable-meaning`; NOT self-closed — awaiting independent verification)
+**Updated:** 2026-09-30 (G2 independently verified and CLOSED — see `docs/reports/G2-INDEPENDENT-AUDIT.md`)
 **Repository:** https://github.com/radz2291/VICT-Quellight
-**Status:** G0 VERIFIED — CLOSED; G1 VERIFIED — CLOSED; G2 CANDIDATE COMPLETE (implementation + verification evidence on branch `g2/durable-meaning`, report `docs/reports/G2-DURABLE-MEANING.md`) — awaiting independent G2 verification
+**Status:** G0 VERIFIED — CLOSED; G1 VERIFIED — CLOSED; G2 VERIFIED — CLOSED (verdict: VERIFIED WITH NON-BLOCKING FINDINGS — closure permitted); G3 PERMITTED BUT NOT BEGUN
+
+## G2 closure record (independent verification)
+
+- Independent audit branch: `verify/g2-durable-meaning` created from the EXACT frozen candidate
+  `1b658940efc4339dd1c279de143ff2213363f7c1` (== `origin/g2/durable-meaning` at handoff).
+- Baseline: `main` `78010faf716fdfa132acfd429b8b0370e5cec9fc` (G1 closure); contract frozen at
+  `c3202e6bca79a713d030ae615d89d4b2a8ce4200`; verification tree `745029f53b19fafe7c06e0560df05148eb53973a`.
+- Post-DAG diff verified: candidate vs verification tree changes ONLY docs/evidence files (4 files);
+  `src/`+`tests/` byte-identical across `745029f` / `938be663` / `1b658940`.
+- Fresh verifier results (all independently reproduced): `npm ci` exit 0 (no bypass flags; Node
+  v22.13.1 / npm 11.19.1); svelte-check 0 errors / 0 warnings (1379 files); prettier clean;
+  vitest 35/35; build exit 0; Mastra offline proof `pass: true`; Cognee tarball SHA-256 re-verified
+  `9c9545…9117` (MATCH); resolved `@victframework/{application,appdata-sqlite,mastra,runtime,sdk}
+0.4.0-rc.1` + `@victframework/cognee 0.1.0` (vendor tarball).
+- Real-Cognee integration 21/21 PASS at gitHead `1b658940` (Zephyr→Orion supersession, stale-index
+  filter, restart durability, failure honesty); real-browser walkthrough 17/17 PASS (B1–B9);
+  6 adversarial auditor probes (proposed/rejected/malformed hit exclusion; infer-never-accepted;
+  patch-contract immutability of semantic fields; no transcript in projections; provenance
+  preservation) — all PASS; `/api/shutdown` 404-by-default re-probed on the built app.
+- Latency (auditor): warm ordinary turn 974 ms with zero add/cognify (ordinary conversation does
+  NOT pay Cognify cost); durable writes 31.5–51.6 s, honestly surfaced.
+- Retained findings (register in the audit report): A-1 Low (extraction intent classification
+  gates `user_stated+accepted`; deterministic fixture parser today; deterministic product-side
+  gate recommended before any live extraction model), A-2 Low (fresh-worker-per-cognify
+  workaround, projection-only), A-3 Low (durable-write latency, honest), A-4 Low (gated shutdown
+  endpoint retained), A-5 Low (Cognee private/UNLICENSED bounded use), A-9 Low (upstream SDK
+  authoring-capture shared-array quirk), A-6–A-8 Observations (report names `938be663` as final
+  candidate — docs-only delta vs `1b658940`; npm-audit/EBADENGINE noise; stale projections
+  searchable but structurally filtered).
+- Verdict: **VERIFIED WITH NON-BLOCKING FINDINGS — G2 CLOSURE PERMITTED** (no Blocking/High;
+  no implementation remediation applied by the auditor; VICT and VICT-Cognee untouched).
 
 ## G2 candidate record
 
@@ -62,7 +93,7 @@
 - Documentation pack completed through governance commit: `d0627e604818f83b75053efbb5895c4fa9312b95`
 - G0 executed on branch `g0/dependency-intake` from starting SHA `3248ceb8d1c2af74e8750cf3fcee5e3d331f601e`
 - G1 executed on branch `g1/walking-quellight` from G0 closure `7ee427ac1abbb864922eef16f81d28a1394f3666` to candidate `df2a1f6ce03133c68ecda5a3e577f86b092542c5` (contract frozen at `04b3e6842aec0c840e6e22b99cf71dedbebe2571`); independently verified on `verify/g1-walking-quellight`
-- G2 executed on branch `g2/durable-meaning` from `main` `78010faf716fdfa132acfd429b8b0370e5cec9fc` (contract frozen at `c3202e6bca79a713d030ae615d89d4b2a8ce4200` before implementation); candidate + evidence see `docs/reports/G2-DURABLE-MEANING.md`
+- G2 executed on branch `g2/durable-meaning` from `main` `78010faf716fdfa132acfd429b8b0370e5cec9fc` (contract frozen at `c3202e6bca79a713d030ae615d89d4b2a8ce4200` before implementation); candidate + evidence see `docs/reports/G2-DURABLE-MEANING.md`; independently verified on `verify/g2-durable-meaning` (audit report `docs/reports/G2-INDEPENDENT-AUDIT.md`, evidence under `proof/g2-audit-evidence/`)
 - VICT reference repo observed: `radz2291/vict-02`
 - VICT main observed at bootstrap AND at G0 intake (unchanged): `fd675d9083a32f282820d9e0135c191d691c943c`
 - `@victframework/mastra`: `0.4.0-rc.1` (npm registry), proven by consumer proof with deterministic offline fixture — PASS
@@ -73,13 +104,13 @@
 
 ## Gate table
 
-| Gate                    | Status                                                                                                                                                                 | Next permitted action                                                              |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| Documentation bootstrap | COMPLETE                                                                                                                                                               | None                                                                               |
-| G0 dependency intake    | VERIFIED — CLOSED (original candidate BLOCKED; blocker lifted by VICT-Cognee `78e6c0a`; independent re-proof verified — see `docs/reports/G0-COGNEE-REPROOF-AUDIT.md`) | None                                                                               |
-| G1 walking Quellight    | VERIFIED — CLOSED (candidate `df2a1f6…`; independent audit `docs/reports/G1-INDEPENDENT-AUDIT.md`, verdict: VERIFIED WITH NON-BLOCKING FINDINGS — closure permitted)   | None — closed                                                                      |
-| G2 durable meaning      | CANDIDATE COMPLETE (implementation + verification evidence on `g2/durable-meaning`)                                                                                    | Independent G2 verification (fresh verifier; contract `docs/gates/G2-CONTRACT.md`) |
-| G3+                     | BLOCKED (also per G2 contract §18 exclusion)                                                                                                                           | None                                                                               |
+| Gate                    | Status                                                                                                                                                                              | Next permitted action                          |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Documentation bootstrap | COMPLETE                                                                                                                                                                            | None                                           |
+| G0 dependency intake    | VERIFIED — CLOSED (original candidate BLOCKED; blocker lifted by VICT-Cognee `78e6c0a`; independent re-proof verified — see `docs/reports/G0-COGNEE-REPROOF-AUDIT.md`)              | None                                           |
+| G1 walking Quellight    | VERIFIED — CLOSED (candidate `df2a1f6…`; independent audit `docs/reports/G1-INDEPENDENT-AUDIT.md`, verdict: VERIFIED WITH NON-BLOCKING FINDINGS — closure permitted)                | None — closed                                  |
+| G2 durable meaning      | VERIFIED — CLOSED (candidate `1b658940…`; independent audit `docs/reports/G2-INDEPENDENT-AUDIT.md`, verdict: VERIFIED WITH NON-BLOCKING FINDINGS — closure permitted and performed) | None — closed                                  |
+| G3+                     | PERMITTED BUT NOT BEGUN (G2 contract §18 exclusions remain binding until a G3 contract is frozen)                                                                                   | Freeze a G3 contract BEFORE any implementation |
 
 ## Explicit exclusions right now
 
@@ -88,8 +119,6 @@ No:
 - old Quellight imports;
 - G3 implementation (threads, open loops, commitments, goals, epistemic taxonomy, Shared World,
   initiative/autonomy, event-driven loop, knowledge-management platform, custom vector/graph DB, `@vict/intelligence`);
-- independent G2 verification (the implementer does not self-verify or self-close G2);
-- G2 merge to main (no merge — verification first, exact branch SHA equality required for the candidate);
 - new universal intelligence package;
 - package publication;
 - production deployment;

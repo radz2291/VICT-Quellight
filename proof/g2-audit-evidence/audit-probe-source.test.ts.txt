@@ -1,0 +1,214 @@
+/**
+ * INDEPENDENT AUDIT PROBES (G2 verifier) — temporary file, NOT part of the
+ * product suite. Runs adversarial cases beyond the committed suite:
+ *  P1  schema-valid forged "remember" intent on an ordinary message
+ *      (intent-trust-boundary classification probe);
+ *  P2  eligibility filter vs PROPOSED and REJECTED canonical ids in hits;
+ *  P3  infer-intent output can never yield an accepted record directly;
+ *  P4  patch contract refuses non-mutable semantic fields (no silent rewrite);
+ *  P5  projection content carries no transcript (id/key/value only);
+ *  P6  superseded record keeps its own provenance after correction.
+ */
+
+import { mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import path from 'node:path';
+import os from 'node:os';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+
+import { KnowledgeStore } from '$lib/server/knowledge';
+import { createDeterministicFixture } from '$lib/server/fixture-model';
+import { composeExtractionInput } from '$lib/server/meaning-extraction';
+import { createQuellightAgent, type QuellightAgent } from '$lib/server/product-agent';
+import { runQuellightTurn, type G2TurnDeps } from '$lib/server/turn';
+import { MeaningStore } from '$lib/server/meaning';
+import { projectionContent } from '$lib/server/meaning-filter';
+import { FakeCogneePack } from './helpers/fake-cognee';
+import { CapturedCalls, withPromptCapture } from './helpers/capture-model';
+
+const tmpDirs: string[] = [];
+let fixture = createDeterministicFixture();
+let agent: QuellightAgent | null = null;
+let captured: CapturedCalls;
+let turnCounter = 0;
+
+async function freshHarness(
+	searchProvider?: (query: string) => { text: string; score?: number }[]
+) {
+	const pack = new FakeCogneePack(searchProvider as never);
+	const store = await KnowledgeStore.create({
+		pythonPath: 'unused',
+		storeRoot: 'unused',
+		namespaces: ['g2'],
+		createPack: () => pack.get() as never
+	});
+	const meaning = MeaningStore.create({ path: ':memory:' });
+	return { pack, meaning, knowledge: store };
+}
+
+function makeDeps(
+	partial: Partial<G2TurnDeps> & {
+		question: string;
+		knowledge: KnowledgeStore | null;
+		meaning: MeaningStore | null;
+	}
+): G2TurnDeps {
+	return {
+		question: partial.question,
+		turnIndex: partial.turnIndex ?? ++turnCounter,
+		knowledge: partial.knowledge,
+		knowledgeFaulted: false,
+		meaning: partial.meaning,
+		meaningFaulted: false,
+		fixture,
+		agent: agent as QuellightAgent,
+		modelIdentity: 'offline-fixture/deterministic-1',
+		fault: partial.fault ?? 'none'
+	};
+}
+
+beforeAll(async () => {
+	const tmp = mkdtempSync(path.join(os.tmpdir(), 'quellight-g2-audit-'));
+	tmpDirs.push(tmp);
+	process.env.QUOLLIGHT_RUN_ROOT = tmp;
+	mkdirSync(path.join(tmp, 'mastra-store'), { recursive: true });
+	fixture = createDeterministicFixture();
+	captured = new CapturedCalls();
+	agent = await createQuellightAgent(() => withPromptCapture(fixture.modelFactory(), captured));
+});
+
+afterAll(async () => {
+	await agent?.close();
+	for (const dir of tmpDirs) {
+		try {
+			rmSync(dir, { recursive: true, force: true });
+		} catch {
+			/* best effort */
+		}
+	}
+});
+
+describe('G2 INDEPENDENT AUDIT PROBES', () => {
+	it('P1: forged schema-valid remember intent on an ORDINARY message (intent trust boundary)', async () => {
+		const { meaning, knowledge } = await freshHarness();
+		const ordinary = 'How does the weather look today for a walk?';
+		// The extraction model (hostile/misclassified) emits a PERFECTLY
+		// schema-valid remember candidate for an ordinary message.
+		const extractionInput = composeExtractionInput(ordinary);
+		fixture.registerExtraction(
+			extractionInput,
+			'{"intent":"remember","semanticKey":"weather.walk","value":"User walks in good weather"}'
+		);
+		const result = await runQuellightTurn(makeDeps({ question: ordinary, knowledge, meaning }));
+		const assistant = (result.response as { kind: string; meta?: Record<string, unknown> });
+		console.log('[AUDIT-P1] durableWrite =', assistant.meta?.durableWrite);
+		const all = await meaning.listAll();
+		console.log('[AUDIT-P1] records =', JSON.stringify(all.map((r) => ({ origin: r.origin, state: r.decisionState, value: r.value }))));
+		// OBSERVATION PROBE: we record what happens (do not assert a desired
+		// outcome either way — this is the trust-boundary measurement).
+	});
+
+	it('P2: hits mapping to PROPOSED and REJECTED canonical records are excluded from context', async () => {
+		const { meaning, knowledge } = await freshHarness();
+		// Create one proposed (infer) and one rejected record; get their ids.
+		const proposedRec = await meaning.recordCandidate(
+			{ intent: 'infer', semanticKey: 'preference.dark', value: 'Prefers dark themes' },
+			{ sourceReference: 'turn-p', sourceExcerpt: 'I prefer dark themes.' }
+		);
+		const rejectedRec = await meaning.recordCandidate(
+			{ intent: 'infer', semanticKey: 'preference.light', value: 'Prefers light themes' },
+			{ sourceReference: 'turn-r', sourceExcerpt: 'I prefer light themes.' }
+		);
+		await meaning.decide(rejectedRec.record.id, 'reject');
+		expect((await meaning.listProposed()).length).toBe(1);
+
+		// Adversarial index: returns hits for BOTH non-eligible records plus a
+		// malformed-id hit — none may reach the model context.
+		const { knowledge: k2 } = await freshHarness(() => [
+			{ text: `meaning_record_id=${proposedRec.record.id} key=preference.dark value=Prefers dark themes` },
+			{ text: `meaning_record_id=${rejectedRec.record.id} key=preference.light value=Prefers light themes` },
+			{ text: 'meaning_record_id=!!malformed!! key=x value=y' }
+		]);
+		const result = await runQuellightTurn(
+			makeDeps({ question: 'What themes do I prefer?', knowledge: k2, meaning })
+		);
+		expect(result.eligibleCount).toBe(0);
+		const prompt = captured.lastUserText() ?? '';
+		expect(prompt).toBe('What themes do I prefer?'); // bare question only
+		expect(prompt).not.toContain('dark');
+		expect(prompt).not.toContain('light');
+	});
+
+	it('P3: infer intent NEVER yields accepted; decide() is the only acceptance path', async () => {
+		const { meaning } = await freshHarness();
+		const rec = await meaning.recordCandidate(
+			{ intent: 'infer', semanticKey: 'pref.a', value: 'A' },
+			{ sourceReference: 'turn-1', sourceExcerpt: 'x' }
+		);
+		expect(rec.record.decisionState).toBe('proposed');
+		// Even deciding the SAME record twice / accepting a non-proposed fails:
+		await meaning.decide(rec.record.id, 'accept');
+		await expect(meaning.decide(rec.record.id, 'reject')).rejects.toThrow(/Only proposed/);
+		await expect(meaning.decide('no-such-id', 'accept')).rejects.toThrow(/No such/);
+	});
+
+	it('P4: patch contract refuses non-mutable semantic fields (no silent rewrite)', async () => {
+		const store = MeaningStore.create({ path: ':memory:' });
+		const created = await store.recordCandidate(
+			{ intent: 'remember', semanticKey: 'k.a', value: 'Original truth' },
+			{ sourceReference: 't', sourceExcerpt: 's' }
+		);
+		// Attempt to silently REWRITE canonical semantics via update patch:
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const adapter = (store as unknown as { adapter: any }).adapter;
+		const res = await adapter.mutate(
+			{
+				resourceId: 'meaning_record',
+				op: 'update',
+				id: created.record.id,
+				input: { value: 'Forged rewrite', origin: 'agent_inferred', semanticKey: 'forged.key' }
+			},
+			{ permissions: ['meaning.read', 'meaning.write'], effect: 'write' }
+		);
+		expect(res.ok).toBe(false); // patch contract: mutable fields only
+		const after = await store.get(created.record.id);
+		expect(after?.value).toBe('Original truth');
+		expect(after?.origin).toBe('user_stated');
+		store.close();
+	});
+
+	it('P5: projection content carries id/key/value ONLY (no transcript leak)', () => {
+		const content = projectionContent({
+			id: 'mr-abc',
+			semanticKey: 'project.codename',
+			value: 'Zephyr',
+			origin: 'user_stated',
+			decisionState: 'accepted',
+			sourceReference: 'turn-9',
+			sourceExcerpt: 'Remember that the project codename is Zephyr. FULL TRANSCRIPT...',
+			createdAt: '2026-09-30T00:00:00.000Z',
+			projectionState: 'unprojected'
+		});
+		expect(content).toBe('meaning_record_id=mr-abc key=project.codename value=Zephyr');
+		expect(content).not.toContain('TRANSCRIPT');
+		expect(content).not.toContain('Remember');
+	});
+
+	it('P6: superseded record keeps its own provenance after correction', async () => {
+		const store = MeaningStore.create({ path: ':memory:' });
+		const zephyr = await store.recordCandidate(
+			{ intent: 'remember', semanticKey: 'project.codename', value: 'Zephyr' },
+			{ sourceReference: 'turn-A', sourceExcerpt: 'Remember that the project codename is Zephyr.' }
+		);
+		await store.recordCandidate(
+			{ intent: 'remember', semanticKey: 'project.codename', value: 'Orion' },
+			{ sourceReference: 'turn-B', sourceExcerpt: 'Remember that the project codename is Orion now.' }
+		);
+		const old = await store.get(zephyr.record.id);
+		expect(old?.sourceReference).toBe('turn-A');
+		expect(old?.sourceExcerpt).toContain('Zephyr');
+		expect(old?.createdAt).toBe(zephyr.record.createdAt);
+		expect(old?.decidedAt).toBe(zephyr.record.decidedAt);
+		expect(old?.supersededById).toBeTruthy();
+		store.close();
+	});
+});
