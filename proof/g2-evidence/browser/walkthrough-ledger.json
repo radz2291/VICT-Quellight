@@ -1,110 +1,110 @@
 {
-  "pass": true,
-  "passCount": 17,
-  "total": 17,
-  "gitHead": "745029f53b19fafe7c06e0560df05148eb53973a",
-  "ledger": [
-    {
-      "id": "I0",
-      "name": "browser server boots with knowledge + meaning READY",
-      "outcome": "PASS",
-      "detail": "{\"state\":\"ready\",\"detail\":null,\"dataset\":\"g2.meaning\"}"
-    },
-    {
-      "id": "B1",
-      "name": "ordinary browser turn: answered, no meaning persisted",
-      "outcome": "PASS",
-      "detail": "latency=165095ms; answer=\"Hello! I’m Quellight — your persistent cognitive partner. Wh\""
-    },
-    {
-      "id": "B2",
-      "name": "accepted user_stated Zephyr visible with provenance",
-      "outcome": "PASS",
-      "detail": "[{\"createdAt\":\"2026-09-30T04:52:06.905Z\",\"decidedAt\":\"2026-09-30T04:52:06.905Z\",\"decisionState\":\"accepted\",\"id\":\"mr-36d07271-fc1a-4132-ae3a-ed3561a08726\",\"origin\":\"user_stated\",\"projectionState\":\"unpr"
-    },
-    {
-      "id": "B2b",
-      "name": "inspector page shows current meaning",
-      "outcome": "PASS",
-      "detail": "cards=1"
-    },
-    {
-      "id": "B2c",
-      "name": "meaning survives an application restart (inspector after restart)",
-      "outcome": "PASS",
-      "detail": ""
-    },
-    {
-      "id": "B2d",
-      "name": "reloaded inspector still shows Zephyr current",
-      "outcome": "PASS",
-      "detail": ""
-    },
-    {
-      "id": "B3",
-      "name": "recall uses eligible meaning through the intended path",
-      "outcome": "PASS",
-      "detail": "From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”."
-    },
-    {
-      "id": "B4",
-      "name": "AI-inferred PROPOSAL created (never accepted)",
-      "outcome": "PASS",
-      "detail": "[{\"createdAt\":\"2026-09-30T04:55:14.404Z\",\"decisionState\":\"proposed\",\"id\":\"mr-b4a2de06-c516-46f5-bf5d-6c0749176595\",\"origin\":\"agent_inferred\",\"projectionState\":\"unprojected\",\"semanticKey\":\"preference.d"
-    },
-    {
-      "id": "B4b",
-      "name": "proposed meaning NOT used as established user context",
-      "outcome": "PASS",
-      "detail": "From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”."
-    },
-    {
-      "id": "B5a",
-      "name": "rejected proposal recorded (decisionState rejected)",
-      "outcome": "PASS",
-      "detail": "{\"record\":{\"createdAt\":\"2026-09-30T04:55:14.404Z\",\"decidedAt\":\"2026-09-30T04:55:17.425Z\",\"decisionState\":\"rejected\",\"id\":\"mr-b4a2de06-c516-46f5-bf5d-6c074917659"
-    },
-    {
-      "id": "B5b",
-      "name": "accepted proposal eligible + projected",
-      "outcome": "PASS",
-      "detail": "{\"record\":{\"createdAt\":\"2026-09-30T04:55:17.856Z\",\"decidedAt\":\"2026-09-30T04:55:19.589Z\",\"decisionState\":\"accepted\",\"id\":\"mr-763a9924-2600-44bb-a062-73a600a3716f\",\"origin\":\"agent_inferred\",\"projection"
-    },
-    {
-      "id": "B6",
-      "name": "correction: Orion current, Zephyr in history, lineage inspectable",
-      "outcome": "PASS",
-      "detail": ""
-    },
-    {
-      "id": "B7",
-      "name": "stale-index protection in browser flow (Orion only)",
-      "outcome": "PASS",
-      "detail": "From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.interfaces.at.night = “Prefers dark interf"
-    },
-    {
-      "id": "B8",
-      "name": "projection failure surfaced honestly; canonical meaning intact",
-      "outcome": "PASS",
-      "detail": "{\"retrieval\":\"used\",\"durableWrite\":true,\"meaningProposed\":false,\"projectionDegraded\":true,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded\":false,\"projectionDetail\":\"controlled cog"
-    },
-    {
-      "id": "B8b",
-      "name": "canonical meaning intact with failed-projection bookkeeping",
-      "outcome": "PASS",
-      "detail": ""
-    },
-    {
-      "id": "B9",
-      "name": "narrow viewport (390px) renders without horizontal overflow",
-      "outcome": "PASS",
-      "detail": ""
-    },
-    {
-      "id": "B9b",
-      "name": "keyboard-only interaction submits and answers",
-      "outcome": "PASS",
-      "detail": "From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.in"
-    }
-  ]
+	"pass": true,
+	"passCount": 17,
+	"total": 17,
+	"gitHead": "745029f53b19fafe7c06e0560df05148eb53973a",
+	"ledger": [
+		{
+			"id": "I0",
+			"name": "browser server boots with knowledge + meaning READY",
+			"outcome": "PASS",
+			"detail": "{\"state\":\"ready\",\"detail\":null,\"dataset\":\"g2.meaning\"}"
+		},
+		{
+			"id": "B1",
+			"name": "ordinary browser turn: answered, no meaning persisted",
+			"outcome": "PASS",
+			"detail": "latency=165095ms; answer=\"Hello! I’m Quellight — your persistent cognitive partner. Wh\""
+		},
+		{
+			"id": "B2",
+			"name": "accepted user_stated Zephyr visible with provenance",
+			"outcome": "PASS",
+			"detail": "[{\"createdAt\":\"2026-09-30T04:52:06.905Z\",\"decidedAt\":\"2026-09-30T04:52:06.905Z\",\"decisionState\":\"accepted\",\"id\":\"mr-36d07271-fc1a-4132-ae3a-ed3561a08726\",\"origin\":\"user_stated\",\"projectionState\":\"unpr"
+		},
+		{
+			"id": "B2b",
+			"name": "inspector page shows current meaning",
+			"outcome": "PASS",
+			"detail": "cards=1"
+		},
+		{
+			"id": "B2c",
+			"name": "meaning survives an application restart (inspector after restart)",
+			"outcome": "PASS",
+			"detail": ""
+		},
+		{
+			"id": "B2d",
+			"name": "reloaded inspector still shows Zephyr current",
+			"outcome": "PASS",
+			"detail": ""
+		},
+		{
+			"id": "B3",
+			"name": "recall uses eligible meaning through the intended path",
+			"outcome": "PASS",
+			"detail": "From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”."
+		},
+		{
+			"id": "B4",
+			"name": "AI-inferred PROPOSAL created (never accepted)",
+			"outcome": "PASS",
+			"detail": "[{\"createdAt\":\"2026-09-30T04:55:14.404Z\",\"decisionState\":\"proposed\",\"id\":\"mr-b4a2de06-c516-46f5-bf5d-6c0749176595\",\"origin\":\"agent_inferred\",\"projectionState\":\"unprojected\",\"semanticKey\":\"preference.d"
+		},
+		{
+			"id": "B4b",
+			"name": "proposed meaning NOT used as established user context",
+			"outcome": "PASS",
+			"detail": "From your accepted durable meaning (eligible, current), I have: project.codename = “Zephyr”."
+		},
+		{
+			"id": "B5a",
+			"name": "rejected proposal recorded (decisionState rejected)",
+			"outcome": "PASS",
+			"detail": "{\"record\":{\"createdAt\":\"2026-09-30T04:55:14.404Z\",\"decidedAt\":\"2026-09-30T04:55:17.425Z\",\"decisionState\":\"rejected\",\"id\":\"mr-b4a2de06-c516-46f5-bf5d-6c074917659"
+		},
+		{
+			"id": "B5b",
+			"name": "accepted proposal eligible + projected",
+			"outcome": "PASS",
+			"detail": "{\"record\":{\"createdAt\":\"2026-09-30T04:55:17.856Z\",\"decidedAt\":\"2026-09-30T04:55:19.589Z\",\"decisionState\":\"accepted\",\"id\":\"mr-763a9924-2600-44bb-a062-73a600a3716f\",\"origin\":\"agent_inferred\",\"projection"
+		},
+		{
+			"id": "B6",
+			"name": "correction: Orion current, Zephyr in history, lineage inspectable",
+			"outcome": "PASS",
+			"detail": ""
+		},
+		{
+			"id": "B7",
+			"name": "stale-index protection in browser flow (Orion only)",
+			"outcome": "PASS",
+			"detail": "From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.interfaces.at.night = “Prefers dark interf"
+		},
+		{
+			"id": "B8",
+			"name": "projection failure surfaced honestly; canonical meaning intact",
+			"outcome": "PASS",
+			"detail": "{\"retrieval\":\"used\",\"durableWrite\":true,\"meaningProposed\":false,\"projectionDegraded\":true,\"modelIdentity\":\"offline-fixture/deterministic-1\",\"canonicalDegraded\":false,\"projectionDetail\":\"controlled cog"
+		},
+		{
+			"id": "B8b",
+			"name": "canonical meaning intact with failed-projection bookkeeping",
+			"outcome": "PASS",
+			"detail": ""
+		},
+		{
+			"id": "B9",
+			"name": "narrow viewport (390px) renders without horizontal overflow",
+			"outcome": "PASS",
+			"detail": ""
+		},
+		{
+			"id": "B9b",
+			"name": "keyboard-only interaction submits and answers",
+			"outcome": "PASS",
+			"detail": "From your accepted durable meaning (eligible, current), I have, in order: project.codename = “Orion”; preference.dark.in"
+		}
+	]
 }
