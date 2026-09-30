@@ -44,4 +44,4 @@ Agents and contributors must read, in order:
 8. `docs/RUNBOOK.md`
 9. `docs/STATE.md`
 
-The documentation bootstrap is complete. G0 (dependency intake) and G1 (Walking Quellight) are verified and closed — G1 by independent audit (`docs/reports/G1-INDEPENDENT-AUDIT.md`). G2 is permitted but NOT begun; the next work requires the owner's QD-04 decision (first Quellight semantic concepts) and a frozen G2 contract as recorded in `docs/STATE.md`.
+The documentation bootstrap is complete. G0 (dependency intake) and G1 (Walking Quellight) are verified and closed — G1 by independent audit (`docs/reports/G1-INDEPENDENT-AUDIT.md`). G2 (Durable Meaning) has a frozen contract (`docs/gates/G2-CONTRACT.md`), a delivered candidate on branch `g2/durable-meaning`, and verification evidence (deterministic suite + real Cognee integration + real browser walkthrough) recorded in `docs/reports/G2-DURABLE-MEANING.md`; it awaits independent verification (implementers do not self-close gates).

@@ -58,20 +58,20 @@ candidate results  ->  eligibility filter against canonical store  ->  ProductAg
 
 Fields (exact names are implementer-owned; these semantics are binding):
 
-| Field                | Type / values                                                            |
-| -------------------- | ------------------------------------------------------------------------ |
-| `id`                 | stable identity (identity key)                                           |
-| `semanticKey`        | dotted stable key, e.g. `project.codename`                               |
-| `value`              | the durable statement/fact                                               |
-| `origin`             | `user_stated` \| `agent_inferred`                                        |
-| `decisionState`      | `proposed` \| `accepted` \| `rejected`                                   |
-| `sourceReference`    | turn reference (provenance)                                              |
-| `sourceExcerpt`      | inspectable durable evidence (user utterance / inference rationale)       |
-| `createdAt`          | ISO timestamp                                                            |
-| `decidedAt`          | ISO timestamp where a decision exists (optional until decided)           |
-| `supersededById`     | lineage link to the replacing record (optional)                          |
-| `projectionState`    | `unprojected` \| `projected` \| `failed` (Cognee projection bookkeeping)  |
-| `projectionDetail`   | honest failure evidence when projection failed (optional)                |
+| Field              | Type / values                                                            |
+| ------------------ | ------------------------------------------------------------------------ |
+| `id`               | stable identity (identity key)                                           |
+| `semanticKey`      | dotted stable key, e.g. `project.codename`                               |
+| `value`            | the durable statement/fact                                               |
+| `origin`           | `user_stated` \| `agent_inferred`                                        |
+| `decisionState`    | `proposed` \| `accepted` \| `rejected`                                   |
+| `sourceReference`  | turn reference (provenance)                                              |
+| `sourceExcerpt`    | inspectable durable evidence (user utterance / inference rationale)      |
+| `createdAt`        | ISO timestamp                                                            |
+| `decidedAt`        | ISO timestamp where a decision exists (optional until decided)           |
+| `supersededById`   | lineage link to the replacing record (optional)                          |
+| `projectionState`  | `unprojected` \| `projected` \| `failed` (Cognee projection bookkeeping) |
+| `projectionDetail` | honest failure evidence when projection failed (optional)                |
 
 Effective state:
 
@@ -145,26 +145,26 @@ requested durable retention; an AI inference is **always** `proposed` and never 
 
 ## 11. Dependency pins (frozen)
 
-| Dependency        | Pin                                                                                                        |
-| ----------------- | ---------------------------------------------------------------------------------------------------------- |
-| VICT packages     | `@victframework/{mastra,runtime,sdk} 0.4.0-rc.1` (npm registry) — unchanged, NO VICT upgrade                 |
-| NEW (adopted)     | `@victframework/application 0.4.0-rc.1` + `@victframework/appdata-sqlite 0.4.0-rc.1` (npm registry, normal install; confirmed available) |
+| Dependency              | Pin                                                                                                                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| VICT packages           | `@victframework/{mastra,runtime,sdk} 0.4.0-rc.1` (npm registry) — unchanged, NO VICT upgrade                                                                                                       |
+| NEW (adopted)           | `@victframework/application 0.4.0-rc.1` + `@victframework/appdata-sqlite 0.4.0-rc.1` (npm registry, normal install; confirmed available)                                                           |
 | `@victframework/cognee` | unchanged tarball `@victframework/cognee@0.1.0` from `radz2291/VICT-Cognee @ 78e6c0ab3f86c571878675d4a947c934768c5ec7`; SHA-256 `9c9545222312cfcc130085b20b04ea5379948ac02d8f151ea7166a8a94439117` |
-| Python worker     | 3.12.x + `cognee[gliner]==1.6.1` (host proof venv; `QUOLLIGHT_COGNEE_PYTHON`)                               |
-| App host          | SvelteKit + `@sveltejs/adapter-node` (unchanged)                                                             |
+| Python worker           | 3.12.x + `cognee[gliner]==1.6.1` (host proof venv; `QUOLLIGHT_COGNEE_PYTHON`)                                                                                                                      |
+| App host                | SvelteKit + `@sveltejs/adapter-node` (unchanged)                                                                                                                                                   |
 
 No dependency bytes may be substituted without recording and proving the change. No VICT
 runtime/config change is authorized; if Application Data requires a VICT source change → STOP.
 
 ## 12. G1 retained findings disposition (frozen)
 
-| Finding                                            | G2 disposition                                                                                       |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| F1/Medium upstream second-cognify failure          | Workaround retained but reduced: fresh-supervised-worker cognify only on actual durable-meaning projection, not every turn |
-| F2/Medium durable-turn latency                     | Ordinary turns no longer cognify (measured); durable writes may stay slow and are surfaced honestly      |
-| F3/Low gated `/api/shutdown`                       | Attempted removal; clean worker/store shutdown for restart proofs still requires it → retained, gated off by default (404), documented temporary |
-| F4/Low every-message intake                        | REMOVED in G2 (no write, no add/cognify without durable-meaning intent)                                  |
-| F5/Low `g1.quellight` dataset                      | Replaced by `g2.meaning` projection scope (not claimed final)                                            |
+| Finding                                   | G2 disposition                                                                                                                                   |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| F1/Medium upstream second-cognify failure | Workaround retained but reduced: fresh-supervised-worker cognify only on actual durable-meaning projection, not every turn                       |
+| F2/Medium durable-turn latency            | Ordinary turns no longer cognify (measured); durable writes may stay slow and are surfaced honestly                                              |
+| F3/Low gated `/api/shutdown`              | Attempted removal; clean worker/store shutdown for restart proofs still requires it → retained, gated off by default (404), documented temporary |
+| F4/Low every-message intake               | REMOVED in G2 (no write, no add/cognify without durable-meaning intent)                                                                          |
+| F5/Low `g1.quellight` dataset             | Replaced by `g2.meaning` projection scope (not claimed final)                                                                                    |
 
 ## 13. Browser scenarios (frozen)
 

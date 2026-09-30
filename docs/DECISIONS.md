@@ -24,8 +24,15 @@ Use the existing `@victframework/mastra` VICT package as the preferred reasoning
 
 ## D-005 — Cognee direction
 
-**Status:** ACCEPTED AS CANDIDATE, NOT YET PRODUCT-ADOPTED  
-`@victframework/cognee` is the preferred first candidate for reusable semantic/knowledge machinery. Adoption into Quellight is contingent on compatibility and a real vertical proof against the current VICT baseline.
+**Status:** ACCEPTED FOR BOUNDED PRIVATE QUELLIGHT USE
+
+`@victframework/cognee` is the current semantic retrieval/knowledge machinery of Quellight and
+the G0 compatibility gate plus the G1 vertical proof have verified it against the current VICT
+line (`0.4.0-rc.1`), including independent audit. Since G2 it is explicitly a DERIVED semantic
+retrieval/index PROJECTION over eligible Quellight meaning — it is NOT canonical Quellight
+truth (canonical semantic state is application-domain data; see D-009). The package remains
+private and UNLICENSED; publication/distribution remains separately governed and unauthorized.
+Any broader adoption beyond the bounded private Quellight use still requires an owner decision.
 
 ## D-006 — No premature intelligence meta-package
 
@@ -39,8 +46,28 @@ Cognee retrieval/enrichment and Mastra reasoning outputs are candidates/proposal
 
 ## D-008 — Current technical gate
 
-**Status:** ACCEPTED  
-Before Quellight product implementation depends on Cognee, revalidate/update `@victframework/cognee` against the current VICT line. Do not force-install incompatible peers or bypass compatibility checks.
+**Status:** COMPLETED / SATISFIED (terminal)
+
+The technical compatibility gate this decision described — revalidate/update `@victframework/cognee`
+against the current VICT line before product implementation depends on it — was performed in
+bound form (QD-03, packaging-only peer remediation in VICT-Cognee `78e6c0ab…`), independently
+verified in G0 (cognee re-proof audit), and exercised end to end by the G1 vertical slice and the
+G2 durable-meaning slice. No force-installed peers or bypass flags were used at any point. The
+gate is closed; no further action is pending.
+
+## D-009 — Canonical semantic state vs. Cognee projection (G2)
+
+**Status:** ACCEPTED
+
+Quellight's canonical semantic state is application-domain data (VICT Application Data,
+`@victframework/appdata-sqlite`, resource `meaning_record`, closed contracts, application-domain
+migrations). Cognee is a derived semantic retrieval/index projection over eligible Quellight
+meaning (accepted AND current only). Retrieval candidates must always be mapped back to the
+canonical store and eligibility-filtered before entering model context; stale or unresolvable
+projection hits are excluded. Origin (where meaning came from) and standing (what Quellight
+grants it) are distinct; AI inference is always proposed, never auto-accepted; supersession is
+non-destructive lineage, never silent rewrite. Rationale and consequences are recorded in the
+contract `docs/gates/G2-CONTRACT.md` (owner decision QD-04, resolved for G2).
 
 ## Open owner decisions
 
@@ -58,4 +85,4 @@ Before Quellight product implementation depends on Cognee, revalidate/update `@v
   No credential was created, committed, or exposed. G1 is fully functional fixture-only and
   was verified in that mode (deterministic repeat proven through the real Mastra adapter).
 - QD-03: **COMPLETED** — the bounded Cognee revalidation/remediation was performed in VICT-Cognee (`compat/vict-0.4-rc1` @ `78e6c0ab…`) under its own branch/governance and was independently verified by the Quellight G0 re-proof audit (`docs/reports/G0-COGNEE-REPROOF-AUDIT.md`). No bypass flags were used at any point.
-- QD-04: exact first Quellight semantic concepts for G2. **Still open — the active owner decision gating G2 scope.** G1 evidence does not make this resolution mechanical (no G2 semantics were exercised). G2 planning must also account for the G1 retained findings register (`docs/reports/G1-INDEPENDENT-AUDIT.md` §12: worker-per-cognify workaround, per-turn intake policy, temporary shutdown endpoint, evidence-tracking improvements).
+- QD-04: **RESOLVED FOR G2** — first Quellight semantic concept = the **Meaning Record** (owner decision, G2): Quellight application-domain data is the canonical durable source; Cognee is a semantic retrieval/index projection over eligible Quellight meaning; ProductAgent/Mastra reasons over selected eligible context; canonical truth is never defined by conversation, raw AI output, or Cognee; stored meaning is not automatically active context. Minimum model: id / semantic key / value / origin (user_stated ∣ agent_inferred) / decision state (proposed ∣ accepted ∣ rejected) / provenance (source turn reference + inspectable excerpt) / created + decided timestamps / supersedesId (lineage; superseded derived). Frozen in `docs/gates/G2-CONTRACT.md`.

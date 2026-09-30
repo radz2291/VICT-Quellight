@@ -4,6 +4,7 @@ dist/
 .env
 .g0-run/
 *.log
+!proof/g2-evidence/integration/*.log
 vendor/cognee/
 scratch/
 quellight/run/
@@ -11,5 +12,7 @@ quellight/run/
 build/
 proof/.g1-run/
 proof/.g1-run-browser/
+proof/.g2-run/
+proof/.g2-browser-run/
 proof/g1-evidence/g1-integration.log
 proof/g1-evidence/browser/
