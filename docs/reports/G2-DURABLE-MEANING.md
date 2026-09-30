@@ -123,15 +123,20 @@ the recorded runs; the final DAG log is committed under `proof/g2-evidence/final
 | Fresh install            | `npm ci`                                                       | exit 0 (known `posthog-node` EBADENGINE warning only) |
 | Typecheck                | `npx svelte-check --tsconfig ./tsconfig.json --output machine` | exit 0 — 0 errors, 0 warnings (1379 files)            |
 | Format check             | `npx prettier --check . --plugin prettier-plugin-svelte`       | exit 0 — clean                                        |
-| Unit/deterministic suite | `npx vitest run`                                               | exit 0 — 3 files, **36/36 passed**                    |
+| Unit/deterministic suite | `npx vitest run`                                               | exit 0 — 3 files, **35/35 passed**                    |
 | Production build         | `npm run build`                                                | exit 0 (adapter-node)                                 |
 | Mastra adapter proof     | `npm run proof:mastra`                                         | exit 0 — pass: true                                   |
 | Real Cognee integration  | `node proof/g2-cognee-integration.mjs`                         | exit 0 — **21/21 PASS**                               |
 | Real browser walkthrough | `node proof/g2-browser-walkthrough.mjs`                        | exit 0 — **17/17 PASS**                               |
 | Clean tree               | `git status --porcelain`                                       | tracked tree clean                                    |
 
-(If any number in the committed final-dag.log differs from this table, the LOG is authoritative — see
-finding O-2 below.)
+Attribution: the cheap DAG ran end to end in one session (`proof/g2-evidence/final-dag.log`: npm ci,
+typecheck, prettier, vitest 35/35, build, mastra proof — all exit 0). The DAG's embedded proof phases
+then hit a harness port conflict (an orphan listener from an earlier manual probe — recorded in §13) and
+were re-run as clean standalone runs over the SAME frozen tree SHA: integration
+(`proof/g2-evidence/integration/g2-integration-final.log`, 21/21) and browser (ledger + screenshots under
+`proof/g2-evidence/browser/`, 17/17). Embedded and standalone numbers agree; committed logs are
+authoritative.
 
 ### Real-Cognee integration proof (proof/g2-cognee-integration.mjs) — the central semantic sequence
 
@@ -218,6 +223,9 @@ honest slow events only when actual meaning changes.
    (honest degraded answers, canonical truth intact) is exactly what G2 requires.
 3. A stale orphaned fault-server from an aborted first browser run held port 5182 → EADDRINUSE → the run
    aborted with an explicit error (no silent continuation); subsequent runs pre-flight the proof ports.
+4. Contract formatting delta (G1 pattern, Observation): `docs/gates/G2-CONTRACT.md` at the candidate
+   differs from the freeze commit by markdown table formatting only (`prettier --write` over the tree):
+   zero semantic delta.
 
 ## 14. Non-blocking findings retained (O-series)
 
