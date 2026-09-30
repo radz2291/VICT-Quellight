@@ -6,6 +6,9 @@
 **Author:** G2 implementation/integration owner (single lane, per contract)
 **Implementation candidate first frozen at:** `f97d12e991a713e44f742698ce0a3eca21d81bf7` (identical
 `src/`+`tests/`; docs/evidence commits follow)
+**Verification tree (DAG + standalone proofs executed here):** `745029f53b19fafe7c06e0560df05148eb53973a`
+**FINAL candidate (pushed; src+tests byte-identical to the verification tree):**
+`938be663f9f9e81f9655d10f3eeb2518a4e6d3f9`
 **Verdict (implementer, NOT self-closing):** **CANDIDATE COMPLETE — PASS WITH NON-BLOCKING
 FINDINGS. Independent G2 verification is permitted.** G2 is NOT declared verified or closed here.
 
@@ -115,8 +118,9 @@ conversation
 
 ## 9. Verification evidence (exact commands / counts / exit codes)
 
-Full frozen-DAG run on the final candidate tree (see §15 for exact final SHA; all numbers below are from
-the recorded runs; the final DAG log is committed under `proof/g2-evidence/final-dag.log`):
+Full frozen-DAG run on the final candidate tree (verification tree `745029f53b19fafe7c06e0560df05148eb53973a`,
+final candidate `938be663f9f9e81f9655d10f3eeb2518a4e6d3f9` — src+tests identical; all numbers below are
+from the recorded runs, committed logs authoritative):
 
 | Step                     | Command                                                        | Result                                                |
 | ------------------------ | -------------------------------------------------------------- | ----------------------------------------------------- |
