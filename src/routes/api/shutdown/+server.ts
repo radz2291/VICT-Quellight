@@ -3,11 +3,13 @@ import type { RequestHandler } from './$types';
 import { gracefulClose } from '$lib/server/quellight';
 
 /**
- * Maintenance-shutdown endpoint — G1 bounded lifecycle seam.
+ * Maintenance-shutdown endpoint — TEMPORARY bounded lifecycle seam (G1
+ * finding F3, retained Low per G2 contract §12): clean worker/store shutdown
+ * for restart proofs still requires it.
  * DISABLED unless QUOLLIGHT_MAINTENANCE_SHUTDOWN=1 (server-held env; never
  * exposed to the browser). Performs a clean VICT-Cognee supervision shutdown
- * (releases the store-owner lock) plus store close, then exits the process.
- * Used by the G1 proof/restart walkthrough; inert on a normal deployment.
+ * (releases the store-owner lock) plus meaning-store/model close, then exits.
+ * Inert on a normal deployment (404 unless gated).
  */
 export const POST: RequestHandler = async () => {
 	if (process.env.QUOLLIGHT_MAINTENANCE_SHUTDOWN !== '1') {

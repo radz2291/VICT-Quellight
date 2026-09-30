@@ -17,9 +17,9 @@
 
 	const DEMO_PROMPTS: { label: string; text: string }[] = [
 		{ label: 'Greet', text: 'Hello.' },
-		{ label: 'Store a fact', text: 'My project codename is Zephyr.' },
+		{ label: 'Remember a fact', text: 'Remember that the project codename is Zephyr.' },
 		{ label: 'Ask recall', text: 'What is my project codename?' },
-		{ label: 'Off-corpus check', text: 'What is my favorite color?' }
+		{ label: 'Express a preference', text: 'I prefer dark interfaces.' }
 	];
 
 	onMount(async () => {
@@ -31,12 +31,12 @@
 				statusLine =
 					status.knowledge.state === 'ready'
 						? null
-						: `Knowledge retrieval is unavailable in this session (${status.knowledge.detail ?? 'not ready'}). Quellight will answer without it.`;
+						: `Semantic retrieval is unavailable in this session (${status.knowledge.detail ?? 'not ready'}). Quellight will answer without it.`;
 				messages.push({
 					kind: 'note',
 					id: uid++,
 					tone: 'info',
-					text: 'Deterministic G1 proof mode — model: deterministic offline fixture through VICT. Knowledge answers come only from what you store in this session store.'
+					text: 'Deterministic G2 proof mode — durable meaning is stored canonically (VICT Application Data); only accepted, current meaning becomes active context. Review your meaning in the Meaning inspector.'
 				});
 			}
 		} catch {
@@ -59,22 +59,14 @@
 		const content = text.trim();
 		if (!content || busy) return;
 		input = '';
-		const echoNote: Msg = {
-			kind: 'note',
-			id: uid++,
-			tone: 'info',
-			text: 'Storing turn in durable knowledge and thinking…'
-		};
-		messages = [...messages, { kind: 'user', id: uid++, text: content }, echoNote];
+		messages = [...messages, { kind: 'user', id: uid++, text: content }];
 		busy = true;
-		const noteId = echoNote.id;
 		try {
 			const res = await fetch('/api/turn', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ message: content })
 			});
-			messages = messages.filter((m) => m.id !== noteId);
 			if (!res.ok) {
 				const err = (await res.json().catch(() => ({ message: res.statusText }))) as {
 					message?: string;
@@ -93,14 +85,49 @@
 				if (data.kind === 'assistant') {
 					const meta: TurnMeta = data.meta;
 					messages = [...messages, { kind: 'assistant', id: uid++, text: data.text, meta }];
-					if (meta.intakeDegraded) {
+					if (meta.durableWrite) {
 						messages = [
 							...messages,
 							{
 								kind: 'note',
 								id: uid++,
 								tone: 'info',
-								text: 'Durable knowledge intake failed for this turn; earlier knowledge still applies.'
+								text: meta.projectionDegraded
+									? 'Durable meaning recorded. Semantic retrieval projection is currently degraded — it is not retrievable yet.'
+									: 'Durable meaning recorded and projected to semantic retrieval.'
+							}
+						];
+					}
+					if (meta.meaningProposed) {
+						messages = [
+							...messages,
+							{
+								kind: 'note',
+								id: uid++,
+								tone: 'info',
+								text: 'A proposed meaning was recorded from this turn — review and accept or reject it in the Meaning inspector. It is NOT treated as established yet.'
+							}
+						];
+					}
+					if (meta.canonicalDegraded) {
+						messages = [
+							...messages,
+							{
+								kind: 'note',
+								id: uid++,
+								tone: 'error',
+								text: 'The canonical meaning store is unavailable — nothing was durably recorded this turn.'
+							}
+						];
+					}
+					if (meta.extractionDegraded) {
+						messages = [
+							...messages,
+							{
+								kind: 'note',
+								id: uid++,
+								tone: 'info',
+								text: 'Meaning analysis was degraded this turn — no durable action was taken.'
 							}
 						];
 					}
@@ -111,14 +138,13 @@
 								kind: 'note',
 								id: uid++,
 								tone: 'info',
-								text: 'Knowledge retrieval was unavailable — answered without it. Nothing fabricated.'
+								text: 'Semantic retrieval was unavailable — answered without it. Nothing fabricated.'
 							}
 						];
 					}
 				}
 			}
 		} catch (e) {
-			messages = messages.filter((m) => m.id !== noteId);
 			messages = [
 				...messages,
 				{
@@ -146,7 +172,7 @@
 	<title>Quellight</title>
 	<meta
 		name="description"
-		content="Quellight — your persistent cognitive partner (G1 walking slice)"
+		content="Quellight — your persistent cognitive partner (G2 durable meaning)"
 	/>
 </svelte:head>
 
@@ -155,7 +181,8 @@
 		<div class="brand">
 			<span class="mark" aria-hidden="true">✦</span>
 			<span class="name">Quellight</span>
-			<span class="tagline">walking proof · G1</span>
+			<span class="tagline">durable meaning · G2</span>
+			<a class="nav-link" href="/meaning">Meaning inspector</a>
 		</div>
 		{#if statusLine}
 			<p class="status degraded">{statusLine}</p>
@@ -173,9 +200,9 @@
 					<div class="speaker">Quellight</div>
 					<div class="bubble assistant">{message.text}</div>
 					{#if message.meta.retrieval === 'used'}
-						<div class="meta">answered using retrieved candidate context</div>
+						<div class="meta">answered using eligible durable meaning (canonical-checked)</div>
 					{:else if message.meta.retrieval === 'miss'}
-						<div class="meta">no candidate knowledge was retrieved for this turn</div>
+						<div class="meta">no eligible meaning was retrieved for this turn</div>
 					{/if}
 				</div>
 			{:else}
@@ -258,6 +285,21 @@
 	.tagline {
 		color: var(--ink-muted);
 		font-size: 0.8rem;
+	}
+
+	.nav-link {
+		margin-left: auto;
+		font-size: 0.82rem;
+		color: var(--accent);
+		text-decoration: none;
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		padding: 0.2rem 0.7rem;
+	}
+
+	.nav-link:hover,
+	.nav-link:focus-visible {
+		border-color: var(--accent);
 	}
 
 	.status {

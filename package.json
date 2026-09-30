@@ -1,9 +1,9 @@
 {
 	"name": "vict-quellight",
-	"version": "0.0.0-g1",
+	"version": "0.0.0-g2",
 	"private": true,
 	"type": "module",
-	"description": "Quellight — persistent cognitive partner built as a thin consumer of VICT capabilities. Current stage: G1 Walking Quellight (candidate).",
+	"description": "Quellight — persistent cognitive partner built as a thin consumer of VICT capabilities. Current stage: G2 Durable Meaning (candidate).",
 	"engines": {
 		"node": ">=22.13.0"
 	},
@@ -17,9 +17,12 @@
 		"format": "prettier --write . --plugin prettier-plugin-svelte",
 		"test": "vitest run",
 		"proof:mastra": "node proof/mastra-offline-proof.mjs",
-		"proof:g1": "node proof/g1-cognee-integration.mjs"
+		"proof:g1": "node proof/g1-cognee-integration.mjs",
+		"proof:g2": "node proof/g2-cognee-integration.mjs"
 	},
 	"dependencies": {
+		"@victframework/appdata-sqlite": "0.4.0-rc.1",
+		"@victframework/application": "0.4.0-rc.1",
 		"@victframework/cognee": "file:vendor/cognee/victframework-cognee-0.1.0.tgz",
 		"@victframework/mastra": "0.4.0-rc.1",
 		"@victframework/runtime": "0.4.0-rc.1",

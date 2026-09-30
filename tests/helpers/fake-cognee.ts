@@ -1,7 +1,7 @@
 /**
  * Test double at the VICT capability-binding boundary (frozen contract §8
  * allows doubles to isolate behavior). Implements ONLY the binding surface
- * G1 uses: cognee.add, cognee.cognify, cognee.searchChunks.
+ * G2 uses: cognee.add, cognee.cognify, cognee.searchChunks.
  */
 
 import type { KnowledgeCandidate } from '$lib/types';
@@ -78,8 +78,10 @@ export class FakeCogneePack {
 						query: string;
 						topK: number;
 					};
+					// Deterministic retrieval over the projected (cognified) scope:
+					// a hit survives only when its dataset was cognified.
 					const hits = this.searchProvider(query).filter(
-						(h) => datasets.length === 0 || datasets.includes('g1.quellight')
+						(h) => datasets.length === 0 || datasets.includes(PROJECTED_DATASET_NAME)
 					);
 					return { hits: hits.slice(0, topK), datasets, total: hits.length, truncated: false };
 				};
@@ -100,3 +102,6 @@ export class FakeCogneePack {
 		};
 	}
 }
+
+/** The G2 projection dataset name asserted in tests (kept in one place). */
+export const PROJECTED_DATASET_NAME = 'g2.meaning';

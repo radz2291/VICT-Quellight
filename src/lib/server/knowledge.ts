@@ -1,23 +1,27 @@
 /**
- * Quellight G1 durable knowledge intake/retrieval — Work Package C + D.
+ * Quellight G2 semantic projection — the ONLY path to Cognee.
  *
- * The ONLY path to Cognee is through the VICT capability-bindings surface of
- * the verified `@victframework/cognee` pack (`cognee.add`, `cognee.cognify`,
- * `cognee.searchChunks`). Product code never touches Cognee internals.
+ * Cognee is a semantic RETRIEVAL/index PROJECTION over eligible Quellight
+ * meaning (QD-04). The only reachable surface is the VICT capability-
+ * bindings of the verified `@victframework/cognee` pack (`cognee.add`,
+ * `cognee.cognify`, `cognee.searchChunks`). Product code never touches
+ * Cognee internals.
  *
- * Temporary G1 intake policy (frozen contract §5, NOT the final memory
- * policy): every user message submitted through the conversation path is
- * added to dataset `g1.quellight` and cognified. No lifecycle/forgetting
- * machinery is implemented at G1.
+ * G2 intake policy (frozen contract §9, replacing the REMOVED G1
+ * every-message policy): canonical meaning is written first (VICT
+ * Application Data); ONLY THEN is the accepted/current record projected
+ * here. Ordinary conversation never reaches this module.
  *
- * Cognee hits are CANDIDATES, not canonical Quellight truth (D-007).
- * Scores are raw retrieval signals; no invented threshold is applied here.
+ * Cognee hits are CANDIDATES, never canonical truth (D-007): every hit must
+ * be mapped back to the canonical Meaning Store and pass the eligibility
+ * filter before it may influence model context.
  */
 
 import { createCogneePack } from '@victframework/cognee';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import type { KnowledgeCandidate } from '$lib/types';
+import type { KnowledgeCandidate, MeaningRecord } from '$lib/types';
+import { projectionContent } from './meaning-filter.js';
 
 /**
  * Structural shape of a capability binding as surfaced by the VICT
@@ -48,8 +52,6 @@ export interface CreationOptions {
 	namespaces: string[];
 }
 
-export const G1_DATASET = 'g1.quellight';
-
 function binding(pack: KnowledgePack, id: string): CapabilityBinding | undefined {
 	const found = pack.bindings.capabilities.find((b) => b.id === id);
 	return found ? { id: found.id, invoke: (input, call) => found.invoke(input, call) } : undefined;
@@ -72,8 +74,9 @@ export class KnowledgeStore {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		createPack?: any;
 	}): Promise<KnowledgeStore> {
-		// Quellight-owned, keyless worker configuration for the isolated G1 store
-		// (no LLM key; fastembed embeddings; no credentials ever sent to Cognee).
+		// Quellight-owned, keyless worker configuration for the isolated
+		// projection store (no LLM key; fastembed embeddings; no credentials
+		// ever sent to Cognee).
 		mkdirSync(options.storeRoot, { recursive: true });
 		const envPath = path.join(options.storeRoot, '.env');
 		if (!existsSync(envPath)) {
@@ -142,17 +145,12 @@ export class KnowledgeStore {
 	) {}
 
 	/**
-	 * G1 bounded recovery for an observed UPSTREAM Cognee-worker defect:
-	 * the SECOND cognify in one worker process's lifetime fails deterministically
-	 * (Python asyncio lock bound to a different event loop; one cognify per fresh
-	 * worker succeeds — verified against the real worker at G1). This is a
-	 * recovery behavior inside Quellight/VICT boundaries; VICT-Cognee itself is
-	 * NOT modified by this repository.
-	 *
-	 * Policy: each durable intake gives its cognify a fresh supervised worker,
-	 * so every cognify is the first in its worker's lifetime. Bounded: at most
-	 * one recreate + one cognify retry per storeMessage call; failure still
-	 * degrades truthfully (intakeDegraded) rather than fabricating state.
+	 * Bounded recovery for an observed UPSTREAM Cognee-worker defect
+	 * (retained from G1): the SECOND cognify in one worker process's
+	 * lifetime fails deterministically (Python asyncio lock bound to a
+	 * different event loop). G2 disposition (contract §12): this workaround
+	 * now runs ONLY on actual durable-meaning projection — never on ordinary
+	 * conversation turns. VICT-Cognee itself is NOT modified by this repo.
 	 */
 	private async recyclePack(): Promise<void> {
 		try {
@@ -182,56 +180,62 @@ export class KnowledgeStore {
 		this.searchBinding = search;
 	}
 
-	/** Durable intake: add + cognify a user-submitted message (keyed, idempotent per call). */
-	async storeMessage(
-		content: string,
+	/**
+	 * Project one accepted/current canonical record: add + cognify with
+	 * keyed idempotency per record. Canonical truth is written BEFORE this
+	 * call and is never rolled back by projection failure (contract §9).
+	 */
+	async projectMeaning(
+		record: MeaningRecord,
 		idempotencyKey: string
 	): Promise<{ datasetName: string; itemsAfter: number }> {
-		// Upstream defect workaround: never run a second cognify on one worker.
 		if (this.hasCognified) {
+			// Upstream-defect workaround: never run a second cognify on one worker.
 			await this.recyclePack();
 		}
+		const content = projectionContent(record);
 		const addReceipt = (await this.addBinding.invoke(
-			{ datasetName: G1_DATASET, content },
+			{ datasetName: PROJECTED_DATASET, content },
 			{ mode: 'normal', idempotencyKey }
 		)) as { datasetName?: string; itemsAfter?: number };
 		try {
 			await this.cognifyBinding.invoke(
-				{ datasetName: G1_DATASET },
+				{ datasetName: PROJECTED_DATASET },
 				{ mode: 'normal', idempotencyKey: `${idempotencyKey}-cognify` }
 			);
 			this.hasCognified = true;
 		} catch (firstError) {
-			// One bounded recovery attempt: fresh worker, one retry.
+			// One bounded recovery attempt: fresh worker, one retry (same as G1).
 			await this.recyclePack();
 			const retryAdd = (await this.addBinding.invoke(
-				{ datasetName: G1_DATASET, content },
+				{ datasetName: PROJECTED_DATASET, content },
 				{ mode: 'normal', idempotencyKey: `${idempotencyKey}-r` }
 			)) as { datasetName?: string; itemsAfter?: number };
 			await this.cognifyBinding.invoke(
-				{ datasetName: G1_DATASET },
+				{ datasetName: PROJECTED_DATASET },
 				{ mode: 'normal', idempotencyKey: `${idempotencyKey}-cognify-r` }
 			);
 			this.hasCognified = true;
 			void firstError;
 			return {
-				datasetName: retryAdd.datasetName ?? G1_DATASET,
+				datasetName: retryAdd.datasetName ?? PROJECTED_DATASET,
 				itemsAfter: typeof retryAdd.itemsAfter === 'number' ? retryAdd.itemsAfter : 0
 			};
 		}
 		return {
-			datasetName: addReceipt.datasetName ?? G1_DATASET,
+			datasetName: addReceipt.datasetName ?? PROJECTED_DATASET,
 			itemsAfter: typeof addReceipt.itemsAfter === 'number' ? addReceipt.itemsAfter : 0
 		};
 	}
 
 	/**
-	 * Scoped read through the capability pack. Returns candidates only —
-	 * callers must treat them as unverified context (D-007 invariant).
+	 * Scoped search through the capability pack. Returns RAW candidates only
+	 * — callers must map them back to canonical state and apply the
+	 * eligibility filter before model context (NEVER trust retrieval text).
 	 */
 	async search(query: string, topK = 5): Promise<KnowledgeCandidate[]> {
 		const result = (await this.searchBinding.invoke(
-			{ datasets: [G1_DATASET], query, topK },
+			{ datasets: [PROJECTED_DATASET], query, topK },
 			{ mode: 'normal' }
 		)) as { hits?: Array<{ text?: string; score?: number }> };
 		const hits = Array.isArray(result?.hits) ? result.hits : [];
@@ -248,3 +252,5 @@ export class KnowledgeStore {
 		}
 	}
 }
+
+export const PROJECTED_DATASET = 'g2.meaning';
